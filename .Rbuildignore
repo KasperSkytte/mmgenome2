@@ -1,0 +1,6 @@
+^_pkgdown\.yml$
+^.*\.Rproj$
+^\.Rproj\.user$
+^docs$
+^test$
+.Rhistory

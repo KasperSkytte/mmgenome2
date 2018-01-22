@@ -1,0 +1,15 @@
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+
+language: R
+sudo: false
+r: bioc-devel
+warnings_are_errors: false
+notifications:
+    on_success: change
+    on_failure: change
+    email: false
+    slack: eb-group-aau:mpu4RiEUcNG66eF0OefApi5d
+r_packages:
+  - covr
+after_success:
+  - Rscript -e 'library(covr); codecov()'
