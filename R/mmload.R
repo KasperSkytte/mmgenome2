@@ -1,4 +1,4 @@
-#' mmload
+#' Title
 #'
 #' @param assembly 
 #' @param coverage 
@@ -12,6 +12,13 @@
 #'
 #' @return
 #' @export
+#' 
+#' @import tibble
+#' @import digest
+#' @import Biostrings
+#' @import dplyr
+#' @import vegan
+#' @import Rtsne.multicore
 #'
 #' @examples
 mmload <- function(assembly,
@@ -24,56 +31,6 @@ mmload <- function(assembly,
                    verbose = TRUE,
                    ...
 ) {
-  ##### Internal functions #####
-  #merge function
-  mmmerge <- function(x, y, type) {
-    #must be a data frame, named atomic vector, or a list of data frames and/or named vectors
-    if(any(class(y) %in% c("list", "data.frame", "tbl", "tbl_df")) | is.atomic(y) | is.factor(y)) {
-      #wrap non-lists in a list to work with the for-loop
-      if(any(!class(y) %in% "list"))
-        y <- list(y)
-      #merge mm with each element in the provided list
-      for(i in 1:length(y)) {
-        string <- ifelse(length(y) == 1, paste0("'", type, "'"), paste0("'", type,"'", " element ", i))
-        if(is.factor(y[[i]]))
-          y[[i]] <- as.character(y[[i]])
-        #first column must be the sequence names
-        if(any(class(y[[i]]) %in% c("data.frame", "tbl", "tbl_df")) & length(y[[i]]) < 2)
-          stop(paste0(string, " not accepted: Data frames must contain at least 2 columns where the first column contains the sequence names exactly matching those of the assembly."))
-        
-        #vectors must be named to be able to merge with mm
-        if(is.atomic(y[[i]]) & is.null(names(y[[i]])))
-          stop(paste0(string, " not accepted: The vector is not a named vector. The vector elements must be named by sequence names exactly matching those of the assembly."))
-        
-        #column names are preserved from data frames, but not from vectors. Use names of the provided list, or else create a dummy name
-        if(is.atomic(y[[i]]) & !is.null(names(y[[i]]))) {
-          y[[i]] <- tibble::enframe(y[[i]], name = "scaffold", value = ifelse((is.null(names(y)) | names(y)[[i]] == ""), paste0(type, i), names(y)[[i]]))
-        }
-        
-        #merge x and y[[i]] by scaffold
-        colnames(y[[i]])[1] <- "scaffold" #first columns must have same name
-        y[[i]][1] <- lapply(y[[i]][1], as.character) #and must be character
-        sharedScaffolds <- dplyr::intersect(x$scaffold, y[[i]][["scaffold"]]) #which scaffolds are shared between x and y[[i]]
-        
-        #print missing or excess scaffolds between x and y[[i]]
-        if(!all(x$scaffold %in% y[[i]][["scaffold"]])) {
-          missingScaffolds <- filter(x, !scaffold %in% sharedScaffolds)[[1]]
-          warning(paste0("Only ", length(sharedScaffolds), " of all ", length(x$scaffold), " scaffolds in the assembly match in ", string,  ". The following ", length(missingScaffolds), " scaffolds are missing:\n\"", paste(missingScaffolds, collapse = "\", \""), "\""))
-        } else if(!all(y[[i]][["scaffold"]] %in% x$scaffold)) {
-          excessScaffolds <- filter(y, !scaffold %in% sharedScaffolds)[[1]]
-          warning(paste0(string, " contains more scaffolds than the assembly. The following ", length(excessScaffolds), " scaffolds have not been loaded:\n\"", paste(excessScaffolds, collapse = "\", \""), "\""))
-        } else if (!any(x$scaffold %in% y[[i]][["scaffold"]]))
-          #no match sucks
-          stop("No scaffold names match between the assembly and ", string, ". ")
-        x <- dplyr::left_join(x, 
-                              y[[i]], 
-                              by = "scaffold")
-      }
-    } else
-      stop("Data must be provided as a data frame, named vector, or a list of multiple data frames and/or named vectors.")
-    return(x)
-  }
-  
   ##### Assembly #####
   #Load assembly sequences from the provided file path or object
   if(isTRUE(verbose))
@@ -85,21 +42,15 @@ mmload <- function(assembly,
   }
   
   #check if a different assembly already exists in global environment
-  MD5 <- digest::digest(assembly)
   if(!exists("assembly", where = .GlobalEnv, envir = .GlobalEnv)) {
     assign("assembly", assembly, envir = .GlobalEnv)
-  } else if (exists("assembly", where = .GlobalEnv, envir = .GlobalEnv) & !identical(MD5, digest::digest(get("assembly", envir = .GlobalEnv)))) {
-    userChoice <- readline(prompt = "An object named \"assembly\" already exists in the global environment. Do you want to overwrite it? (y/n): ")
-    if(tolower(userChoice) == "n") {
-      stop("Aborted by user.")
-    } else if(tolower(userChoice) == "y") {
+  } else if (exists("assembly", where = .GlobalEnv, envir = .GlobalEnv) & !identical(digest::digest(assembly), digest::digest(get("assembly", envir = .GlobalEnv)))) {
+    userChoice <- readline(prompt = "A different object named \"assembly\" already exists in the global environment. Do you want to overwrite it? (y/n or ENTER/ESC): ")
+    if(any(tolower(userChoice) %in% c("y", "yes", ""))) {
       assign("assembly", assembly, envir = .GlobalEnv)
-    }
+    } else
+      stop("Aborted by user.")
   }
-  
-  #attributes
-  attributes <- list()
-  attributes[["assemblyMD5"]] <- paste0(".mmID_", MD5)
   
   #duplicate sequence names are not allowed
   if(any(duplicated(names(assembly)))) 
@@ -110,7 +61,7 @@ mmload <- function(assembly,
     message("Calculating GC content...")
   mm <- tibble::tibble(scaffold = names(assembly),
                        length = BiocGenerics::width(assembly),
-                       gc_pct = round(as.numeric(Biostrings::letterFrequency(assembly, letters = c("CG"), as.prob=T))*100, digits = 2)
+                       gc = round(as.numeric(Biostrings::letterFrequency(assembly, letters = c("CG"), as.prob=T))*100, digits = 2)
   )
   mm[1] <- lapply(mm[1], as.character)
   
@@ -121,37 +72,31 @@ mmload <- function(assembly,
   mm <- mmmerge(x = mm,
                 y = coverage,
                 type = "coverage")
-  attributes[["coverageCols"]] <- c((beforeMerge+1):ncol(mm))
+  colnames(mm)[c((beforeMerge+1):ncol(mm))] <- paste0("cov_", colnames(mm)[c((beforeMerge+1):ncol(mm))])
   
   
   ##### Essential genes #####
   if(!is.null(essential_genes)) {
-    if(is.data.frame(essential_genes) & ncol(essential_genes) > 1) {
+    if(is.data.frame(essential_genes) & ncol(essential_genes) == 2) {
       if(isTRUE(verbose))
         message("Loading essential genes...")
-      attributes[["total_Ess.genes"]] <- nrow(essential_genes)
-      if(ncol(essential_genes) > 2) {
-        attributes[["unique_Ess.genes"]] <- length(unique(essential_genes$hmm.id))
-      } else if(ncol(essential_genes) == 2) {
-        attributes[["unique_Ess.genes"]] <- length(unique(essential_genes[,2]))
-      }
       
-      #replace all values in all character and factor columns to only contain alpha-numerics and dots "."
-      if(any(sapply(essential_genes[,-1], class) %in% c("character", "factor"))) {
-        essential_genes[,-1] <- dplyr::mutate_all(essential_genes[,-1], dplyr::funs(stringr::str_replace_all(., "[^[:alnum:].]", "")))
-      }
+      essential_genes[,1] <- as.character(essential_genes[,1])
+      essential_genes[,2] <- as.character(essential_genes[,2])
       
-      colnames(essential_genes)[1] <- "scaffold"
-      essential_genes[1] <- lapply(essential_genes[1], as.character)
+      #replace all values to only contain alpha-numerics and dots "."
+      essential_genes[,-1] <- dplyr::mutate_all(essential_genes[,-1, drop = FALSE], dplyr::funs(stringr::str_replace_all(., "[^[:alnum:].]", "")))
+      
+      colnames(essential_genes) <- c("scaffold", "geneID")
       essential_genes <- essential_genes %>% 
         dplyr::group_by(scaffold) %>% 
-        dplyr::summarise_all(dplyr::funs(paste(., collapse = ", ")))
+        dplyr::summarise_all(dplyr::funs(paste(., collapse = ",")))
       
       mm <- dplyr::left_join(mm, 
                              essential_genes, 
                              by = "scaffold")
-    } else if(!is.data.frame(essential_genes))
-      stop("Essential genes must be provided as a data frame with at least 2 columns where the first column contains the sequence names exactly matching those of the assembly.")
+    } else
+      stop("Essential genes must be provided as a 2 column data frame, where the first column contains the sequence names exactly matching those of the assembly, and the second column the gene names/IDs.")
   }
   
   ##### calculate tetranucleotides frequencies #####
@@ -226,11 +171,5 @@ mmload <- function(assembly,
   ##### Return #####
   if(isTRUE(verbose))
     message("Done!")
-  
-  #add class mm and the assembly MD5 as id
-  class(mm) <- append(class(mm), c("mm", attributes[["assemblyMD5"]]))
-  
-  #some functions drop attributes set with attr(), so the solution is a hidden object named by an MD5 of the assembly
-  assign(attributes[["assemblyMD5"]], attributes, envir = .GlobalEnv) 
   return(mm)
 }

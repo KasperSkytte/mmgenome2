@@ -1,14 +1,15 @@
 #' mmstats
 #'
 #' @param mm 
-#' @param compare 
 #'
 #' @return
 #' @export
 #'
+#' @import dplyr
+#' @import tidyr
+#'
 #' @examples
-mmstats <- function(mm, compare) {
-  attributes <- get(class(mm)[grepl(".mmID_", class(mm))], envir = .GlobalEnv)
+mmstats <- function(mm) {
   mm$length <- as.numeric(mm$length)
   lengthTotal <- sum(mm$length)
   
@@ -16,9 +17,8 @@ mmstats <- function(mm, compare) {
   lengths <- sort(as.integer(mm$length), decreasing = TRUE)
   N50 <- lengths[which(cumsum(lengths) >= lengthTotal/2)[1]]
   
-  #fix coverage names
-  coverage <- unlist(lapply(mm[,attributes[["coverageCols"]]], function(x) {round(sum(x*mm$length)/lengthTotal, 2)}))
-  names(coverage) <- paste0("cov_", names(coverage))
+  #essential genes
+  ess.genes <- tidyr::separate_rows(mm[!is.na(mm[,"geneID"]),c("scaffold", "geneID")], "geneID")[["geneID"]]
   
   stats <- c(Scaffolds = length(mm$scaffold),
              N50 = N50,
@@ -26,10 +26,10 @@ mmstats <- function(mm, compare) {
              Length.max = max(mm$length),
              Length.mean = round(mean(mm$length) ,2),
              Length.min = min(mm$length),
-             weighted_GC_mean = round(sum(mm$gc_pct*mm$length)/lengthTotal, 2),
-             coverage,
-             Ess.genes.total = attributes[["total_Ess.genes"]],
-             Ess.genes.unique = attributes[["unique_Ess.genes"]]
+             weighted_GC_mean = round(sum(mm$gc*mm$length)/lengthTotal, 2),
+             unlist(lapply(dplyr::select(mm, dplyr::starts_with("cov_")), function(x) {round(sum(x*mm$length)/lengthTotal, 2)})),
+             Ess.genes.total = length(ess.genes),
+             Ess.genes.unique = length(unique(ess.genes))
   )
   df <- data.frame(stats)
   colnames(df)[1] <- "General stats"
