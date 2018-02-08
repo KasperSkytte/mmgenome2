@@ -1,14 +1,10 @@
 #' mmstats
 #'
 #' @param mm 
-#'
-#' @return
 #' @export
 #'
 #' @import dplyr
 #' @import tidyr
-#'
-#' @examples
 mmstats <- function(mm) {
   mm$length <- as.numeric(mm$length)
   lengthTotal <- sum(mm$length)

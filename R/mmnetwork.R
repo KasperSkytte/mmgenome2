@@ -14,15 +14,12 @@
 #' @param print_nolinks 
 #' @param seed 
 #'
-#' @return
 #' @export
 #' 
 #' @import ggplot2
 #' @import igraph
 #' @import dplyr
 #' @import sp
-#'
-#' @examples
 mmnetwork <- function(mm,
                       network, 
                       n_connections = 2,

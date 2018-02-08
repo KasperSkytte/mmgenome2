@@ -10,7 +10,6 @@
 #' @param verbose 
 #' @param ... 
 #'
-#' @return
 #' @export
 #' 
 #' @import tibble
@@ -19,8 +18,6 @@
 #' @import dplyr
 #' @import vegan
 #' @import Rtsne.multicore
-#'
-#' @examples
 mmload <- function(assembly,
                    coverage, 
                    essential_genes = NULL,

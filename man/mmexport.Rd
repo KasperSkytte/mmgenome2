@@ -2,7 +2,7 @@
 % Please edit documentation in R/mmexport.R
 \name{mmexport}
 \alias{mmexport}
-\title{mmexport}
+\title{Title}
 \usage{
 mmexport(mm, assembly, file = "exported_assembly.fa")
 }
@@ -14,5 +14,5 @@ mmexport(mm, assembly, file = "exported_assembly.fa")
 \item{file}{}
 }
 \description{
-mmexport
+Title
 }

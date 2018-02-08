@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generates a ggplot2 style pairs plot — mmplot_pairs • mmgenome2</title>
+<title>Locate points in a ggplot2 plot — mmlocator • mmgenome2</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,75 +83,37 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Generates a ggplot2 style pairs plot</h1>
+    <h1>Locate points in a ggplot2 plot</h1>
     </div>
 
     
-    <p>Generates a ggplot2 style pairs plot.</p>
+    <p>Internal function used within mmplot and mmplot_network</p>
     
 
-    <pre class="usage"><span class='fu'>mmplot_pairs</span>(<span class='no'>data</span>, <span class='no'>variables</span>)</pre>
+    <pre class="usage"><span class='fu'>mmlocator</span>(<span class='no'>plot</span>, <span class='kw'>x_scale</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y_scale</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>(required) The dataframe to plot.</p></td>
+      <th>plot</th>
+      <td><p>ggplot2 object.</p></td>
     </tr>
     <tr>
-      <th>variables</th>
-      <td><p>(required) The vaiables to plot as a vector.</p></td>
+      <th>x_scale</th>
+      <td><p>x axis scale, <code>"sqrt"</code> or <code>"log10"</code>.</p></td>
     </tr>
     <tr>
-      <th>color</th>
-      <td><p>Coloring of the plot (default: gc).</p></td>
-    </tr>
-    <tr>
-      <th>log.color</th>
-      <td><p>Log scale the color (default: F).</p></td>
-    </tr>
-    <tr>
-      <th>log</th>
-      <td><p>A vector of variables to log scale.</p></td>
-    </tr>
-    <tr>
-      <th>minlength</th>
-      <td><p>Minimum length of the plotted scaffolds.</p></td>
-    </tr>
-    <tr>
-      <th>resize</th>
-      <td><p>Rescale the size of the scaffolds (default: 1).</p></td>
-    </tr>
-    <tr>
-      <th>textsize</th>
-      <td><p>Size of the legend text (deafult = 8).</p></td>
-    </tr>
-    <tr>
-      <th>point.size</th>
-      <td><p>Use a fixed size for points instead of scaffold length.</p></td>
-    </tr>
-    <tr>
-      <th>highlight</th>
-      <td><p>Mark selected scaffolds on the plot. Either as a vector of scaffold names or as a full subset of data.</p></td>
-    </tr>
-    <tr>
-      <th>hightlight.color</th>
-      <td><p>Color of the highlighted scaffolds (default: "darkred").</p></td>
+      <th>y_scale</th>
+      <td><p>y axis scale, <code>"sqrt"</code> or <code>"log10"</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A pairs plot object.</p>
+    <p>A data frame with the x/y coordinates of the mousepositions clicked in the ggplot2 plot</p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>rocco</span>)
-
-<span class='fu'>mmplot_pairs</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>d</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"C13.12.03"</span>, <span class='st'>"C14.01.09"</span>, <span class='st'>"C13.11.25"</span>, <span class='st'>"gc"</span>, <span class='st'>"PC2"</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"essential"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"C13.12.03"</span>, <span class='st'>"C14.01.09"</span>, <span class='st'>"C13.11.25"</span>), <span class='kw'>minlength</span> <span class='kw'>=</span> <span class='fl'>10000</span>)</div><div class='output co'>#&gt; <span class='error'>Error in mmplot(data = data, x = variables[j], y = variables[i], color = color,     log.color = log.color, minlength = minlength, resize = resize *         0.5, point.size = point.size, highlight = highlight,     highlight.color = highlight.color): unused arguments (data = data, log.color = log.color, minlength = minlength, resize = resize * 0.5, point.size = point.size, highlight = highlight, highlight.color = highlight.color)</span></div><div class='input'>
-
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -159,15 +121,7 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    
-Soren M. Karst <a href='mailto:smk@bio.aau.dk'>smk@bio.aau.dk</a>
-
-Mads Albertsen <a href='mailto:MadsAlbertsen85@gmail.com'>MadsAlbertsen85@gmail.com</a>
+          </ul>
 
   </div>
 </div>

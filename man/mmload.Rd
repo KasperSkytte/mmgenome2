@@ -2,7 +2,7 @@
 % Please edit documentation in R/mmload.R
 \name{mmload}
 \alias{mmload}
-\title{mmload}
+\title{Title}
 \usage{
 mmload(assembly, coverage, essential_genes = NULL, kmer_pca = FALSE,
   kmer_BH_tSNE = FALSE, taxonomy = NULL, additional = NULL,
@@ -28,5 +28,5 @@ mmload(assembly, coverage, essential_genes = NULL, kmer_pca = FALSE,
 \item{...}{}
 }
 \description{
-mmload
+Title
 }

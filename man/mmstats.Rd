@@ -4,12 +4,10 @@
 \alias{mmstats}
 \title{mmstats}
 \usage{
-mmstats(mm, compare)
+mmstats(mm)
 }
 \arguments{
 \item{mm}{}
-
-\item{compare}{}
 }
 \description{
 mmstats

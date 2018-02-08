@@ -17,14 +17,11 @@
 #' @param size_scale 
 #' @param duplicate_genes 
 #'
-#' @return
 #' @export
 #' 
 #' @import ggplot2
 #' @import tidyr
 #' @import tibble
-#'
-#' @examples
 mmplot <- function(mm,
                    x,
                    y, 

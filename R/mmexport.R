@@ -4,13 +4,10 @@
 #' @param assembly 
 #' @param file 
 #'
-#' @return
 #' @export
 #' 
 #' @import Biostrings
 #' @import tidyr
-#'
-#' @examples
 mmexport <- function(mm, assembly, file = "exported_assembly.fa") {
   if(!any(class(mm) == "mm"))
     stop("The provided data is not a \"mm\" class data frame. Use mmload() to load various data into a \"mm\" data frame. (or class(df) <- append(class(df), \"mm\") if you know what you are doing)")

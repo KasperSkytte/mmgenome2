@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extracts a subset of scaffolds — mmextract • mmgenome2</title>
+<title>Title — mmextract • mmgenome2</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,75 +83,43 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extracts a subset of scaffolds</h1>
+    <h1>Title</h1>
     </div>
 
     
-    <p>Extracts a subset of scaffolds defined on a <code>mmplot</code> and selected using <code>mmplot_locator</code>.</p>
+    <p>Title</p>
     
 
-    <pre class="usage"><span class='fu'>mmextract</span>(<span class='no'>data</span>, <span class='no'>selection</span>)</pre>
+    <pre class="usage"><span class='fu'>mmextract</span>(<span class='no'>mm</span>, <span class='no'>selection</span>, <span class='kw'>min_length</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>inverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>(required) The dataframe containing all data.</p></td>
+      <th>mm</th>
+      <td></td>
     </tr>
     <tr>
       <th>selection</th>
-      <td><p>(required) Extract the scaffolds within the subspace.</p></td>
+      <td></td>
     </tr>
     <tr>
-      <th>minlength</th>
-      <td><p>Minimum scaffold length.</p></td>
+      <th>min_length</th>
+      <td></td>
     </tr>
     <tr>
-      <th>exclude</th>
-      <td><p>Vector of scaffold names to exclude.</p></td>
-    </tr>
-    <tr>
-      <th>include</th>
-      <td><p>Vector of scaffold names to include.</p></td>
-    </tr>
-    <tr>
-      <th>original</th>
-      <td><p>The original dataset, required when using include.</p></td>
+      <th>inverse</th>
+      <td></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The subset of scaffolds in the original dataframe within the defined selection.</p>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='fu'>data</span>(<span class='no'>rocco</span>)
-
-<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'>mmplot</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>d</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"C13.12.03"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"C14.01.09"</span>, <span class='kw'>log.x</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>log.y</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"phylum"</span>, <span class='kw'>minlength</span> <span class='kw'>=</span> <span class='fl'>3000</span>)</div><div class='output co'>#&gt; <span class='error'>Error in mmplot(data = d, x = "C13.12.03", y = "C14.01.09", log.x = T,     log.y = T, color = "phylum", minlength = 3000): unused arguments (data = d, log.x = T, log.y = T, minlength = 3000)</span></div><div class='input'><span class='no'>p</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'p' not found</span></div><div class='input'><span class='co'>#sel &lt;- mmplot_locator(p)</span>
-<span class='no'>sel</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>C13.12.03</span>  <span class='kw'>=</span>  <span class='fu'>c</span>(<span class='fl'>1.39</span>, <span class='fl'>2.07</span>, <span class='fl'>16.8</span>, <span class='fl'>19.4</span>, <span class='fl'>7.72</span>, <span class='fl'>1.76</span>),
-                  <span class='kw'>C14.01.09</span>  <span class='kw'>=</span>  <span class='fu'>c</span>(<span class='fl'>29.4</span>, <span class='fl'>67.6</span>, <span class='fl'>85.9</span>, <span class='fl'>43.6</span>, <span class='fl'>16.7</span>, <span class='fl'>14.9</span>))
-<span class='fu'>mmplot_selection</span>(<span class='no'>p</span>, <span class='no'>sel</span>)</div><div class='output co'>#&gt; <span class='error'>Error in mmplot_selection(p, sel): object 'p' not found</span></div><div class='input'>
-<span class='no'>dA</span> <span class='kw'>&lt;-</span> <span class='fu'>mmextract</span>(<span class='no'>d</span>, <span class='no'>sel</span>)</div><div class='output co'>#&gt; <span class='error'>Error in unlist(data$scaffolds[xname]): object 'd' not found</span></div><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    
-Soren M. Karst <a href='mailto:smk@bio.aau.dk'>smk@bio.aau.dk</a>
-
-Mads Albertsen <a href='mailto:MadsAlbertsen85@gmail.com'>MadsAlbertsen85@gmail.com</a>
+                </ul>
 
   </div>
 </div>

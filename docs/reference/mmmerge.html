@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Add data to any mmgenome object — mmadd • mmgenome2</title>
+<title>Merge mm object with more data — mmmerge • mmgenome2</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,31 +83,35 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add data to any mmgenome object</h1>
+    <h1>Merge mm object with more data</h1>
     </div>
 
     
-    <p>Add new dataframes to an excisting mmgenome object.</p>
+    <p>Internal function used in mmload. <code>y</code> can be a named vector, dataframe, or a list containing any of these types of data to be merged with <code>x</code>.</p>
     
 
-    <pre class="usage"><span class='fu'>mmadd</span>(<span class='no'>data</span>, <span class='no'>new</span>)</pre>
+    <pre class="usage"><span class='fu'>mmmerge</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>type</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>(required) The existing mmgenome object.</p></td>
+      <th>x</th>
+      <td><p>mm object</p></td>
     </tr>
     <tr>
-      <th>newdata</th>
-      <td><p>(required) The new dataframe that is to be added.</p></td>
+      <th>y</th>
+      <td><p>Object to merge with <code>x</code></p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>Character string defining the type of data being merged</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list with 2 dataframes: scaffolds and essential (if provided).</p>
+    <p>A tibble</p>
     
 
   </div>
@@ -118,12 +122,6 @@
       
       <li><a href="#value">Value</a></li>
           </ul>
-
-    <h2>Author</h2>
-    
-Soren M. Karst <a href='mailto:smk@bio.aau.dk'>smk@bio.aau.dk</a>
-
-Mads Albertsen <a href='mailto:MadsAlbertsen85@gmail.com'>MadsAlbertsen85@gmail.com</a>
 
   </div>
 </div>

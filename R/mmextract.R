@@ -5,13 +5,10 @@
 #' @param min_length 
 #' @param inverse 
 #'
-#' @return
 #' @export
 #' 
 #' @import sp
 #' @import dplyr
-#'
-#' @examples
 mmextract <-  function(mm, 
                        selection,
                        min_length = 0,

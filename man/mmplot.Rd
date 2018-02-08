@@ -2,10 +2,12 @@
 % Please edit documentation in R/mmplot.R
 \name{mmplot}
 \alias{mmplot}
-\title{mmplot}
+\title{Title}
 \usage{
-mmplot(mm, x, y, color_by = NULL, alpha = 0.1, fixed_size = NULL,
-  size_scale = 1, min_length = 0)
+mmplot(mm, x, y, min_length = 0, locator = FALSE, selection = NULL,
+  x_scale = NULL, x_limits = NULL, y_scale = NULL, y_limits = NULL,
+  color_by = NULL, alpha = 0.1, scaffold_labels = FALSE,
+  fixed_size = NULL, size_scale = 1, duplicate_genes = FALSE)
 }
 \arguments{
 \item{mm}{}
@@ -14,16 +16,32 @@ mmplot(mm, x, y, color_by = NULL, alpha = 0.1, fixed_size = NULL,
 
 \item{y}{}
 
+\item{min_length}{}
+
+\item{locator}{}
+
+\item{selection}{}
+
+\item{x_scale}{}
+
+\item{x_limits}{}
+
+\item{y_scale}{}
+
+\item{y_limits}{}
+
 \item{color_by}{}
 
 \item{alpha}{}
+
+\item{scaffold_labels}{}
 
 \item{fixed_size}{}
 
 \item{size_scale}{}
 
-\item{min_length}{}
+\item{duplicate_genes}{}
 }
 \description{
-mmplot
+Title
 }

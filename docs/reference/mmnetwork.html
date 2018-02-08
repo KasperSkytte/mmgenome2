@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Format ppsp data for use in mmgenome — mmformat_ppsp • mmgenome2</title>
+<title>Title — mmnetwork • mmgenome2</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,35 +83,74 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Format ppsp data for use in mmgenome</h1>
+    <h1>Title</h1>
     </div>
 
     
-    <p>Format PhyloPythiaS+ data for use in mmgenome</p>
+    <p>Title</p>
     
 
-    <pre class="usage"><span class='fu'>mmformat_ppsp</span>(<span class='no'>data</span>)</pre>
+    <pre class="usage"><span class='fu'>mmnetwork</span>(<span class='no'>mm</span>, <span class='no'>network</span>, <span class='kw'>n_connections</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>color_by</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>locator</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>selection</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>highlight_labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>highlight_color</span> <span class='kw'>=</span> <span class='st'>"darkred"</span>, <span class='kw'>color_scale_log10</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>links_scale</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>scaffold_labels</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>print_nolinks</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='no'>.mm_Random.seed</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>(required) The PP.pOUT file from PPSP.</p></td>
+      <th>mm</th>
+      <td></td>
     </tr>
     <tr>
-      <th>ranks</th>
-      <td><p>A vector of which phylogenetic ranks to keep (default: c("phylum", "class))</p></td>
+      <th>network</th>
+      <td></td>
     </tr>
     <tr>
-      <th>ranknames</th>
-      <td><p>A vector with names of the kept ranks.</p></td>
+      <th>n_connections</th>
+      <td></td>
+    </tr>
+    <tr>
+      <th>color_by</th>
+      <td></td>
+    </tr>
+    <tr>
+      <th>locator</th>
+      <td></td>
+    </tr>
+    <tr>
+      <th>selection</th>
+      <td></td>
+    </tr>
+    <tr>
+      <th>highlight_labels</th>
+      <td></td>
+    </tr>
+    <tr>
+      <th>highlight_color</th>
+      <td></td>
+    </tr>
+    <tr>
+      <th>color_scale_log10</th>
+      <td></td>
+    </tr>
+    <tr>
+      <th>links_scale</th>
+      <td></td>
+    </tr>
+    <tr>
+      <th>scaffold_labels</th>
+      <td></td>
+    </tr>
+    <tr>
+      <th>print_nolinks</th>
+      <td></td>
+    </tr>
+    <tr>
+      <th>seed</th>
+      <td></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A dataframe with cleaned PPSP data.</p>
     
 
   </div>
@@ -119,15 +158,7 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-          </ul>
-
-    <h2>Author</h2>
-    
-Soren M. Karst <a href='mailto:smk@bio.aau.dk'>smk@bio.aau.dk</a>
-
-Mads Albertsen <a href='mailto:MadsAlbertsen85@gmail.com'>MadsAlbertsen85@gmail.com</a>
+                </ul>
 
   </div>
 </div>
