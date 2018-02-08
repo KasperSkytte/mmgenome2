@@ -25,6 +25,7 @@ Imports:
     Rtsne.multicore,
     digest,
     clipr,
+    igraph,
     tibble,
     tidyr
 Remotes: github::RGLab/Rtsne.multicore
