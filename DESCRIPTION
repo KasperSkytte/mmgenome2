@@ -17,15 +17,15 @@ Depends:
     R (>= 3.4.3)
 Imports:
     sp,
-    gridExtra,
-    ggplot2,
-    knitr,
     grid,
+    ggplot2,
+    dplyr,
     vegan,
     Biostrings,
-    igraph,
-    reshape2,
-    dplyr,
-    Rtsne.multicore
+    Rtsne.multicore,
+    digest,
+    clipr,
+    tibble,
+    tidyr
 Remotes: github::RGLab/Rtsne.multicore
 RoxygenNote: 6.0.1
