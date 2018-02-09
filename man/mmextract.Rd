@@ -7,7 +7,7 @@
 mmextract(mm, selection, min_length = 0, inverse = FALSE)
 }
 \arguments{
-\item{mm}{}
+\item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}
 
 \item{selection}{}
 

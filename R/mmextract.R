@@ -1,6 +1,6 @@
 #' Title
 #'
-#' @param mm 
+#' @param mm (\emph{required}) A dataframe loaded with \code{\link{mmload}}.
 #' @param selection 
 #' @param min_length 
 #' @param inverse 

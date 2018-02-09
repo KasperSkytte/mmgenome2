@@ -1,6 +1,6 @@
-#' mmstats
+#' @title Print summary of basic statistics
 #'
-#' @param mm 
+#' @param mm (\emph{required}) A dataframe loaded with \code{\link{mmload}}.
 #' @export
 #'
 #' @import dplyr

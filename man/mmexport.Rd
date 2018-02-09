@@ -2,17 +2,17 @@
 % Please edit documentation in R/mmexport.R
 \name{mmexport}
 \alias{mmexport}
-\title{Title}
+\title{Export DNA sequences of selected scaffolds}
 \usage{
-mmexport(mm, assembly, file = "exported_assembly.fa")
+mmexport(mm, assembly = assembly, file = "exported_assembly.fa")
 }
 \arguments{
-\item{mm}{}
+\item{assembly}{(\emph{required}) The assembly to subset and export. Must be an object of class \code{"DNAStringSet"} as loaded with \code{\link[Biostrings]{readDNAStringSet}}.}
 
-\item{assembly}{}
+\item{file}{The file path and file name of the file to write the sequences to. (\emph{Default: } \code{"exported_assembly.fa"})}
 
-\item{file}{}
+\item{scaffolds}{(\emph{required}) Either a vector of scaffold names or a dataframe loaded with \code{\link{mmload}} containing the scaffolds to extract from the \code{assembly}.}
 }
 \description{
-Title
+Writes the DNA sequences of a set of scaffolds from the assembly to a FASTA file.
 }

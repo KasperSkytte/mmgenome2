@@ -2,9 +2,11 @@
 
 export(mmexport)
 export(mmextract)
+export(mmextract_network)
 export(mmload)
 export(mmnetwork)
 export(mmplot)
+export(mmplot_pairs)
 export(mmstats)
 import(Biostrings)
 import(Rtsne.multicore)

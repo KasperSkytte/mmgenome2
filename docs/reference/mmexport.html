@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Title — mmexport • mmgenome2</title>
+<title>Export DNA sequences of selected scaffolds — mmexport • mmgenome2</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,29 +83,29 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Title</h1>
+    <h1>Export DNA sequences of selected scaffolds</h1>
     </div>
 
     
-    <p>Title</p>
+    <p>Writes the DNA sequences of a set of scaffolds from the assembly to a FASTA file.</p>
     
 
-    <pre class="usage"><span class='fu'>mmexport</span>(<span class='no'>mm</span>, <span class='no'>assembly</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"exported_assembly.fa"</span>)</pre>
+    <pre class="usage"><span class='fu'>mmexport</span>(<span class='no'>mm</span>, <span class='kw'>assembly</span> <span class='kw'>=</span> <span class='no'>assembly</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"exported_assembly.fa"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>mm</th>
-      <td></td>
-    </tr>
-    <tr>
       <th>assembly</th>
-      <td></td>
+      <td><p>(<em>required</em>) The assembly to subset and export. Must be an object of class <code>"DNAStringSet"</code> as loaded with <code><a href='http://www.rdocumentation.org/packages/Biostrings/topics/XStringSet-io'>readDNAStringSet</a></code>.</p></td>
     </tr>
     <tr>
       <th>file</th>
-      <td></td>
+      <td><p>The file path and file name of the file to write the sequences to. (<em>Default: </em> <code>"exported_assembly.fa"</code>)</p></td>
+    </tr>
+    <tr>
+      <th>scaffolds</th>
+      <td><p>(<em>required</em>) Either a vector of scaffold names or a dataframe loaded with <code><a href='mmload.html'>mmload</a></code> containing the scaffolds to extract from the <code>assembly</code>.</p></td>
     </tr>
     </table>
     
@@ -126,7 +126,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

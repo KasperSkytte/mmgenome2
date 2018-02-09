@@ -1,21 +1,21 @@
-#' Title
+#' @title plot
 #'
-#' @param mm 
-#' @param x 
-#' @param y 
-#' @param min_length 
-#' @param locator 
-#' @param selection 
-#' @param x_scale 
-#' @param x_limits 
-#' @param y_scale 
-#' @param y_limits 
-#' @param color_by 
-#' @param alpha 
-#' @param scaffold_labels 
-#' @param fixed_size 
-#' @param size_scale 
-#' @param duplicate_genes 
+#' @param mm (\emph{required}) A dataframe loaded with \code{\link{mmload}}.
+#' @param x (\emph{required}) The variable from \code{mm} to plot on the first axis.
+#' @param y (\emph{required}) The variable from \code{mm} to plot on the second axis.
+#' @param min_length Remove scaffolds with a length at or below this size before plotting. (\emph{Default: } \code{0}) 
+#' @param locator (\emph{Logical}) . (\emph{Default: } \code{FALSE})
+#' @param selection A 2-column dataframe with the x and y coordinates of points with which to draw a polygon onto the plot to highlight selected regions.
+#' @param x_scale Apply a log10-scale (\code{"log10"}) or a square-root scale \code{"sqrt"} to the x axis. (\emph{Default: } \code{NULL})
+#' @param x_limits Axis limits of the x axis. (\emph{Default: } \code{NULL})
+#' @param y_scale Apply a log10-scale (\code{"log10"}) or a square-root scale \code{"sqrt"} to the y axis. (\emph{Default: } \code{NULL})
+#' @param y_limits Axis limits of the y axis. (\emph{Default: } \code{NULL})
+#' @param color_by  (\emph{Default: } \code{NULL})
+#' @param alpha  (\emph{Default: } \code{0.1})
+#' @param scaffold_labels (\emph{Logical})  (\emph{Default: } \code{FALSE})
+#' @param fixed_size  (\emph{Default: } \code{NULL})
+#' @param size_scale  (\emph{Default: } \code{1})
+#' @param duplicate_genes (\emph{Logical})  (\emph{Default: } \code{FALSE})
 #'
 #' @export
 #' 

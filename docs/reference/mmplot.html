@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Title — mmplot • mmgenome2</title>
+<title>plot — mmplot • mmgenome2</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,12 +83,10 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Title</h1>
+    <h1>plot</h1>
     </div>
 
-    
-    <p>Title</p>
-    
+
 
     <pre class="usage"><span class='fu'>mmplot</span>(<span class='no'>mm</span>, <span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>min_length</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>locator</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>selection</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>x_scale</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>x_limits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y_scale</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y_limits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -100,67 +98,67 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>mm</th>
-      <td></td>
+      <td><p>(<em>required</em>) A dataframe loaded with <code><a href='mmload.html'>mmload</a></code>.</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td></td>
+      <td><p>(<em>required</em>) The variable from <code>mm</code> to plot on the first axis.</p></td>
     </tr>
     <tr>
       <th>y</th>
-      <td></td>
+      <td><p>(<em>required</em>) The variable from <code>mm</code> to plot on the second axis.</p></td>
     </tr>
     <tr>
       <th>min_length</th>
-      <td></td>
+      <td><p>Remove scaffolds with a length at or below this size before plotting. (<em>Default: </em> <code>0</code>)</p></td>
     </tr>
     <tr>
       <th>locator</th>
-      <td></td>
+      <td><p>(<em>Logical</em>) . (<em>Default: </em> <code>FALSE</code>)</p></td>
     </tr>
     <tr>
       <th>selection</th>
-      <td></td>
+      <td><p>A 2-column dataframe with the x and y coordinates of points with which to draw a polygon onto the plot to highlight selected regions.</p></td>
     </tr>
     <tr>
       <th>x_scale</th>
-      <td></td>
+      <td><p>Apply a log10-scale (<code>"log10"</code>) or a square-root scale <code>"sqrt"</code> to the x axis. (<em>Default: </em> <code>NULL</code>)</p></td>
     </tr>
     <tr>
       <th>x_limits</th>
-      <td></td>
+      <td><p>Axis limits of the x axis. (<em>Default: </em> <code>NULL</code>)</p></td>
     </tr>
     <tr>
       <th>y_scale</th>
-      <td></td>
+      <td><p>Apply a log10-scale (<code>"log10"</code>) or a square-root scale <code>"sqrt"</code> to the y axis. (<em>Default: </em> <code>NULL</code>)</p></td>
     </tr>
     <tr>
       <th>y_limits</th>
-      <td></td>
+      <td><p>Axis limits of the y axis. (<em>Default: </em> <code>NULL</code>)</p></td>
     </tr>
     <tr>
       <th>color_by</th>
-      <td></td>
+      <td><p>(<em>Default: </em> <code>NULL</code>)</p></td>
     </tr>
     <tr>
       <th>alpha</th>
-      <td></td>
+      <td><p>(<em>Default: </em> <code>0.1</code>)</p></td>
     </tr>
     <tr>
       <th>scaffold_labels</th>
-      <td></td>
+      <td><p>(<em>Logical</em>)  (<em>Default: </em> <code>FALSE</code>)</p></td>
     </tr>
     <tr>
       <th>fixed_size</th>
-      <td></td>
+      <td><p>(<em>Default: </em> <code>NULL</code>)</p></td>
     </tr>
     <tr>
       <th>size_scale</th>
-      <td></td>
+      <td><p>(<em>Default: </em> <code>1</code>)</p></td>
     </tr>
     <tr>
       <th>duplicate_genes</th>
-      <td></td>
+      <td><p>(<em>Logical</em>)  (<em>Default: </em> <code>FALSE</code>)</p></td>
     </tr>
     </table>
     
@@ -181,7 +179,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

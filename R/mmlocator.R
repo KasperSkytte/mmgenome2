@@ -11,7 +11,6 @@
 #' @import ggplot2
 #' @import grid
 #' @import clipr
-#'
 mmlocator <- function(plot, x_scale = NULL, y_scale = NULL) {
   #build ggplot object to be able to extract axis ranges, and show the plot
   suppressWarnings(ggobj <- ggplot2::ggplot_build(plot))

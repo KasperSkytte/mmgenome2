@@ -2,7 +2,7 @@
 % Please edit documentation in R/mmplot.R
 \name{mmplot}
 \alias{mmplot}
-\title{Title}
+\title{plot}
 \usage{
 mmplot(mm, x, y, min_length = 0, locator = FALSE, selection = NULL,
   x_scale = NULL, x_limits = NULL, y_scale = NULL, y_limits = NULL,
@@ -10,38 +10,35 @@ mmplot(mm, x, y, min_length = 0, locator = FALSE, selection = NULL,
   fixed_size = NULL, size_scale = 1, duplicate_genes = FALSE)
 }
 \arguments{
-\item{mm}{}
+\item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}
 
-\item{x}{}
+\item{x}{(\emph{required}) The variable from \code{mm} to plot on the first axis.}
 
-\item{y}{}
+\item{y}{(\emph{required}) The variable from \code{mm} to plot on the second axis.}
 
-\item{min_length}{}
+\item{min_length}{Remove scaffolds with a length at or below this size before plotting. (\emph{Default: } \code{0})}
 
-\item{locator}{}
+\item{locator}{(\emph{Logical}) . (\emph{Default: } \code{FALSE})}
 
-\item{selection}{}
+\item{selection}{A 2-column dataframe with the x and y coordinates of points with which to draw a polygon onto the plot to highlight selected regions.}
 
-\item{x_scale}{}
+\item{x_scale}{Apply a log10-scale (\code{"log10"}) or a square-root scale \code{"sqrt"} to the x axis. (\emph{Default: } \code{NULL})}
 
-\item{x_limits}{}
+\item{x_limits}{Axis limits of the x axis. (\emph{Default: } \code{NULL})}
 
-\item{y_scale}{}
+\item{y_scale}{Apply a log10-scale (\code{"log10"}) or a square-root scale \code{"sqrt"} to the y axis. (\emph{Default: } \code{NULL})}
 
-\item{y_limits}{}
+\item{y_limits}{Axis limits of the y axis. (\emph{Default: } \code{NULL})}
 
-\item{color_by}{}
+\item{color_by}{(\emph{Default: } \code{NULL})}
 
-\item{alpha}{}
+\item{alpha}{(\emph{Default: } \code{0.1})}
 
-\item{scaffold_labels}{}
+\item{scaffold_labels}{(\emph{Logical})  (\emph{Default: } \code{FALSE})}
 
-\item{fixed_size}{}
+\item{fixed_size}{(\emph{Default: } \code{NULL})}
 
-\item{size_scale}{}
+\item{size_scale}{(\emph{Default: } \code{1})}
 
-\item{duplicate_genes}{}
-}
-\description{
-Title
+\item{duplicate_genes}{(\emph{Logical})  (\emph{Default: } \code{FALSE})}
 }

@@ -10,7 +10,7 @@ mmnetwork(mm, network, n_connections = 2, color_by = NULL,
   scaffold_labels = FALSE, print_nolinks = FALSE, seed = .mm_Random.seed)
 }
 \arguments{
-\item{mm}{}
+\item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}
 
 \item{network}{}
 

@@ -2,13 +2,10 @@
 % Please edit documentation in R/mmstats.R
 \name{mmstats}
 \alias{mmstats}
-\title{mmstats}
+\title{Print summary of basic statistics}
 \usage{
 mmstats(mm)
 }
 \arguments{
-\item{mm}{}
-}
-\description{
-mmstats
+\item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}
 }

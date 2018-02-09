@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Title — mmload • mmgenome2</title>
+<title>Load and combine data for use with other mmgenome2 functions — mmload • mmgenome2</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,15 +83,13 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Title</h1>
+    <h1>Load and combine data for use with other mmgenome2 functions</h1>
     </div>
 
-    
-    <p>Title</p>
-    
 
-    <pre class="usage"><span class='fu'>mmload</span>(<span class='no'>assembly</span>, <span class='no'>coverage</span>, <span class='kw'>essential_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>kmer_pca</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>kmer_BH_tSNE</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>taxonomy</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>additional</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+
+    <pre class="usage"><span class='fu'>mmload</span>(<span class='no'>assembly</span>, <span class='no'>coverage</span>, <span class='kw'>essential_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>taxonomy</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>additional</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>kmer_pca</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>kmer_BH_tSNE</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -99,41 +97,49 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>assembly</th>
-      <td></td>
+      <td><p>(<em>required</em>) A character string with the path to the assembly FASTA file, or the assembly as already loaded with <code><a href='http://www.rdocumentation.org/packages/Biostrings/topics/XStringSet-io'>readDNAStringSet</a></code>.</p></td>
     </tr>
     <tr>
       <th>coverage</th>
-      <td></td>
+      <td><p>(<em>required</em>) A <code>vector</code>, <code>dataframe</code>, or a <code>list</code> hereof containing coverage of each scaffold. The prefix <code>"cov_"</code> will be appended to all coverage column names in the output.</p><dl class='dl-horizontal'>
+  <dt><code>vector</code></dt><dd><p>If provided as a vector, the elements of the vector must be named by the scaffold names exactly matching those of the assembly.</p></dd>
+  <dt><code>dataframe</code></dt><dd><p>If provided as a dataframe, the first column must contain the scaffold names exactly matching those of the assembly, and any additional column(s) contain coverage of each scaffold.</p></dd>
+  <dt><code>list</code></dt><dd><p>If provided as a list, it must contain any number of <code>vector</code> or <code>dataframe</code> objects as described above.</p></dd>
+</dl></td>
     </tr>
     <tr>
       <th>essential_genes</th>
-      <td></td>
-    </tr>
-    <tr>
-      <th>kmer_pca</th>
-      <td></td>
-    </tr>
-    <tr>
-      <th>kmer_BH_tSNE</th>
-      <td></td>
+      <td><p>A 2-column dataframe with scaffold names in the first column and gene ID's in the second. Can contain duplicates. (<em>Default: </em> <code>NULL</code>)</p></td>
     </tr>
     <tr>
       <th>taxonomy</th>
-      <td></td>
+      <td><p>A dataframe containing taxonomy assigned to the scaffolds. The first column must contain the scaffold names. (<em>Default: </em> <code>NULL</code>)</p></td>
     </tr>
     <tr>
       <th>additional</th>
-      <td></td>
+      <td><p>A dataframe containing any additional data. The first column must contain the scaffold names. (<em>Default: </em> <code>NULL</code>)</p></td>
+    </tr>
+    <tr>
+      <th>kmer_pca</th>
+      <td><p>(<em>Logical</em>) Perform Principal Components Analysis of tetranucleotide frequencies of each scaffold and merge the scores of the 3 most significant axes. (<em>Default: </em> <code>FALSE</code>)</p></td>
+    </tr>
+    <tr>
+      <th>kmer_BH_tSNE</th>
+      <td><p>(<em>Logical</em>) Calculate Barnes-Hut t-Distributed Stochastic Neighbor Embedding (B-H t-SNE) representations of tetranucleotide frequencies using <code><a href='http://www.rdocumentation.org/packages/Rtsne.multicore/topics/Rtsne.multicore'>Rtsne.multicore</a></code> and merge the result. Additional arguments may be required for success, refer to the documentation of <code><a href='http://www.rdocumentation.org/packages/Rtsne.multicore/topics/Rtsne.multicore'>Rtsne.multicore</a></code>. (<em>Default: </em> <code>FALSE</code>)</p></td>
     </tr>
     <tr>
       <th>verbose</th>
-      <td></td>
+      <td><p>(<em>Logical</em>) Whether to print status messages during the loading process. (<em>Default: </em> <code>TRUE</code>)</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td></td>
+      <td><p>Additional arguments are passed on to <code><a href='http://www.rdocumentation.org/packages/Rtsne.multicore/topics/Rtsne.multicore'>Rtsne.multicore</a></code>.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A dataframe (tibble) compatible with other mmgenome2 functions.</p>
     
 
   </div>
@@ -141,7 +147,9 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#value">Value</a></li>
+          </ul>
 
   </div>
 </div>
@@ -152,7 +160,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
