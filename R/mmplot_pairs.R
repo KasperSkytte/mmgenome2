@@ -1,28 +1,18 @@
-#' Generates a ggplot2 style pairs plot
+#' Title
 #'
-#' Generates a ggplot2 style pairs plot.
+#' @param mm 
+#' @param variables 
+#' @param textsize 
+#' @param log 
 #'
-#' @usage mmplot_pairs(mm, variables)
-#'
-#' @param mm (required) The dataframe to plot.
-#' @param variables (required) The vaiables to plot as a vector.
-#' @param textsize Size of the legend text (deafult = 8).
-#' @param ... Arguments passed on to mmplot()
-#' 
-#' @return A pairs plot object.
-#' 
+#' @return
 #' @export
-#' @author Soren M. Karst \email{smk@@bio.aau.dk}
-#' @author Mads Albertsen \email{MadsAlbertsen85@@gmail.com}
 #' 
+#' @import ggplot2
+#' @import gridExtra
+#'
 #' @examples
-#' data(rocco)
-#' 
-#' mmplot_pairs(mm = d, variables = c("C13.12.03", "C14.01.09", "C13.11.25", "gc", "PC2"), color = "essential", log = c("C13.12.03", "C14.01.09", "C13.11.25"), minlength = 10000)
-#' 
-#' 
-
-mmplot_pairs <- function(mm, variables, textsize = 8, log = NULL, ...){  
+mmplot_pairs <- function(mm, variables, textsize = 8, log = NULL){  
   
   ## Make a blank plot
   emp <- data.frame(x = 0, y = 0)

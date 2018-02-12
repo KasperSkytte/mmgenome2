@@ -2,7 +2,7 @@
 #'
 #' @param mm (\emph{required}) A dataframe loaded with \code{\link{mmload}}.
 #' @param network 
-#' @param n_connections 
+#' @param min_connections 
 #' @param color_by 
 #' @param locator 
 #' @param selection 
@@ -22,7 +22,7 @@
 #' @import sp
 mmnetwork <- function(mm,
                       network, 
-                      n_connections = 2,
+                      min_connections = 2,
                       color_by = NULL,
                       locator = FALSE,
                       selection = NULL,
@@ -38,7 +38,7 @@ mmnetwork <- function(mm,
     stop("Using the locator and highlighting a selection at the same time is not supported.")
   
   ## Subset the network
-  snetwork <- dplyr::filter(network, network[[1]] %in% mm[[1]] & network[[2]] %in% mm[[1]] & network[["connections"]] >= n_connections)
+  snetwork <- dplyr::filter(network, network[[1]] %in% mm[[1]] & network[[2]] %in% mm[[1]] & network[["connections"]] >= min_connections)
   
   ## Convert to graph 
   g <- igraph::graph.data.frame(snetwork, directed = F)
