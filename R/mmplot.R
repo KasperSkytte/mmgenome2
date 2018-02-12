@@ -106,6 +106,18 @@ mmplot <- function(mm,
   #add scaffold names
   if(isTRUE(scaffold_labels)) {
     p <- p + geom_text(label = mm[[1]], size = 4, color = "black")
+  } else if(is.vector(scaffold_labels) | is.data.frame(scaffold_labels)) {
+    if(is.data.frame(scaffold_labels)) {
+      scaffold_labels <- as.character(scaffold_labels[[1]])
+    }
+    labels_data <- subset(mm, mm[[1]] %in% as.character(scaffold_labels))
+    p <- p + geom_text(data = labels_data, 
+                       aes_(x = labels_data[[x]], 
+                            y = labels_data[[y]],
+                            label = labels_data[[1]]), 
+                       size = 4, 
+                       color = "black",
+                       inherit.aes = FALSE)
   }
   
   #axis scales and limits

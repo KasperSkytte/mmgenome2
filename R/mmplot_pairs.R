@@ -8,8 +8,8 @@
 #' @return
 #' @export
 #' 
-#' @import ggplot2
 #' @import gridExtra
+#' @import ggplot2
 #'
 #' @examples
 mmplot_pairs <- function(mm, variables, textsize = 8, log = NULL){  
@@ -19,7 +19,7 @@ mmplot_pairs <- function(mm, variables, textsize = 8, log = NULL){
   
   pblank <-  ggplot(emp, aes(x,y)) + 
     geom_blank() +
-    theme_bw() +z
+    theme_bw() +
     theme(panel.grid.major=element_blank(), 
           panel.grid.minor=element_blank(), 
           axis.text.x=element_blank(),

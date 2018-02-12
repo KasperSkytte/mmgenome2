@@ -63,11 +63,10 @@ mmload <- function(assembly,
   ##### Create base mm object #####
   if(isTRUE(verbose))
     message("Calculating GC content...")
-  mm <- tibble::tibble(scaffold = names(assembly),
-                       length = BiocGenerics::width(assembly),
+  mm <- tibble::tibble(scaffold = as.character(names(assembly)),
+                       length = as.numeric(BiocGenerics::width(assembly)),
                        gc = round(as.numeric(Biostrings::letterFrequency(assembly, letters = c("CG"), as.prob=T))*100, digits = 2)
   )
-  mm[1] <- lapply(mm[1], as.character)
   
   ##### Coverage #####
   if(isTRUE(verbose))

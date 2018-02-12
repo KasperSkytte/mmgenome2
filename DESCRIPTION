@@ -19,6 +19,7 @@ Imports:
     sp,
     grid,
     ggplot2,
+    gridExtra,
     dplyr,
     vegan,
     Biostrings,
