@@ -14,17 +14,19 @@ reference:
     desc: Functions for loading, exporting and subsetting the data.
     contents:
     - mmload
-    - mmexport
     - mmstats
+    - mmexport
   - title: Metagenome plotting and extraction
     desc: Functions for plotting and extracting scaffolds
     contents: 
     - mmplot
     - mmnetwork
+    - mmplot_pairs
   - title: Extracting/subsetting
     desc: Extracting
     contents: 
     - mmextract
+    - mmexpand_network
     
 navbar:
   title: "mmgenome2"

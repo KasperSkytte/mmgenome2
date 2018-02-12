@@ -1,4 +1,4 @@
-#' Title
+#' Find 
 #'
 #' @param scaffolds 
 #' @param network 
@@ -6,18 +6,16 @@
 #' @param min_connections 
 #' @param include_connections 
 #'
-#' @return
 #' @export
 #' 
 #' @import igraph
 #' @import dplyr
 #'
-#' @examples
-mmextract_network <- function(scaffolds, 
-                              network,
-                              original_data,
-                              min_connections = 2,
-                              include_connections = "direct") {
+mmexpand_network <- function(scaffolds, 
+                             network,
+                             original_data,
+                             min_connections = 2,
+                             include_connections = "direct") {
   if(is.data.frame(scaffolds)) {
     scaffolds <- scaffolds[[1]]
   } else if(!is.vector(scaffolds) | !is.data.frame(scaffolds)) {

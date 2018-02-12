@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>plot — mmplot • mmgenome2</title>
+<title>Visualise metagenomes in various ways — mmplot • mmgenome2</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,15 +83,15 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>plot</h1>
+    <h1>Visualise metagenomes in various ways</h1>
     </div>
 
 
 
-    <pre class="usage"><span class='fu'>mmplot</span>(<span class='no'>mm</span>, <span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>min_length</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>locator</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>selection</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>x_scale</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>x_limits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y_scale</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y_limits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>color_by</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>scaffold_labels</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>fixed_size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>size_scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>duplicate_genes</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>mmplot</span>(<span class='no'>mm</span>, <span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>min_length</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>color_by</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>locator</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>selection</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>x_scale</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>x_limits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y_scale</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>y_limits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>scaffold_labels</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>fixed_size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>size_scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>shared_genes</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -110,19 +110,23 @@
     </tr>
     <tr>
       <th>min_length</th>
-      <td><p>Remove scaffolds with a length at or below this size before plotting. (<em>Default: </em> <code>0</code>)</p></td>
+      <td><p>Remove scaffolds with a length at or below this value before plotting. (<em>Default: </em> <code>0</code>)</p></td>
+    </tr>
+    <tr>
+      <th>color_by</th>
+      <td><p>Color the scaffolds by a variable in <code>mm</code>. (<em>Default: </em> <code>NULL</code>)</p></td>
     </tr>
     <tr>
       <th>locator</th>
-      <td><p>(<em>Logical</em>) . (<em>Default: </em> <code>FALSE</code>)</p></td>
+      <td><p>(<em>Logical</em>) When enabled (set to <code>TRUE</code>), left-clicks in the plot are captured and the exact x/y-coordinates of the mouse clicks are returned. These coordinates can be used to highlight a selection of scaffolds in the plot, and also be used with <code><a href='mmextract.html'>mmextract</a></code> to extract all scaffolds within the selection from the data. (<em>Default: </em> <code>FALSE</code>)</p></td>
     </tr>
     <tr>
       <th>selection</th>
-      <td><p>A 2-column dataframe with the x and y coordinates of points with which to draw a polygon onto the plot to highlight selected regions.</p></td>
+      <td><p>A 2-column dataframe with the x and y coordinates of points with which to draw a polygon onto the plot to highlight a selected region. Can be obtained by using the locator feature (by <code>locator = TRUE</code>). (<em>Default: </em> <code>NULL</code>)</p></td>
     </tr>
     <tr>
       <th>x_scale</th>
-      <td><p>Apply a log10-scale (<code>"log10"</code>) or a square-root scale <code>"sqrt"</code> to the x axis. (<em>Default: </em> <code>NULL</code>)</p></td>
+      <td><p>Log10-scale (<code>"log10"</code>) or square-root scale <code>"sqrt"</code> the x axis. (<em>Default: </em> <code>NULL</code>)</p></td>
     </tr>
     <tr>
       <th>x_limits</th>
@@ -130,35 +134,31 @@
     </tr>
     <tr>
       <th>y_scale</th>
-      <td><p>Apply a log10-scale (<code>"log10"</code>) or a square-root scale <code>"sqrt"</code> to the y axis. (<em>Default: </em> <code>NULL</code>)</p></td>
+      <td><p>Log10-scale (<code>"log10"</code>) or square-root scale <code>"sqrt"</code> the y axis. (<em>Default: </em> <code>NULL</code>)</p></td>
     </tr>
     <tr>
       <th>y_limits</th>
       <td><p>Axis limits of the y axis. (<em>Default: </em> <code>NULL</code>)</p></td>
     </tr>
     <tr>
-      <th>color_by</th>
-      <td><p>(<em>Default: </em> <code>NULL</code>)</p></td>
-    </tr>
-    <tr>
       <th>alpha</th>
-      <td><p>(<em>Default: </em> <code>0.1</code>)</p></td>
+      <td><p>The transparancy of the scaffold points, where 0 is invisible and 1 is opaque. (<em>Default: </em> <code>0.1</code>)</p></td>
     </tr>
     <tr>
       <th>scaffold_labels</th>
-      <td><p>(<em>Logical</em>)  (<em>Default: </em> <code>FALSE</code>)</p></td>
+      <td><p>Add labels of a selection of scaffolds by providing either a character vector of scaffold names, or a dataframe with scaffold names in the first column. If set to <code>TRUE</code> then <em>all</em> scaffolds will be labelled. (<em>Default: </em> <code>FALSE</code>)</p></td>
     </tr>
     <tr>
       <th>fixed_size</th>
-      <td><p>(<em>Default: </em> <code>NULL</code>)</p></td>
+      <td><p>A fixed size for all scaffolds if set. If <code>NULL</code> then the scaffolds are scaled by length. (<em>Default: </em> <code>NULL</code>)</p></td>
     </tr>
     <tr>
       <th>size_scale</th>
-      <td><p>(<em>Default: </em> <code>1</code>)</p></td>
+      <td><p>A factor to scale the sizes of the scaffolds plotted. Only applies when <code>fixed_size</code> is set to <code>NULL</code> and the scaffolds are scaled by length. (<em>Default: </em> <code>1</code>)</p></td>
     </tr>
     <tr>
-      <th>duplicate_genes</th>
-      <td><p>(<em>Logical</em>)  (<em>Default: </em> <code>FALSE</code>)</p></td>
+      <th>shared_genes</th>
+      <td><p>(<em>Logical</em>) If <code>TRUE</code>, lines will be drawn between scaffolds with any shared gene(s). (<em>Default: </em> <code>FALSE</code>)</p></td>
     </tr>
     </table>
     

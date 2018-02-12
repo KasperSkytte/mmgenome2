@@ -59,182 +59,16 @@
       
       </header><div class="row">
   <div class="contents col-md-9">
-    <div id="mmgenome" class="section level1">
+    <div id="mmgenome2" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#mmgenome" class="anchor"></a>mmgenome</h1></div>
-<p>mmgenome: Tools for extracting genomes from metagenomes</p>
-<div id="changelog" class="section level2">
+<a href="#mmgenome2" class="anchor"></a>mmgenome2</h1></div>
+<div id="installation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changelog" class="anchor"></a>Changelog</h2>
-<div id="section" class="section level3">
-<h3 class="hasAnchor">
-<a href="#section" class="anchor"></a>0.7.1</h3>
-<div id="enhancements" class="section level4">
-<h4 class="hasAnchor">
-<a href="#enhancements" class="anchor"></a>Enhancements</h4>
-<ul>
-<li>mmstats: Now icludes an option to compare the coverage as a fraction of the original dataset (Kirk3gaard).</li>
-</ul>
-</div>
-</div>
-<div id="section-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#section-1" class="anchor"></a>0.7.0</h3>
-<div id="bugfix" class="section level4">
-<h4 class="hasAnchor">
-<a href="#bugfix" class="anchor"></a>Bugfix</h4>
-<ul>
-<li>mmplot_locator: Updated to handle the new format of ggplot2 objects (&gt;v. 1.0.0).</li>
-</ul>
-</div>
-</div>
-<div id="section-2" class="section level3">
-<h3 class="hasAnchor">
-<a href="#section-2" class="anchor"></a>0.6.3</h3>
-<div id="bugfix-1" class="section level4">
-<h4 class="hasAnchor">
-<a href="#bugfix-1" class="anchor"></a>Bugfix</h4>
-<ul>
-<li>mmplot_network: Updated to the newest version of igraph. Igraph changed function and variable names.</li>
-</ul>
-</div>
-</div>
-<div id="section-3" class="section level3">
-<h3 class="hasAnchor">
-<a href="#section-3" class="anchor"></a>0.6.2</h3>
-<div id="enhancements-1" class="section level4">
-<h4 class="hasAnchor">
-<a href="#enhancements-1" class="anchor"></a>Enhancements</h4>
-<ul>
-<li>mmplot: Now includes an option, <code>factor.shape</code> to color factors with solid shapes instead.</li>
-<li>mmformat_esom: Formats ESOM data from databionics to a simple dataframe which can be loaded in mmgenome.</li>
-<li>mmformat_ppsp: Formats classification data from PhyloPythiaS+ to a simple dataframe which can be loaded in mmgenome.</li>
-<li>mmadd: Adds a dataframe to an existing mmgenome object.</li>
-</ul>
-</div>
-</div>
-<div id="section-4" class="section level3">
-<h3 class="hasAnchor">
-<a href="#section-4" class="anchor"></a>0.6.1</h3>
-<div id="enhancements-2" class="section level4">
-<h4 class="hasAnchor">
-<a href="#enhancements-2" class="anchor"></a>Enhancements</h4>
-<ul>
-<li>mmplot: Now includes an option to overlay a ESOM contour plot if ESOM data have been loaded.</li>
-</ul>
-</div>
-</div>
-<div id="section-5" class="section level3">
-<h3 class="hasAnchor">
-<a href="#section-5" class="anchor"></a>0.6.0</h3>
-<div id="bugfix-2" class="section level4">
-<h4 class="hasAnchor">
-<a href="#bugfix-2" class="anchor"></a>Bugfix</h4>
-<ul>
-<li>mmsubset: The subsetting of essential genes was wrong, which affected the mmstats calculations. Fixed thanks to @russianconcussion.</li>
-</ul>
-</div>
-</div>
-<div id="section-6" class="section level3">
-<h3 class="hasAnchor">
-<a href="#section-6" class="anchor"></a>0.6.0</h3>
-<div id="enhancements-3" class="section level4">
-<h4 class="hasAnchor">
-<a href="#enhancements-3" class="anchor"></a>Enhancements</h4>
-<ul>
-<li>mmplot_network: new option to scale line width of links between scaffolds by a constant (<code>scale.links</code>).</li>
-</ul>
-</div>
-</div>
-<div id="section-7" class="section level3">
-<h3 class="hasAnchor">
-<a href="#section-7" class="anchor"></a>0.5.0</h3>
-<div id="enhancements-4" class="section level4">
-<h4 class="hasAnchor">
-<a href="#enhancements-4" class="anchor"></a>Enhancements</h4>
-<ul>
-<li>mmsubset: new function to subset based on normal subset syntax. E.g. <code>gc &gt; 50</code>.</li>
-</ul>
-</div>
-<div id="bugfixes" class="section level4">
-<h4 class="hasAnchor">
-<a href="#bugfixes" class="anchor"></a>Bugfixes</h4>
-<ul>
-<li>mmstats: Now rounding coverages to 2 decimals instead of one (Kirk3gaard).</li>
-</ul>
-</div>
-</div>
-<div id="section-8" class="section level3">
-<h3 class="hasAnchor">
-<a href="#section-8" class="anchor"></a>0.4.3</h3>
-<ul>
-<li>mmstats: Error in summing scaffold lengths of large datasets due to integer overflow. Handled by converting integer to numeric (skarst).</li>
-</ul>
-</div>
-<div id="section-9" class="section level3">
-<h3 class="hasAnchor">
-<a href="#section-9" class="anchor"></a>0.4.2</h3>
-<ul>
-<li>mmplot: log.x and log.y is now false by default in order to function in mmplot_pairs (skarst).</li>
-</ul>
-</div>
-<div id="section-10" class="section level3">
-<h3 class="hasAnchor">
-<a href="#section-10" class="anchor"></a>0.4.1</h3>
-<ul>
-<li>mmload: Failed to load data if coverage was missing for some scaffolds. Fixed thanks to Matthew Neave (neavemj).</li>
-</ul>
-</div>
-<div id="section-11" class="section level3">
-<h3 class="hasAnchor">
-<a href="#section-11" class="anchor"></a>0.4.0</h3>
-<ul>
-<li>mmplot_network: It’s now possible to to highlight scaffolds.</li>
-<li>General: Information on essential genes is no longer required.</li>
-</ul>
-</div>
-<div id="section-12" class="section level3">
-<h3 class="hasAnchor">
-<a href="#section-12" class="anchor"></a>0.3.1</h3>
-<div id="bugfixes-1" class="section level4">
-<h4 class="hasAnchor">
-<a href="#bugfixes-1" class="anchor"></a>Bugfixes</h4>
-<ul>
-<li>mmload: Column names of additional datasets did not load as intended.</li>
-</ul>
-</div>
-<div id="enhancements-5" class="section level4">
-<h4 class="hasAnchor">
-<a href="#enhancements-5" class="anchor"></a>Enhancements</h4>
-<ul>
-<li>mmplot: The variable “point.size” can be used to scale the points by a constant instead of the scaffold length.</li>
-<li>mmimport: New simple function to handle import of the data through a Rmarkdown file.</li>
-</ul>
-</div>
-</div>
-<div id="section-13" class="section level3">
-<h3 class="hasAnchor">
-<a href="#section-13" class="anchor"></a>0.3.0</h3>
-<div id="enhancements-6" class="section level4">
-<h4 class="hasAnchor">
-<a href="#enhancements-6" class="anchor"></a>Enhancements</h4>
-<ul>
-<li>mmplot: It’s now possible to highlight subsets. Either by just suppling the subset dataset or using the names of the scaffolds.</li>
-<li>mmplot: “color” support the argument “none” for coloring all scaffolds black.</li>
-<li>mmextract: The function now supports to “include” or “exclude” scaffolds based on a list of scaffold names.</li>
-</ul>
-</div>
-</div>
-<div id="section-14" class="section level3">
-<h3 class="hasAnchor">
-<a href="#section-14" class="anchor"></a>0.2.0</h3>
-<p>First stable release of the mmgenome package</p>
-</div>
-<div id="section-15" class="section level3">
-<h3 class="hasAnchor">
-<a href="#section-15" class="anchor"></a>0.1.0</h3>
-<p>Initial release of the mmgenome package</p>
-</div>
+<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span>(<span class="op">!</span><span class="kw">require</span>(remotes)) {
+  <span class="kw">install.packages</span>(<span class="st">"remotes"</span>)
+}
+remotes<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"MadsAlbertsen/mmgenome2"</span>)</code></pre></div>
 </div>
 </div>
   </div>
@@ -246,13 +80,17 @@
 </li>
 </ul>
 <h2>License</h2>
-<p><a href="https://www.r-project.org/Licenses/AGPL-3">AGPL-3</a></p>
+
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>Mads Albertsen <br><small class="roles"> Author, maintainer </small> </li>
 <li>Kasper Skytte Andersen <br><small class="roles"> Author </small> </li>
 <li>Rasmus Hansen Kirkegaard <br><small class="roles"> Author </small> </li>
 <li>Søren Mikael Karst <br><small class="roles"> Author </small> </li>
+</ul>
+<h2>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://www.r-project.org/Licenses/AGPL-3">AGPL-3</a></li>
 </ul>
 </div>
 </div>

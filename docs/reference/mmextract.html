@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Title — mmextract • mmgenome2</title>
+<title>Extract all scaffolds within a selection polygon — mmextract • mmgenome2</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,11 +83,11 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Title</h1>
+    <h1>Extract all scaffolds within a selection polygon</h1>
     </div>
 
     
-    <p>Title</p>
+    <p>Extract all scaffolds within a selection polygon</p>
     
 
     <pre class="usage"><span class='fu'>mmextract</span>(<span class='no'>mm</span>, <span class='no'>selection</span>, <span class='kw'>min_length</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>inverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
@@ -101,15 +101,15 @@
     </tr>
     <tr>
       <th>selection</th>
-      <td></td>
+      <td><p>(<em>required</em>) A 2-column dataframe with the x and y coordinates of a selection of points in an <code>mmplot</code>. The column names of the provided dataframe must match column names in <code>mm</code>.</p></td>
     </tr>
     <tr>
       <th>min_length</th>
-      <td></td>
+      <td><p>Filter all scaffolds with a length at or below this value before the extraction. (<em>Default: </em> <code>0</code>)</p></td>
     </tr>
     <tr>
       <th>inverse</th>
-      <td></td>
+      <td><p>(<em>Logical</em>) If <code>TRUE</code>, then the scaffolds within the <code>selection</code> are instead removed. (<em>Default: </em> <code>FALSE</code>)</p></td>
     </tr>
     </table>
     

@@ -2,19 +2,19 @@
 % Please edit documentation in R/mmextract.R
 \name{mmextract}
 \alias{mmextract}
-\title{Title}
+\title{Extract all scaffolds within a selection polygon}
 \usage{
 mmextract(mm, selection, min_length = 0, inverse = FALSE)
 }
 \arguments{
 \item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}
 
-\item{selection}{}
+\item{selection}{(\emph{required}) A 2-column dataframe with the x and y coordinates of a selection of points in an \code{mmplot}. The column names of the provided dataframe must match column names in \code{mm}.}
 
-\item{min_length}{}
+\item{min_length}{Filter all scaffolds with a length at or below this value before the extraction. (\emph{Default: } \code{0})}
 
-\item{inverse}{}
+\item{inverse}{(\emph{Logical}) If \code{TRUE}, then the scaffolds within the \code{selection} are instead removed. (\emph{Default: } \code{FALSE})}
 }
 \description{
-Title
+Extract all scaffolds within a selection polygon
 }

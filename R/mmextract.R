@@ -1,9 +1,9 @@
-#' Title
+#' Extract all scaffolds within a selection polygon
 #'
 #' @param mm (\emph{required}) A dataframe loaded with \code{\link{mmload}}.
-#' @param selection 
-#' @param min_length 
-#' @param inverse 
+#' @param selection (\emph{required}) A 2-column dataframe with the x and y coordinates of a selection of points in an \code{mmplot}. The column names of the provided dataframe must match column names in \code{mm}. 
+#' @param min_length Filter all scaffolds with a length at or below this value before the extraction. (\emph{Default: } \code{0})
+#' @param inverse (\emph{Logical}) If \code{TRUE}, then the scaffolds within the \code{selection} are instead removed. (\emph{Default: } \code{FALSE})
 #'
 #' @export
 #' 

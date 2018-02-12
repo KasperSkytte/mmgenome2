@@ -2,12 +2,12 @@
 % Please edit documentation in R/mmplot.R
 \name{mmplot}
 \alias{mmplot}
-\title{plot}
+\title{Visualise metagenomes in various ways}
 \usage{
-mmplot(mm, x, y, min_length = 0, locator = FALSE, selection = NULL,
-  x_scale = NULL, x_limits = NULL, y_scale = NULL, y_limits = NULL,
-  color_by = NULL, alpha = 0.1, scaffold_labels = FALSE,
-  fixed_size = NULL, size_scale = 1, duplicate_genes = FALSE)
+mmplot(mm, x, y, min_length = 0, color_by = NULL, locator = FALSE,
+  selection = NULL, x_scale = NULL, x_limits = NULL, y_scale = NULL,
+  y_limits = NULL, alpha = 0.1, scaffold_labels = FALSE,
+  fixed_size = NULL, size_scale = 1, shared_genes = FALSE)
 }
 \arguments{
 \item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}
@@ -16,29 +16,29 @@ mmplot(mm, x, y, min_length = 0, locator = FALSE, selection = NULL,
 
 \item{y}{(\emph{required}) The variable from \code{mm} to plot on the second axis.}
 
-\item{min_length}{Remove scaffolds with a length at or below this size before plotting. (\emph{Default: } \code{0})}
+\item{min_length}{Remove scaffolds with a length at or below this value before plotting. (\emph{Default: } \code{0})}
 
-\item{locator}{(\emph{Logical}) . (\emph{Default: } \code{FALSE})}
+\item{color_by}{Color the scaffolds by a variable in \code{mm}. (\emph{Default: } \code{NULL})}
 
-\item{selection}{A 2-column dataframe with the x and y coordinates of points with which to draw a polygon onto the plot to highlight selected regions.}
+\item{locator}{(\emph{Logical}) When enabled (set to \code{TRUE}), left-clicks in the plot are captured and the exact x/y-coordinates of the mouse clicks are returned. These coordinates can be used to highlight a selection of scaffolds in the plot, and also be used with \code{\link{mmextract}} to extract all scaffolds within the selection from the data. (\emph{Default: } \code{FALSE})}
 
-\item{x_scale}{Apply a log10-scale (\code{"log10"}) or a square-root scale \code{"sqrt"} to the x axis. (\emph{Default: } \code{NULL})}
+\item{selection}{A 2-column dataframe with the x and y coordinates of points with which to draw a polygon onto the plot to highlight a selected region. Can be obtained by using the locator feature (by \code{locator = TRUE}). (\emph{Default: } \code{NULL})}
+
+\item{x_scale}{Log10-scale (\code{"log10"}) or square-root scale \code{"sqrt"} the x axis. (\emph{Default: } \code{NULL})}
 
 \item{x_limits}{Axis limits of the x axis. (\emph{Default: } \code{NULL})}
 
-\item{y_scale}{Apply a log10-scale (\code{"log10"}) or a square-root scale \code{"sqrt"} to the y axis. (\emph{Default: } \code{NULL})}
+\item{y_scale}{Log10-scale (\code{"log10"}) or square-root scale \code{"sqrt"} the y axis. (\emph{Default: } \code{NULL})}
 
 \item{y_limits}{Axis limits of the y axis. (\emph{Default: } \code{NULL})}
 
-\item{color_by}{(\emph{Default: } \code{NULL})}
+\item{alpha}{The transparancy of the scaffold points, where 0 is invisible and 1 is opaque. (\emph{Default: } \code{0.1})}
 
-\item{alpha}{(\emph{Default: } \code{0.1})}
+\item{scaffold_labels}{Add labels of a selection of scaffolds by providing either a character vector of scaffold names, or a dataframe with scaffold names in the first column. If set to \code{TRUE} then \emph{all} scaffolds will be labelled. (\emph{Default: } \code{FALSE})}
 
-\item{scaffold_labels}{(\emph{Logical})  (\emph{Default: } \code{FALSE})}
+\item{fixed_size}{A fixed size for all scaffolds if set. If \code{NULL} then the scaffolds are scaled by length. (\emph{Default: } \code{NULL})}
 
-\item{fixed_size}{(\emph{Default: } \code{NULL})}
+\item{size_scale}{A factor to scale the sizes of the scaffolds plotted. Only applies when \code{fixed_size} is set to \code{NULL} and the scaffolds are scaled by length. (\emph{Default: } \code{1})}
 
-\item{size_scale}{(\emph{Default: } \code{1})}
-
-\item{duplicate_genes}{(\emph{Logical})  (\emph{Default: } \code{FALSE})}
+\item{shared_genes}{(\emph{Logical}) If \code{TRUE}, lines will be drawn between scaffolds with any shared gene(s). (\emph{Default: } \code{FALSE})}
 }

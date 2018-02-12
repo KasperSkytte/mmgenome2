@@ -5,13 +5,11 @@
 #' @param textsize 
 #' @param log 
 #'
-#' @return
 #' @export
 #' 
 #' @import gridExtra
 #' @import ggplot2
 #'
-#' @examples
 mmplot_pairs <- function(mm, variables, textsize = 8, log = NULL){  
   
   ## Make a blank plot

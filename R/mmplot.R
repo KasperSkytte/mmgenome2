@@ -1,21 +1,21 @@
-#' @title plot
+#' @title Visualise metagenomes in various ways
 #'
 #' @param mm (\emph{required}) A dataframe loaded with \code{\link{mmload}}.
 #' @param x (\emph{required}) The variable from \code{mm} to plot on the first axis.
 #' @param y (\emph{required}) The variable from \code{mm} to plot on the second axis.
-#' @param min_length Remove scaffolds with a length at or below this size before plotting. (\emph{Default: } \code{0}) 
-#' @param locator (\emph{Logical}) . (\emph{Default: } \code{FALSE})
-#' @param selection A 2-column dataframe with the x and y coordinates of points with which to draw a polygon onto the plot to highlight selected regions.
-#' @param x_scale Apply a log10-scale (\code{"log10"}) or a square-root scale \code{"sqrt"} to the x axis. (\emph{Default: } \code{NULL})
+#' @param min_length Remove scaffolds with a length at or below this value before plotting. (\emph{Default: } \code{0}) 
+#' @param locator (\emph{Logical}) When enabled (set to \code{TRUE}), left-clicks in the plot are captured and the exact x/y-coordinates of the mouse clicks are returned. These coordinates can be used to highlight a selection of scaffolds in the plot, and also be used with \code{\link{mmextract}} to extract all scaffolds within the selection from the data. (\emph{Default: } \code{FALSE})
+#' @param selection A 2-column dataframe with the x and y coordinates of points with which to draw a polygon onto the plot to highlight a selected region. Can be obtained by using the locator feature (by \code{locator = TRUE}). (\emph{Default: } \code{NULL})
+#' @param x_scale Log10-scale (\code{"log10"}) or square-root scale \code{"sqrt"} the x axis. (\emph{Default: } \code{NULL})
 #' @param x_limits Axis limits of the x axis. (\emph{Default: } \code{NULL})
-#' @param y_scale Apply a log10-scale (\code{"log10"}) or a square-root scale \code{"sqrt"} to the y axis. (\emph{Default: } \code{NULL})
+#' @param y_scale Log10-scale (\code{"log10"}) or square-root scale \code{"sqrt"} the y axis. (\emph{Default: } \code{NULL})
 #' @param y_limits Axis limits of the y axis. (\emph{Default: } \code{NULL})
-#' @param color_by  (\emph{Default: } \code{NULL})
-#' @param alpha  (\emph{Default: } \code{0.1})
-#' @param scaffold_labels (\emph{Logical})  (\emph{Default: } \code{FALSE})
-#' @param fixed_size  (\emph{Default: } \code{NULL})
-#' @param size_scale  (\emph{Default: } \code{1})
-#' @param duplicate_genes (\emph{Logical})  (\emph{Default: } \code{FALSE})
+#' @param color_by Color the scaffolds by a variable in \code{mm}. (\emph{Default: } \code{NULL})
+#' @param alpha The transparancy of the scaffold points, where 0 is invisible and 1 is opaque. (\emph{Default: } \code{0.1})
+#' @param scaffold_labels Add labels of a selection of scaffolds by providing either a character vector of scaffold names, or a dataframe with scaffold names in the first column. If set to \code{TRUE} then \emph{all} scaffolds will be labelled. (\emph{Default: } \code{FALSE})
+#' @param fixed_size A fixed size for all scaffolds if set. If \code{NULL} then the scaffolds are scaled by length. (\emph{Default: } \code{NULL})
+#' @param size_scale A factor to scale the sizes of the scaffolds plotted. Only applies when \code{fixed_size} is set to \code{NULL} and the scaffolds are scaled by length. (\emph{Default: } \code{1})
+#' @param shared_genes (\emph{Logical}) If \code{TRUE}, lines will be drawn between scaffolds with any shared gene(s). (\emph{Default: } \code{FALSE})
 #'
 #' @export
 #' 
@@ -26,18 +26,18 @@ mmplot <- function(mm,
                    x,
                    y, 
                    min_length = 0,
+                   color_by = NULL,
                    locator = FALSE,
                    selection = NULL,
                    x_scale = NULL,
                    x_limits = NULL,
                    y_scale = NULL,
                    y_limits = NULL,
-                   color_by = NULL,
                    alpha = 0.1,
                    scaffold_labels = FALSE,
                    fixed_size = NULL,
                    size_scale = 1,
-                   duplicate_genes = FALSE) {
+                   shared_genes = FALSE) {
   #Checks and error messages before anything else
   if(isTRUE(locator) & !is.null(selection))
     stop("Using the locator and highlighting a selection at the same time is not supported.")
@@ -165,7 +165,7 @@ mmplot <- function(mm,
   #qweqweqwe
   
   ##### Plot duplicates #####
-  if (isTRUE(duplicate_genes)) {
+  if (isTRUE(shared_genes)) {
     eg <- tidyr::separate_rows(mm[!is.na(mm[,"geneID"]),c("scaffold", "geneID")], "geneID")
     df <- eg[which(duplicated(eg[[2]]) | duplicated(eg[[2]], fromLast=TRUE)),] 
     
