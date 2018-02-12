@@ -90,11 +90,15 @@
     <p>Writes the DNA sequences of a set of scaffolds from the assembly to a FASTA file.</p>
     
 
-    <pre class="usage"><span class='fu'>mmexport</span>(<span class='no'>mm</span>, <span class='kw'>assembly</span> <span class='kw'>=</span> <span class='no'>assembly</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"exported_assembly.fa"</span>)</pre>
+    <pre class="usage"><span class='fu'>mmexport</span>(<span class='no'>scaffolds</span>, <span class='kw'>assembly</span> <span class='kw'>=</span> <span class='no'>assembly</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"exported_assembly.fa"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>scaffolds</th>
+      <td><p>(<em>required</em>) Either a vector of scaffold names or a dataframe loaded with <code><a href='mmload.html'>mmload</a></code> containing the scaffolds to extract from the <code>assembly</code>.</p></td>
+    </tr>
     <tr>
       <th>assembly</th>
       <td><p>(<em>required</em>) The assembly to subset and export. Must be an object of class <code>"DNAStringSet"</code> as loaded with <code><a href='http://www.rdocumentation.org/packages/Biostrings/topics/XStringSet-io'>readDNAStringSet</a></code>.</p></td>
@@ -102,10 +106,6 @@
     <tr>
       <th>file</th>
       <td><p>The file path and file name of the file to write the sequences to. (<em>Default: </em> <code>"exported_assembly.fa"</code>)</p></td>
-    </tr>
-    <tr>
-      <th>scaffolds</th>
-      <td><p>(<em>required</em>) Either a vector of scaffold names or a dataframe loaded with <code><a href='mmload.html'>mmload</a></code> containing the scaffolds to extract from the <code>assembly</code>.</p></td>
     </tr>
     </table>
     

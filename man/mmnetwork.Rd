@@ -4,7 +4,7 @@
 \alias{mmnetwork}
 \title{Title}
 \usage{
-mmnetwork(mm, network, n_connections = 2, color_by = NULL,
+mmnetwork(mm, network, min_connections = 2, color_by = NULL,
   locator = FALSE, selection = NULL, highlight_labels = NULL,
   highlight_color = "darkred", color_scale_log10 = FALSE, links_scale = 1,
   scaffold_labels = FALSE, print_nolinks = FALSE, seed = .mm_Random.seed)
@@ -14,7 +14,7 @@ mmnetwork(mm, network, n_connections = 2, color_by = NULL,
 
 \item{network}{}
 
-\item{n_connections}{}
+\item{min_connections}{}
 
 \item{color_by}{}
 

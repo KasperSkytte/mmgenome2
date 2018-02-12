@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generates a ggplot2 style pairs plot — mmplot_pairs • mmgenome2</title>
+<title>Title — mmplot_pairs • mmgenome2</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,62 +83,43 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Generates a ggplot2 style pairs plot</h1>
+    <h1>Title</h1>
     </div>
 
     
-    <p>Generates a ggplot2 style pairs plot.</p>
+    <p>Title</p>
     
 
-    <pre class="usage"><span class='fu'>mmplot_pairs</span>(<span class='no'>mm</span>, <span class='no'>variables</span>)</pre>
+    <pre class="usage"><span class='fu'>mmplot_pairs</span>(<span class='no'>mm</span>, <span class='no'>variables</span>, <span class='kw'>textsize</span> <span class='kw'>=</span> <span class='fl'>8</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>mm</th>
-      <td><p>(required) The dataframe to plot.</p></td>
+      <td></td>
     </tr>
     <tr>
       <th>variables</th>
-      <td><p>(required) The vaiables to plot as a vector.</p></td>
+      <td></td>
     </tr>
     <tr>
       <th>textsize</th>
-      <td><p>Size of the legend text (deafult = 8).</p></td>
+      <td></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Arguments passed on to mmplot()</p></td>
+      <th>log</th>
+      <td></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A pairs plot object.</p>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>rocco</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: data set ‘rocco’ not found</span></div><div class='input'>
-<span class='fu'>mmplot_pairs</span>(<span class='kw'>mm</span> <span class='kw'>=</span> <span class='no'>d</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"C13.12.03"</span>, <span class='st'>"C14.01.09"</span>, <span class='st'>"C13.11.25"</span>, <span class='st'>"gc"</span>, <span class='st'>"PC2"</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"essential"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"C13.12.03"</span>, <span class='st'>"C14.01.09"</span>, <span class='st'>"C13.11.25"</span>), <span class='kw'>minlength</span> <span class='kw'>=</span> <span class='fl'>10000</span>)</div><div class='output co'>#&gt; <span class='error'>Error in mmplot_pairs(mm = d, variables = c("C13.12.03", "C14.01.09",     "C13.11.25", "gc", "PC2"), color = "essential", log = c("C13.12.03",     "C14.01.09", "C13.11.25"), minlength = 10000): object 'z' not found</span></div><div class='input'>
-
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    
-Soren M. Karst <a href='mailto:smk@bio.aau.dk'>smk@bio.aau.dk</a>
-
-Mads Albertsen <a href='mailto:MadsAlbertsen85@gmail.com'>MadsAlbertsen85@gmail.com</a>
+                </ul>
 
   </div>
 </div>

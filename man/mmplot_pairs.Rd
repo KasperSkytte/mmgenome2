@@ -2,34 +2,19 @@
 % Please edit documentation in R/mmplot_pairs.R
 \name{mmplot_pairs}
 \alias{mmplot_pairs}
-\title{Generates a ggplot2 style pairs plot}
+\title{Title}
 \usage{
-mmplot_pairs(mm, variables)
+mmplot_pairs(mm, variables, textsize = 8, log = NULL)
 }
 \arguments{
-\item{mm}{(required) The dataframe to plot.}
+\item{mm}{}
 
-\item{variables}{(required) The vaiables to plot as a vector.}
+\item{variables}{}
 
-\item{textsize}{Size of the legend text (deafult = 8).}
+\item{textsize}{}
 
-\item{...}{Arguments passed on to mmplot()}
-}
-\value{
-A pairs plot object.
+\item{log}{}
 }
 \description{
-Generates a ggplot2 style pairs plot.
-}
-\examples{
-data(rocco)
-
-mmplot_pairs(mm = d, variables = c("C13.12.03", "C14.01.09", "C13.11.25", "gc", "PC2"), color = "essential", log = c("C13.12.03", "C14.01.09", "C13.11.25"), minlength = 10000)
-
-
-}
-\author{
-Soren M. Karst \email{smk@bio.aau.dk}
-
-Mads Albertsen \email{MadsAlbertsen85@gmail.com}
+Title
 }

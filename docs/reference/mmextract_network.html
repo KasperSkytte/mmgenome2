@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract scaffolds connected by paired-end reads — mmextract_network • mmgenome2</title>
+<title>Title — mmextract_network • mmgenome2</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,71 +83,48 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract scaffolds connected by paired-end reads</h1>
+    <h1>Title</h1>
     </div>
 
     
-    <p>Extracts scaffolds that are connected by paired-end or mate-pair reads.</p>
+    <p>Title</p>
     
 
-    <pre class="usage"><span class='fu'>mmextract_network</span>(<span class='no'>subset</span>, <span class='no'>network</span>, <span class='no'>original</span>, <span class='no'>nconnections</span>, <span class='no'>type</span>)</pre>
+    <pre class="usage"><span class='fu'>mmextract_network</span>(<span class='no'>scaffolds</span>, <span class='no'>network</span>, <span class='no'>original_data</span>, <span class='kw'>min_connections</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>include_connections</span> <span class='kw'>=</span> <span class='st'>"direct"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>subset</th>
-      <td><p>The subset dataframe to use for network extraction or a vector of scaffold names.</p></td>
+      <th>scaffolds</th>
+      <td></td>
     </tr>
     <tr>
       <th>network</th>
-      <td><p>The network of connected scaffold.</p></td>
+      <td></td>
     </tr>
     <tr>
-      <th>original</th>
-      <td><p>The original dataframe (default: d).</p></td>
+      <th>original_data</th>
+      <td></td>
     </tr>
     <tr>
-      <th>nconnections</th>
-      <td><p>The minumum number of connections needed (default: 2).</p></td>
+      <th>min_connections</th>
+      <td></td>
     </tr>
     <tr>
-      <th>type</th>
-      <td><p>Extract "direct" or "complete" (all) linked scaffolds (default: direct).</p></td>
+      <th>include_connections</th>
+      <td></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A dataframe with scaffold information.</p>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='fu'>data</span>(<span class='no'>rocco</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: data set ‘rocco’ not found</span></div><div class='input'>
-<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mmplot.html'>mmplot</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>d</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"C13.12.03"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"C14.01.09"</span>, <span class='kw'>log.x</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>log.y</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"phylum"</span>, <span class='kw'>minlength</span> <span class='kw'>=</span> <span class='fl'>3000</span>)</div><div class='output co'>#&gt; <span class='error'>Error in mmplot(data = d, x = "C13.12.03", y = "C14.01.09", log.x = T,     log.y = T, color = "phylum", minlength = 3000): unused arguments (data = d, log.x = T, log.y = T, minlength = 3000)</span></div><div class='input'><span class='no'>sel</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>C13.12.03</span>  <span class='kw'>=</span>  <span class='fu'>c</span>(<span class='fl'>4.94</span>, <span class='fl'>8.99</span>, <span class='fl'>10.8</span>, <span class='fl'>7.22</span>, <span class='fl'>5.79</span>),
-                  <span class='kw'>C14.01.09</span>  <span class='kw'>=</span>  <span class='fu'>c</span>(<span class='fl'>43.9</span>, <span class='fl'>57.4</span>, <span class='fl'>35.7</span>, <span class='fl'>25.7</span>, <span class='fl'>32.6</span>))
-<span class='fu'>mmplot_selection</span>(<span class='no'>p</span>, <span class='no'>sel</span>)</div><div class='output co'>#&gt; <span class='error'>Error in mmplot_selection(p, sel): could not find function "mmplot_selection"</span></div><div class='input'>
-<span class='no'>dA</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mmextract.html'>mmextract</a></span>(<span class='no'>d</span>, <span class='no'>sel</span>)</div><div class='output co'>#&gt; <span class='error'>Error in is.data.frame(x): object 'd' not found</span></div><div class='input'><span class='fu'><a href='mmplot.html'>mmplot</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>dA</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"C13.12.03"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"C14.01.09"</span>, <span class='kw'>log.x</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>log.y</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"phylum"</span>, <span class='kw'>minlength</span> <span class='kw'>=</span> <span class='fl'>3000</span>)</div><div class='output co'>#&gt; <span class='error'>Error in mmplot(data = dA, x = "C13.12.03", y = "C14.01.09", log.x = T,     log.y = T, color = "phylum", minlength = 3000): unused arguments (data = dA, log.x = T, log.y = T, minlength = 3000)</span></div><div class='input'><span class='fu'>mmplot_network</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>dA</span>, <span class='kw'>network</span> <span class='kw'>=</span> <span class='no'>pe</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"phylum"</span>, <span class='kw'>nconnections</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='error'>Error in mmplot_network(data = dA, network = pe, color = "phylum", nconnections = 10): could not find function "mmplot_network"</span></div><div class='input'>
-<span class='no'>dB</span> <span class='kw'>&lt;-</span> <span class='fu'>mmextract_network</span>(<span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>dA</span>, <span class='kw'>original</span> <span class='kw'>=</span> <span class='no'>d</span>, <span class='kw'>network</span> <span class='kw'>=</span> <span class='no'>pe</span>, <span class='kw'>nconnections</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"direct"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in mmextract_network(subset = dA, original = d, network = pe, nconnections = 10,     type = "direct"): object 'dA' not found</span></div><div class='input'><span class='fu'><a href='mmplot.html'>mmplot</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>dB</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"C13.12.03"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"C14.01.09"</span>, <span class='kw'>log.x</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>log.y</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"phylum"</span>, <span class='kw'>minlength</span> <span class='kw'>=</span> <span class='fl'>3000</span>)</div><div class='output co'>#&gt; <span class='error'>Error in mmplot(data = dB, x = "C13.12.03", y = "C14.01.09", log.x = T,     log.y = T, color = "phylum", minlength = 3000): unused arguments (data = dB, log.x = T, log.y = T, minlength = 3000)</span></div><div class='input'><span class='fu'>mmplot_network</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>dB</span>, <span class='kw'>network</span> <span class='kw'>=</span> <span class='no'>pe</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"phylum"</span>, <span class='kw'>nconnections</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='error'>Error in mmplot_network(data = dB, network = pe, color = "phylum", nconnections = 10): could not find function "mmplot_network"</span></div><div class='input'>
-
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    
-Soren M. Karst <a href='mailto:smk@bio.aau.dk'>smk@bio.aau.dk</a>
-
-Mads Albertsen <a href='mailto:MadsAlbertsen85@gmail.com'>MadsAlbertsen85@gmail.com</a>
+                </ul>
 
   </div>
 </div>
