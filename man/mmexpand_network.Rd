@@ -2,22 +2,26 @@
 % Please edit documentation in R/mmexpand_network.R
 \name{mmexpand_network}
 \alias{mmexpand_network}
-\title{Find}
+\title{Find connections of a subset of scaffolds in a larger set of scaffolds}
 \usage{
-mmexpand_network(scaffolds, network, original_data, min_connections = 2,
+mmexpand_network(mm, scaffolds, network, min_connections = 2,
   include_connections = "direct")
 }
 \arguments{
-\item{scaffolds}{}
+\item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}} in which to find connections from \code{scaffolds}.}
 
-\item{network}{}
+\item{scaffolds}{(\emph{required}) The scaffolds from which to find connections in \code{mm}. Must be a vector of scaffold names or a dataframe with scaffold names in the first column.}
 
-\item{original_data}{}
+\item{network}{(\emph{required}) Paired-end or mate-pair connections between scaffolds in long format. The first and second columns must contain all connected scaffold pairs and the third column the number of connections.}
 
-\item{min_connections}{}
+\item{min_connections}{Filter all scaffold pairs with equal to or less than this number of connections before the extraction. (\emph{Default: } \code{2})}
 
-\item{include_connections}{}
+\item{include_connections}{The connections to include. One of the following:
+\describe{
+  \item{\code{"direct"}}{Extract only scaffolds from \code{mm} that are directly connected to any of the scaffolds in \code{scaffolds}. (\emph{default})}
+  \item{\code{"all"}}{Same as \code{"direct"}, except that any further connections to connected scaffolds are also included, continuing until no further connections are found.}
+}}
 }
 \description{
-Find
+Find connections of a subset of scaffolds in a larger set of scaffolds
 }

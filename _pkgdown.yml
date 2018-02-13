@@ -16,13 +16,13 @@ reference:
     - mmload
     - mmstats
     - mmexport
-  - title: Metagenome plotting and extraction
+  - title: Metagenome plotting
     desc: Functions for plotting and extracting scaffolds
     contents: 
     - mmplot
-    - mmnetwork
     - mmplot_pairs
-  - title: Extracting/subsetting
+    - mmnetwork
+  - title: Extracting scaffolds from metagenomes
     desc: Extracting
     contents: 
     - mmextract

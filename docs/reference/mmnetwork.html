@@ -93,7 +93,7 @@
     <pre class="usage"><span class='fu'>mmnetwork</span>(<span class='no'>mm</span>, <span class='no'>network</span>, <span class='kw'>min_connections</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>color_by</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>color_scale_log10</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>locator</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>selection</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>highlight_labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>highlight_color</span> <span class='kw'>=</span> <span class='st'>"darkred"</span>, <span class='kw'>links_scale</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>scaffold_labels</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>print_nolinks</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='no'>.mm_Random.seed</span>)</pre>
+  <span class='kw'>scaffold_labels</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>print_nolinks</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -104,7 +104,7 @@
     </tr>
     <tr>
       <th>network</th>
-      <td><p>(<em>required</em>) Paired-end or mate-pair connections between scaffolds in long format. First and second column should contain all connected scaffold pairs and the third column the number of connections.</p></td>
+      <td><p>(<em>required</em>) Paired-end or mate-pair connections between scaffolds in long format. The first and second columns must contain all connected scaffold pairs and the third column the number of connections.</p></td>
     </tr>
     <tr>
       <th>min_connections</th>
@@ -120,11 +120,11 @@
     </tr>
     <tr>
       <th>locator</th>
-      <td><p>(<em>Logical</em>) When enabled (set to <code>TRUE</code>), left-clicks in the plot are captured and the exact x/y-coordinates of the mouse clicks are captured and returned. These coordinates can be used to highlight a selection of scaffolds in the plot, and to extract all scaffolds within the selection. (<em>Default: </em> <code>FALSE</code>)</p></td>
+      <td><p>(<em>Logical</em>) When <code>TRUE</code>, left-clicks in the plot are captured and the exact x/y-coordinates of the mouse clicks are captured and returned. These coordinates can be used to highlight a selection of scaffolds in the plot, and to extract all scaffolds within the selection. (<em>Default: </em> <code>FALSE</code>)</p></td>
     </tr>
     <tr>
       <th>selection</th>
-      <td><p>A 2-column dataframe with the x and y coordinates of points with which to draw a polygon onto the plot to highlight a selected region. Can be obtained by using the locator feature (by <code>locator = TRUE</code>). (<em>Default: </em> <code>NULL</code>)</p></td>
+      <td><p>A 2-column dataframe with the x and y coordinates of points with which to draw a polygon onto the plot to highlight a selected region. A selection can be obtained by using the locator feature (by <code>locator = TRUE</code>). (<em>Default: </em> <code>NULL</code>)</p></td>
     </tr>
     <tr>
       <th>highlight_labels</th>
@@ -148,7 +148,7 @@
     </tr>
     <tr>
       <th>seed</th>
-      <td><p>Network plots are based on Random Number Generation, and this is used to set a specific random seed (with <code>set.seed</code>) allowing for reproducible network plots. Set to NULL to generate a unique network plot with each run of <code>mmnetwork</code>, the random seed in R is always available in the hidden object <code>.Random.seed</code>. (<em>Default: </em> <code>.mm_Random.seed</code>)</p></td>
+      <td><p>Network plots are based on Random Number Generation, and this is used to set a specific random seed (with <code>set.seed</code>) allowing for reproducible network plots. Set to NULL to generate a unique network plot with each run of <code>mmnetwork</code>. (<em>Default: </em> <code>0</code>)</p></td>
     </tr>
     </table>
     

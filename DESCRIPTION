@@ -18,6 +18,7 @@ Depends:
 Imports:
     sp,
     grid,
+    cowplot,
     ggplot2,
     gridExtra,
     dplyr,

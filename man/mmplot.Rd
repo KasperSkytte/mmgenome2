@@ -20,9 +20,9 @@ mmplot(mm, x, y, min_length = 0, color_by = NULL, locator = FALSE,
 
 \item{color_by}{Color the scaffolds by a variable in \code{mm}. (\emph{Default: } \code{NULL})}
 
-\item{locator}{(\emph{Logical}) When enabled (set to \code{TRUE}), left-clicks in the plot are captured and the exact x/y-coordinates of the mouse clicks are returned. These coordinates can be used to highlight a selection of scaffolds in the plot, and also be used with \code{\link{mmextract}} to extract all scaffolds within the selection from the data. (\emph{Default: } \code{FALSE})}
+\item{locator}{(\emph{Logical}) When \code{TRUE}, left-clicks in the plot are captured and the exact x/y-coordinates of the mouse clicks are returned. These coordinates can be used to highlight a selection of scaffolds in the plot, and also be used with \code{\link{mmextract}} to extract all scaffolds within the selection from the data. (\emph{Default: } \code{FALSE})}
 
-\item{selection}{A 2-column dataframe with the x and y coordinates of points with which to draw a polygon onto the plot to highlight a selected region. Can be obtained by using the locator feature (by \code{locator = TRUE}). (\emph{Default: } \code{NULL})}
+\item{selection}{A 2-column dataframe with the x and y coordinates of points with which to draw a polygon onto the plot to highlight a selected region. A selection can be obtained by using the locator feature (by \code{locator = TRUE}). (\emph{Default: } \code{NULL})}
 
 \item{x_scale}{Log10-scale (\code{"log10"}) or square-root scale \code{"sqrt"} the x axis. (\emph{Default: } \code{NULL})}
 

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Find — mmexpand_network • mmgenome2</title>
+<title>Find connections of a subset of scaffolds in a larger set of scaffolds — mmexpand_network • mmgenome2</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,38 +83,41 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Find</h1>
+    <h1>Find connections of a subset of scaffolds in a larger set of scaffolds</h1>
     </div>
 
     
-    <p>Find</p>
+    <p>Find connections of a subset of scaffolds in a larger set of scaffolds</p>
     
 
-    <pre class="usage"><span class='fu'>mmexpand_network</span>(<span class='no'>scaffolds</span>, <span class='no'>network</span>, <span class='no'>original_data</span>, <span class='kw'>min_connections</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+    <pre class="usage"><span class='fu'>mmexpand_network</span>(<span class='no'>mm</span>, <span class='no'>scaffolds</span>, <span class='no'>network</span>, <span class='kw'>min_connections</span> <span class='kw'>=</span> <span class='fl'>2</span>,
   <span class='kw'>include_connections</span> <span class='kw'>=</span> <span class='st'>"direct"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>mm</th>
+      <td><p>(<em>required</em>) A dataframe loaded with <code><a href='mmload.html'>mmload</a></code> in which to find connections from <code>scaffolds</code>.</p></td>
+    </tr>
+    <tr>
       <th>scaffolds</th>
-      <td></td>
+      <td><p>(<em>required</em>) The scaffolds from which to find connections in <code>mm</code>. Must be a vector of scaffold names or a dataframe with scaffold names in the first column.</p></td>
     </tr>
     <tr>
       <th>network</th>
-      <td></td>
-    </tr>
-    <tr>
-      <th>original_data</th>
-      <td></td>
+      <td><p>(<em>required</em>) Paired-end or mate-pair connections between scaffolds in long format. The first and second columns must contain all connected scaffold pairs and the third column the number of connections.</p></td>
     </tr>
     <tr>
       <th>min_connections</th>
-      <td></td>
+      <td><p>Filter all scaffold pairs with equal to or less than this number of connections before the extraction. (<em>Default: </em> <code>2</code>)</p></td>
     </tr>
     <tr>
       <th>include_connections</th>
-      <td></td>
+      <td><p>The connections to include. One of the following:</p><dl class='dl-horizontal'>
+  <dt><code>"direct"</code></dt><dd><p>Extract only scaffolds from <code>mm</code> that are directly connected to any of the scaffolds in <code>scaffolds</code>. (<em>default</em>)</p></dd>
+  <dt><code>"all"</code></dt><dd><p>Same as <code>"direct"</code>, except that any further connections to connected scaffolds are also included, continuing until no further connections are found.</p></dd>
+</dl></td>
     </tr>
     </table>
     

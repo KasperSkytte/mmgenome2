@@ -2,19 +2,19 @@
 % Please edit documentation in R/mmplot_pairs.R
 \name{mmplot_pairs}
 \alias{mmplot_pairs}
-\title{Title}
+\title{Plot multiple combinations of variables in a pairs plot}
 \usage{
-mmplot_pairs(mm, variables, textsize = 8, log = NULL)
+mmplot_pairs(mm, variables = NULL, textsize = 5, ...)
 }
 \arguments{
-\item{mm}{}
+\item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}
 
-\item{variables}{}
+\item{variables}{A vector of 3 or more variable names in \code{mm} to plot on each axis. If NULL, the default, then all coverage variables will be plotted. (\emph{Default: } \code{NULL})}
 
-\item{textsize}{}
+\item{textsize}{The text size of the axis titles.}
 
-\item{log}{}
+\item{...}{Arguments passed on to \code{\link{mmplot}}, eg. \code{color_by}, \code{min_length}, axis scales and more, see help("mmplot").}
 }
 \description{
-Title
+Plot multiple combinations of variables in a pairs plot
 }

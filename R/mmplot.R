@@ -4,8 +4,8 @@
 #' @param x (\emph{required}) The variable from \code{mm} to plot on the first axis.
 #' @param y (\emph{required}) The variable from \code{mm} to plot on the second axis.
 #' @param min_length Remove scaffolds with a length at or below this value before plotting. (\emph{Default: } \code{0}) 
-#' @param locator (\emph{Logical}) When enabled (set to \code{TRUE}), left-clicks in the plot are captured and the exact x/y-coordinates of the mouse clicks are returned. These coordinates can be used to highlight a selection of scaffolds in the plot, and also be used with \code{\link{mmextract}} to extract all scaffolds within the selection from the data. (\emph{Default: } \code{FALSE})
-#' @param selection A 2-column dataframe with the x and y coordinates of points with which to draw a polygon onto the plot to highlight a selected region. Can be obtained by using the locator feature (by \code{locator = TRUE}). (\emph{Default: } \code{NULL})
+#' @param locator (\emph{Logical}) When \code{TRUE}, left-clicks in the plot are captured and the exact x/y-coordinates of the mouse clicks are returned. These coordinates can be used to highlight a selection of scaffolds in the plot, and also be used with \code{\link{mmextract}} to extract all scaffolds within the selection from the data. (\emph{Default: } \code{FALSE})
+#' @param selection A 2-column dataframe with the x and y coordinates of points with which to draw a polygon onto the plot to highlight a selected region. A selection can be obtained by using the locator feature (by \code{locator = TRUE}). (\emph{Default: } \code{NULL})
 #' @param x_scale Log10-scale (\code{"log10"}) or square-root scale \code{"sqrt"} the x axis. (\emph{Default: } \code{NULL})
 #' @param x_limits Axis limits of the x axis. (\emph{Default: } \code{NULL})
 #' @param y_scale Log10-scale (\code{"log10"}) or square-root scale \code{"sqrt"} the y axis. (\emph{Default: } \code{NULL})

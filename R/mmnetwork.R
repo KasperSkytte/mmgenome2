@@ -1,18 +1,18 @@
 #' Network plot of mate-pair or paired-end connected scaffold reads
 #'
 #' @param mm (\emph{required}) A dataframe loaded with \code{\link{mmload}}.
-#' @param network (\emph{required}) Paired-end or mate-pair connections between scaffolds in long format. First and second column should contain all connected scaffold pairs and the third column the number of connections. 
+#' @param network (\emph{required}) Paired-end or mate-pair connections between scaffolds in long format. The first and second columns must contain all connected scaffold pairs and the third column the number of connections. 
 #' @param min_connections Filter all scaffold pairs with equal to or less than this number of connections. (\emph{Default: } \code{2})
 #' @param color_by Color the scaffolds by a variable in \code{mm}. (\emph{Default: } \code{NULL})
 #' @param color_scale_log10 (\emph{Logical}) Log10-scale the colors of the variable defined by \code{color_by}. (\emph{Default: } \code{FALSE})
-#' @param locator (\emph{Logical}) When enabled (set to \code{TRUE}), left-clicks in the plot are captured and the exact x/y-coordinates of the mouse clicks are captured and returned. These coordinates can be used to highlight a selection of scaffolds in the plot, and to extract all scaffolds within the selection. (\emph{Default: } \code{FALSE})
-#' @param selection A 2-column dataframe with the x and y coordinates of points with which to draw a polygon onto the plot to highlight a selected region. Can be obtained by using the locator feature (by \code{locator = TRUE}). (\emph{Default: } \code{NULL})
+#' @param locator (\emph{Logical}) When \code{TRUE}, left-clicks in the plot are captured and the exact x/y-coordinates of the mouse clicks are captured and returned. These coordinates can be used to highlight a selection of scaffolds in the plot, and to extract all scaffolds within the selection. (\emph{Default: } \code{FALSE})
+#' @param selection A 2-column dataframe with the x and y coordinates of points with which to draw a polygon onto the plot to highlight a selected region. A selection can be obtained by using the locator feature (by \code{locator = TRUE}). (\emph{Default: } \code{NULL})
 #' @param highlight_labels A dataframe or vector of scaffold names whose labels to highlight in the plot (colored by \code{highlight_color}). (\emph{Default: } \code{NULL})
 #' @param highlight_color The color with which to highlight the scaffold labels defined by \code{highlight_labels}. (\emph{Default: } \code{"darkred"})
 #' @param links_scale A factor to scale the sizes of the links plotted between scaffolds. (\emph{Default: } \code{1})
 #' @param scaffold_labels Add labels with the scaffold names of \emph{all} scaffolds.
 #' @param print_nolinks (\emph{Logical}) Print the names of all scaffolds with no links to other scaffolds to the console. (\emph{Default: } \code{FALSE})
-#' @param seed Network plots are based on Random Number Generation, and this is used to set a specific random seed (with \code{set.seed}) allowing for reproducible network plots. Set to NULL to generate a unique network plot with each run of \code{mmnetwork}, the random seed in R is always available in the hidden object \code{.Random.seed}. (\emph{Default: } \code{.mm_Random.seed})
+#' @param seed Network plots are based on Random Number Generation, and this is used to set a specific random seed (with \code{set.seed}) allowing for reproducible network plots. Set to NULL to generate a unique network plot with each run of \code{mmnetwork}. (\emph{Default: } \code{0})
 #'
 #' @export
 #' 
@@ -35,7 +35,7 @@ mmnetwork <- function(mm,
                       links_scale = 1,
                       scaffold_labels = FALSE,
                       print_nolinks = FALSE,
-                      seed = .mm_Random.seed) {
+                      seed = 0) {
   #Checks and error messages before anything else
   if(isTRUE(locator) & !is.null(selection))
     stop("Using the locator and highlighting a selection at the same time is not supported.")

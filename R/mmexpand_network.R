@@ -1,19 +1,22 @@
-#' Find 
+#' Find connections of a subset of scaffolds in a larger set of scaffolds
 #'
-#' @param scaffolds 
-#' @param network 
-#' @param original_data 
-#' @param min_connections 
-#' @param include_connections 
-#'
+#' @param mm (\emph{required}) A dataframe loaded with \code{\link{mmload}} in which to find connections from \code{scaffolds}.
+#' @param scaffolds (\emph{required}) The scaffolds from which to find connections in \code{mm}. Must be a vector of scaffold names or a dataframe with scaffold names in the first column.
+#' @param network (\emph{required}) Paired-end or mate-pair connections between scaffolds in long format. The first and second columns must contain all connected scaffold pairs and the third column the number of connections. 
+#' @param min_connections Filter all scaffold pairs with equal to or less than this number of connections before the extraction. (\emph{Default: } \code{2})
+#' @param include_connections The connections to include. One of the following:
+#' \describe{
+#'   \item{\code{"direct"}}{Extract only scaffolds from \code{mm} that are directly connected to any of the scaffolds in \code{scaffolds}. (\emph{default})}
+#'   \item{\code{"all"}}{Same as \code{"direct"}, except that any further connections to connected scaffolds are also included, continuing until no further connections are found.}
+#' }
 #' @export
 #' 
 #' @import igraph
 #' @import dplyr
 #'
-mmexpand_network <- function(scaffolds, 
+mmexpand_network <- function(mm,
+                             scaffolds, 
                              network,
-                             original_data,
                              min_connections = 2,
                              include_connections = "direct") {
   if(is.data.frame(scaffolds)) {
@@ -23,8 +26,8 @@ mmexpand_network <- function(scaffolds,
   }
   
   if (include_connections == "direct"){
-    ns <- dplyr::filter(network, (network[[1]] %in% scaffolds | network[[2]] %in% scaffolds) & network$connections >= min_connections)
-    out <- dplyr::filter(original_data, original_data[[1]] %in% ns$scaffold1 | original_data[[1]] %in% ns$scaffold2 | original_data[[1]] %in% scaffolds)
+    ns <- dplyr::filter(network, (network[[1]] %in% scaffolds | network[[2]] %in% scaffolds) & network[[3]] >= min_connections)
+    out <- dplyr::filter(mm, mm[[1]] %in% ns$scaffold1 | mm[[1]] %in% ns$scaffold2 | mm[[1]] %in% scaffolds)
   }
   
   if (include_connections == "all"){
@@ -35,7 +38,7 @@ mmexpand_network <- function(scaffolds,
     colnames(clusters) <- c("scaffold", "cluster")  
     ext.clusters <- dplyr::filter(clusters, clusters$scaffold %in% scaffolds)
     ext.scaffolds <- dplyr::filter(clusters, clusters$cluster %in% ext.clusters$cluster)
-    out <- dplyr::filter(original_data, original_data[[1]] %in% scaffolds | original_data[[1]] %in% ext.scaffolds$scaffold)
+    out <- dplyr::filter(mm, mm[[1]] %in% scaffolds | mm[[1]] %in% ext.scaffolds$scaffold)
   }
   return(out)  
 }

@@ -4,12 +4,13 @@
 \alias{mmexport}
 \title{Export DNA sequences of selected scaffolds}
 \usage{
-mmexport(scaffolds, assembly = assembly, file = "exported_assembly.fa")
+mmexport(scaffolds, assembly = get("assembly", envir = .GlobalEnv),
+  file = "exported_assembly.fa")
 }
 \arguments{
 \item{scaffolds}{(\emph{required}) Either a vector of scaffold names or a dataframe loaded with \code{\link{mmload}} containing the scaffolds to extract from the \code{assembly}.}
 
-\item{assembly}{(\emph{required}) The assembly to subset and export. Must be an object of class \code{"DNAStringSet"} as loaded with \code{\link[Biostrings]{readDNAStringSet}}.}
+\item{assembly}{(\emph{required}) The assembly to subset and export. Must be an object of class \code{"DNAStringSet"} as loaded with \code{\link[Biostrings]{readDNAStringSet}}. By default any object named "assembly" in the global environment will be used.}
 
 \item{file}{The file path and file name of the file to write the sequences to. (\emph{Default: } \code{"exported_assembly.fa"})}
 }

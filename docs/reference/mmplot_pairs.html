@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Title — mmplot_pairs • mmgenome2</title>
+<title>Plot multiple combinations of variables in a pairs plot — mmplot_pairs • mmgenome2</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,33 +83,33 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Title</h1>
+    <h1>Plot multiple combinations of variables in a pairs plot</h1>
     </div>
 
     
-    <p>Title</p>
+    <p>Plot multiple combinations of variables in a pairs plot</p>
     
 
-    <pre class="usage"><span class='fu'>mmplot_pairs</span>(<span class='no'>mm</span>, <span class='no'>variables</span>, <span class='kw'>textsize</span> <span class='kw'>=</span> <span class='fl'>8</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>mmplot_pairs</span>(<span class='no'>mm</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>textsize</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>mm</th>
-      <td></td>
+      <td><p>(<em>required</em>) A dataframe loaded with <code><a href='mmload.html'>mmload</a></code>.</p></td>
     </tr>
     <tr>
       <th>variables</th>
-      <td></td>
+      <td><p>A vector of 3 or more variable names in <code>mm</code> to plot on each axis. If NULL, the default, then all coverage variables will be plotted. (<em>Default: </em> <code>NULL</code>)</p></td>
     </tr>
     <tr>
       <th>textsize</th>
-      <td></td>
+      <td><p>The text size of the axis titles.</p></td>
     </tr>
     <tr>
-      <th>log</th>
-      <td></td>
+      <th>...</th>
+      <td><p>Arguments passed on to <code><a href='mmplot.html'>mmplot</a></code>, eg. <code>color_by</code>, <code>min_length</code>, axis scales and more, see help("mmplot").</p></td>
     </tr>
     </table>
     
