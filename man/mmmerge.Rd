@@ -14,8 +14,11 @@ mmmerge(x, y, type)
 \item{type}{Character string defining the type of data being merged}
 }
 \value{
-A tibble
+A tibble.
 }
 \description{
 Internal function used in mmload. \code{y} can be a named vector, dataframe, or a list containing any of these types of data to be merged with \code{x}.
+}
+\author{
+Kasper Skytte Andersen \email{ksa@bio.aau.dk}
 }

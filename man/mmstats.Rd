@@ -2,10 +2,23 @@
 % Please edit documentation in R/mmstats.R
 \name{mmstats}
 \alias{mmstats}
-\title{Print summary of basic statistics}
+\title{Print basic statistics of metagenome data}
 \usage{
 mmstats(mm)
 }
 \arguments{
 \item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}
+}
+\value{
+A dataframe with the calculated stats.
+}
+\description{
+Calculates some basic statistics like the N50 length, minimum-, mean-, and maximum scaffold lengths, mean GC content, information about essential genes, and more...
+}
+\author{
+Kasper Skytte Andersen \email{ksa@bio.aau.dk}
+
+Soren M. Karst \email{smk@bio.aau.dk}
+
+Mads Albertsen \email{MadsAlbertsen85@gmail.com}
 }

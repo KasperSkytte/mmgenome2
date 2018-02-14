@@ -8,7 +8,9 @@
 #' 
 #' @import dplyr
 #'
-#' @return A tibble
+#' @return A tibble.
+#' 
+#' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
 mmmerge <- function(x, y, type) {
   #must be a data frame, named atomic vector, or a list of data frames and/or named vectors
   if(any(class(y) %in% c("list", "data.frame", "tbl", "tbl_df")) | is.atomic(y) | is.factor(y)) {

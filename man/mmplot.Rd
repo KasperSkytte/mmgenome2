@@ -42,3 +42,16 @@ mmplot(mm, x, y, min_length = 0, color_by = NULL, locator = FALSE,
 
 \item{shared_genes}{(\emph{Logical}) If \code{TRUE}, lines will be drawn between scaffolds with any shared gene(s). (\emph{Default: } \code{FALSE})}
 }
+\value{
+A ggplot2 object.
+}
+\description{
+Plots any information about the scaffolds contained in the given mm object as a scatterplot, for example different coverage variables, scaffold length, GC content, or anything else that were loaded with \code{\link{mmload}}. Scaffolds can then be highlighted and extracted using the locator and selection features.
+}
+\author{
+Kasper Skytte Andersen \email{ksa@bio.aau.dk}
+
+Soren M. Karst \email{smk@bio.aau.dk}
+
+Mads Albertsen \email{MadsAlbertsen85@gmail.com}
+}

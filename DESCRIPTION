@@ -20,7 +20,6 @@ Imports:
     grid,
     cowplot,
     ggplot2,
-    gridExtra,
     dplyr,
     vegan,
     Biostrings,

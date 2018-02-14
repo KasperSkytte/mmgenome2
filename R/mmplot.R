@@ -1,4 +1,6 @@
 #' @title Visualise metagenomes in various ways
+#' 
+#' @description Plots any information about the scaffolds contained in the given mm object as a scatterplot, for example different coverage variables, scaffold length, GC content, or anything else that were loaded with \code{\link{mmload}}. Scaffolds can then be highlighted and extracted using the locator and selection features.
 #'
 #' @param mm (\emph{required}) A dataframe loaded with \code{\link{mmload}}.
 #' @param x (\emph{required}) The variable from \code{mm} to plot on the first axis.
@@ -19,9 +21,15 @@
 #'
 #' @export
 #' 
+#' @return A ggplot2 object.
+#' 
 #' @import ggplot2
 #' @import tidyr
 #' @import tibble
+#' 
+#' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
+#' @author Soren M. Karst \email{smk@@bio.aau.dk}
+#' @author Mads Albertsen \email{MadsAlbertsen85@@gmail.com}
 mmplot <- function(mm,
                    x,
                    y, 

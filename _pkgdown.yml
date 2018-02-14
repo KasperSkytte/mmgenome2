@@ -10,20 +10,20 @@ template:
     bootswatch: yeti
 
 reference:
-  - title: Data and filtering
-    desc: Functions for loading, exporting and subsetting the data.
+  - title: Loading and exporting data
+    desc: Use `mmload` to load and merge metagenomic data, `mmstats` to show basic stats of the data, and `mmexport` to export the DNA sequences of binned scaffolds.
     contents:
     - mmload
     - mmstats
     - mmexport
-  - title: Metagenome plotting
-    desc: Functions for plotting and extracting scaffolds
+  - title: Metagenome plotting and exploration
+    desc: Functions for plotting metagenomes and identifying individual genomes. 
     contents: 
     - mmplot
     - mmplot_pairs
     - mmnetwork
   - title: Extracting scaffolds from metagenomes
-    desc: Extracting
+    desc: Functions for extracting individual genomes from metagenomes for further exploration or exportation with `mmexport`. 
     contents: 
     - mmextract
     - mmexpand_network

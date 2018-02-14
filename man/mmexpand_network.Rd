@@ -22,6 +22,16 @@ mmexpand_network(mm, scaffolds, network, min_connections = 2,
   \item{\code{"all"}}{Same as \code{"direct"}, except that any further connections to connected scaffolds are also included, continuing until no further connections are found.}
 }}
 }
+\value{
+A dataframe (tibble) compatible with other mmgenome2 functions.
+}
 \description{
-Find connections of a subset of scaffolds in a larger set of scaffolds
+Searches for all connections between the given set of \code{scaffolds} and the scaffolds in \code{mm}. The given set of \code{scaffolds} is often a subset of \code{mm}, but can also be a manually selected set of scaffolds from which to find connections in \code{mm}.
+}
+\author{
+Kasper Skytte Andersen \email{ksa@bio.aau.dk}
+
+Soren M. Karst \email{smk@bio.aau.dk}
+
+Mads Albertsen \email{MadsAlbertsen85@gmail.com}
 }

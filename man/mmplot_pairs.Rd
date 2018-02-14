@@ -15,6 +15,16 @@ mmplot_pairs(mm, variables = NULL, textsize = 5, ...)
 
 \item{...}{Arguments passed on to \code{\link{mmplot}}, eg. \code{color_by}, \code{min_length}, axis scales and more, see help("mmplot").}
 }
+\value{
+A ggplot2 object.
+}
 \description{
-Plot multiple combinations of variables in a pairs plot
+Plots multiple variables from the given mm object in a grid plot with all pairs of variables using \code{\link{mmplot}}.
+}
+\author{
+Kasper Skytte Andersen \email{ksa@bio.aau.dk}
+
+Soren M. Karst \email{smk@bio.aau.dk}
+
+Mads Albertsen \email{MadsAlbertsen85@gmail.com}
 }

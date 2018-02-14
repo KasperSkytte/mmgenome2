@@ -14,8 +14,17 @@ mmlocator(plot, x_scale = NULL, y_scale = NULL)
 \item{y_scale}{y axis scale, \code{"sqrt"} or \code{"log10"}.}
 }
 \value{
-A data frame with the x/y coordinates of the mousepositions clicked in the ggplot2 plot
+A data frame with the x/y coordinates of the mousepositions clicked in the ggplot2 plot.
 }
 \description{
 Internal function used within mmplot and mmplot_network
+}
+\author{
+Kasper Skytte Andersen \email{ksa@bio.aau.dk}
+
+Rasmus Hansen Kirkegaard \email{rhk@bio.aau.dk}
+
+Soren M. Karst \email{smk@bio.aau.dk}
+
+Mads Albertsen \email{MadsAlbertsen85@gmail.com}
 }

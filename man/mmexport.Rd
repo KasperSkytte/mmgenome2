@@ -15,5 +15,12 @@ mmexport(scaffolds, assembly = get("assembly", envir = .GlobalEnv),
 \item{file}{The file path and file name of the file to write the sequences to. (\emph{Default: } \code{"exported_assembly.fa"})}
 }
 \description{
-Writes the DNA sequences of a set of scaffolds from the assembly to a FASTA file.
+Writes the DNA sequences of a given set of scaffolds from the assembly to a FASTA file.
+}
+\author{
+Kasper Skytte Andersen \email{ksa@bio.aau.dk}
+
+Soren M. Karst \email{smk@bio.aau.dk}
+
+Mads Albertsen \email{MadsAlbertsen85@gmail.com}
 }

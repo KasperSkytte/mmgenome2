@@ -35,3 +35,9 @@ mmload(assembly, coverage, essential_genes = NULL, taxonomy = NULL,
 \value{
 A dataframe (tibble) compatible with other mmgenome2 functions.
 }
+\description{
+Loads, validates and combines multiple aspects of metagenome data into one dataframe for use with all mmgenome2 functions, including scaffold assembly sequences, scaffold coverage, essential genes, taxonomy, and more.
+}
+\author{
+Kasper Skytte Andersen \email{ksa@bio.aau.dk}
+}

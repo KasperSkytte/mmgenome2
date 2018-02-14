@@ -86,7 +86,9 @@
     <h1>Visualise metagenomes in various ways</h1>
     </div>
 
-
+    
+    <p>Plots any information about the scaffolds contained in the given mm object as a scatterplot, for example different coverage variables, scaffold length, GC content, or anything else that were loaded with <code><a href='mmload.html'>mmload</a></code>. Scaffolds can then be highlighted and extracted using the locator and selection features.</p>
+    
 
     <pre class="usage"><span class='fu'>mmplot</span>(<span class='no'>mm</span>, <span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>min_length</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>color_by</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>locator</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>selection</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>x_scale</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>x_limits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y_scale</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -162,13 +164,27 @@
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A ggplot2 object.</p>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#value">Value</a></li>
+          </ul>
+
+    <h2>Author</h2>
+    
+Kasper Skytte Andersen <a href='mailto:ksa@bio.aau.dk'>ksa@bio.aau.dk</a>
+
+Soren M. Karst <a href='mailto:smk@bio.aau.dk'>smk@bio.aau.dk</a>
+
+Mads Albertsen <a href='mailto:MadsAlbertsen85@gmail.com'>MadsAlbertsen85@gmail.com</a>
 
   </div>
 </div>

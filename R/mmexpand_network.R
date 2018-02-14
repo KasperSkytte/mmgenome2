@@ -1,4 +1,6 @@
-#' Find connections of a subset of scaffolds in a larger set of scaffolds
+#' @title Find connections of a subset of scaffolds in a larger set of scaffolds
+#' 
+#' @description Searches for all connections between the given set of \code{scaffolds} and the scaffolds in \code{mm}. The given set of \code{scaffolds} is often a subset of \code{mm}, but can also be a manually selected set of scaffolds from which to find connections in \code{mm}. 
 #'
 #' @param mm (\emph{required}) A dataframe loaded with \code{\link{mmload}} in which to find connections from \code{scaffolds}.
 #' @param scaffolds (\emph{required}) The scaffolds from which to find connections in \code{mm}. Must be a vector of scaffold names or a dataframe with scaffold names in the first column.
@@ -9,11 +11,18 @@
 #'   \item{\code{"direct"}}{Extract only scaffolds from \code{mm} that are directly connected to any of the scaffolds in \code{scaffolds}. (\emph{default})}
 #'   \item{\code{"all"}}{Same as \code{"direct"}, except that any further connections to connected scaffolds are also included, continuing until no further connections are found.}
 #' }
+#' 
 #' @export
+#' 
+#' @return A dataframe (tibble) compatible with other mmgenome2 functions.
 #' 
 #' @import igraph
 #' @import dplyr
-#'
+#' @import tibble
+#' 
+#' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
+#' @author Soren M. Karst \email{smk@@bio.aau.dk}
+#' @author Mads Albertsen \email{MadsAlbertsen85@@gmail.com}
 mmexpand_network <- function(mm,
                              scaffolds, 
                              network,
@@ -40,5 +49,5 @@ mmexpand_network <- function(mm,
     ext.scaffolds <- dplyr::filter(clusters, clusters$cluster %in% ext.clusters$cluster)
     out <- dplyr::filter(mm, mm[[1]] %in% scaffolds | mm[[1]] %in% ext.scaffolds$scaffold)
   }
-  return(out)  
+  return(tibble::as_tibble(out))
 }

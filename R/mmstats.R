@@ -1,10 +1,18 @@
-#' @title Print summary of basic statistics
+#' @title Print basic statistics of metagenome data
+#' 
+#' @description Calculates some basic statistics like the N50 length, minimum-, mean-, and maximum scaffold lengths, mean GC content, information about essential genes, and more...
 #'
 #' @param mm (\emph{required}) A dataframe loaded with \code{\link{mmload}}.
 #' @export
 #'
+#' @return A dataframe with the calculated stats.
+#'
 #' @import dplyr
 #' @import tidyr
+#' 
+#' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
+#' @author Soren M. Karst \email{smk@@bio.aau.dk}
+#' @author Mads Albertsen \email{MadsAlbertsen85@@gmail.com}
 mmstats <- function(mm) {
   mm$length <- as.numeric(mm$length)
   lengthTotal <- sum(mm$length)

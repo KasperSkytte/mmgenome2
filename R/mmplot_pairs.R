@@ -1,4 +1,6 @@
-#' Plot multiple combinations of variables in a pairs plot
+#' @title Plot multiple combinations of variables in a pairs plot
+#' 
+#' @description Plots multiple variables from the given mm object in a grid plot with all pairs of variables using \code{\link{mmplot}}. 
 #'
 #' @param mm (\emph{required}) A dataframe loaded with \code{\link{mmload}}.
 #' @param variables A vector of 3 or more variable names in \code{mm} to plot on each axis. If NULL, the default, then all coverage variables will be plotted. (\emph{Default: } \code{NULL})
@@ -7,10 +9,15 @@
 #'
 #' @export
 #' 
+#' @return A ggplot2 object.
+#' 
 #' @import cowplot
 #' @import dplyr
 #' @import ggplot2
-#'
+#' 
+#' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
+#' @author Soren M. Karst \email{smk@@bio.aau.dk}
+#' @author Mads Albertsen \email{MadsAlbertsen85@@gmail.com}
 mmplot_pairs <- function(mm, 
                          variables = NULL, 
                          textsize = 5,

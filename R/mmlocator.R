@@ -6,11 +6,16 @@
 #' @param x_scale x axis scale, \code{"sqrt"} or \code{"log10"}.
 #' @param y_scale y axis scale, \code{"sqrt"} or \code{"log10"}.
 #'
-#' @return A data frame with the x/y coordinates of the mousepositions clicked in the ggplot2 plot
+#' @return A data frame with the x/y coordinates of the mousepositions clicked in the ggplot2 plot.
 #' 
 #' @import ggplot2
 #' @import grid
 #' @import clipr
+#' 
+#' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
+#' @author Rasmus Hansen Kirkegaard \email{rhk@@bio.aau.dk}
+#' @author Soren M. Karst \email{smk@@bio.aau.dk}
+#' @author Mads Albertsen \email{MadsAlbertsen85@@gmail.com}
 mmlocator <- function(plot, x_scale = NULL, y_scale = NULL) {
   #build ggplot object to be able to extract axis ranges, and show the plot
   suppressWarnings(ggobj <- ggplot2::ggplot_build(plot))
