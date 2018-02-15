@@ -118,6 +118,32 @@
     <p>A ggplot2 object.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>mmgenome2</span>)
+<span class='fu'>data</span>(<span class='no'>mmgenome2</span>)
+<span class='no'>mmgenome2</span></div><div class='output co'>#&gt; # A tibble: 97,285 x 10
+#&gt;    scaffold length    gc cov_C13.11.14 cov_C13.11.25 cov_C13.12.03
+#&gt;    &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+#&gt;  1 1          8264  57.8       1.44             53.6         0    
+#&gt;  2 2          1027  57.0       0.625            24.2         0    
+#&gt;  3 3          1665  55.9      13.5             434           0.166
+#&gt;  4 4          9056  35.9       0.0100           23.4         0    
+#&gt;  5 5          3343  64.0       3.20             16.4         0    
+#&gt;  6 6         98207  39.1       0.00966          24.5         3.29 
+#&gt;  7 7          6480  63.0       2.61             19.2         1.46 
+#&gt;  8 8         15790  61.7       2.78             21.2         1.62 
+#&gt;  9 9          1403  70.4      85.1             192           0    
+#&gt; 10 10         2018  70.2      50.3             101           0    
+#&gt; # ... with 97,275 more rows, and 4 more variables: cov_C14.01.09 &lt;dbl&gt;,
+#&gt; #   geneID &lt;chr&gt;, phylum &lt;fct&gt;, rRNA16S &lt;fct&gt;</div><div class='input'><span class='fu'>mmplot_pairs</span>(<span class='no'>mmgenome2</span>,
+             <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"cov_C13.11.14"</span>, <span class='st'>"cov_C13.11.25"</span>, <span class='st'>"cov_C13.12.03"</span>, <span class='st'>"cov_C14.01.09"</span>),
+             <span class='kw'>min_length</span> <span class='kw'>=</span> <span class='fl'>10000</span>,
+             <span class='kw'>color_by</span> <span class='kw'>=</span> <span class='st'>"phylum"</span>,
+             <span class='kw'>x_scale</span> <span class='kw'>=</span> <span class='st'>"log10"</span>,
+             <span class='kw'>y_scale</span> <span class='kw'>=</span> <span class='st'>"log10"</span>,
+             <span class='kw'>x_limits</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>NA</span>),
+             <span class='kw'>y_limits</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>NA</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: Transformation introduced infinite values in continuous x-axis</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Transformation introduced infinite values in continuous y-axis</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Transformation introduced infinite values in continuous x-axis</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Transformation introduced infinite values in continuous y-axis</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Transformation introduced infinite values in continuous x-axis</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Transformation introduced infinite values in continuous y-axis</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Transformation introduced infinite values in continuous x-axis</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Transformation introduced infinite values in continuous y-axis</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Transformation introduced infinite values in continuous x-axis</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Transformation introduced infinite values in continuous y-axis</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Transformation introduced infinite values in continuous x-axis</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Transformation introduced infinite values in continuous y-axis</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Transformation introduced infinite values in continuous x-axis</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Transformation introduced infinite values in continuous y-axis</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Transformation introduced infinite values in continuous x-axis</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Transformation introduced infinite values in continuous y-axis</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Transformation introduced infinite values in continuous x-axis</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Transformation introduced infinite values in continuous y-axis</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Transformation introduced infinite values in continuous x-axis</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Transformation introduced infinite values in continuous y-axis</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Transformation introduced infinite values in continuous x-axis</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Transformation introduced infinite values in continuous y-axis</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Transformation introduced infinite values in continuous x-axis</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Transformation introduced infinite values in continuous y-axis</span></div><div class='img'><img src='mmplot_pairs-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -125,7 +151,9 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     

@@ -3,12 +3,29 @@
 #' @description Writes the DNA sequences of a given set of scaffolds from the assembly to a FASTA file. 
 #'
 #' @param scaffolds (\emph{required}) Either a vector of scaffold names or a dataframe loaded with \code{\link{mmload}} containing the scaffolds to extract from the \code{assembly}.
-#' @param assembly (\emph{required}) The assembly to subset and export. Must be an object of class \code{"DNAStringSet"} as loaded with \code{\link[Biostrings]{readDNAStringSet}}. By default any object named "assembly" in the global environment will be used.
+#' @param assembly (\emph{required}) The assembly to subset and export. Must be an object of class \code{"DNAStringSet"} as loaded with \code{\link{readDNAStringSet}}. By default any object named "assembly" in the global environment will be used.
 #' @param file The file path and file name of the file to write the sequences to. (\emph{Default: } \code{"exported_assembly.fa"}) 
 #'
 #' @export
 #' 
 #' @import Biostrings
+#' 
+#' @examples 
+#' \dontrun{
+#' library(mmgenome2)
+#' data(mmgenome2)
+#' mmgenome2
+#' selection <- data.frame(cov_C14.01.09 = c(24.852, 32.545, 53.062, 38.52),
+#'                         cov_C13.12.03 = c(7.676, 5.165, 6.386, 10.933))
+#' mmgenome2_extraction <- mmextract(mmgenome2, 
+#'                                   min_length = 3000,
+#'                                   selection = selection,
+#'                                   inverse = FALSE)
+#' mmgenome2_extraction
+#' mmexport(mmgenome2_extraction,
+#'          assembly = assembly,
+#'          file = "exported_assembly.fa")
+#' }
 #' 
 #' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
 #' @author Soren M. Karst \email{smk@@bio.aau.dk}

@@ -15,6 +15,19 @@
 #' @import dplyr
 #' @import ggplot2
 #' 
+#' @examples
+#' library(mmgenome2)
+#' data(mmgenome2)
+#' mmgenome2
+#' mmplot_pairs(mmgenome2,
+#'              variables = c("cov_C13.11.14", "cov_C13.11.25", "cov_C13.12.03", "cov_C14.01.09"),
+#'              min_length = 10000,
+#'              color_by = "phylum",
+#'              x_scale = "log10",
+#'              y_scale = "log10",
+#'              x_limits = c(1, NA),
+#'              y_limits = c(1, NA))
+#' 
 #' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
 #' @author Soren M. Karst \email{smk@@bio.aau.dk}
 #' @author Mads Albertsen \email{MadsAlbertsen85@@gmail.com}
@@ -22,6 +35,15 @@ mmplot_pairs <- function(mm,
                          variables = NULL, 
                          textsize = 5,
                          ...) {
+  args <- list(...)
+  if(any(names(args) == "locator")) {
+    if(isTRUE(args[["locator"]]))
+      stop("mmplot_pairs does not support the locator feature")
+  }
+  if(any(names(args) == "selection")) {
+    if(!is.null(args[["selection"]]))
+      stop("mmplot_pairs cannot highlight a \"selection\", use mmplot instead")
+  }
   if(is.null(variables)) {
     variables <- names(dplyr::select(mm, dplyr::starts_with("cov_")))
   }

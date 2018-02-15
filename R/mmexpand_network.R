@@ -20,6 +20,25 @@
 #' @import dplyr
 #' @import tibble
 #' 
+#' @examples 
+#' library(mmgenome2)
+#' data(mmgenome2)
+#' data(paired_ends)
+#' mmgenome2
+#' selection <- data.frame(cov_C14.01.09 = c(24.852, 32.545, 53.062, 38.52),
+#'                         cov_C13.12.03 = c(7.676, 5.165, 6.386, 10.933))
+#' mmgenome2_extraction <- mmextract(mmgenome2, 
+#'                                   min_length = 3000,
+#'                                   selection = selection,
+#'                                   inverse = FALSE)
+#' mmgenome2_extraction
+#' mmgenome2_extraction_expanded <- mmexpand_network(mm = mmgenome2,
+#'                                                   scaffolds = mmgenome2_extraction, 
+#'                                                   network = paired_ends,
+#'                                                   min_connections = 10,
+#'                                                   include_connections = "direct")
+#' mmgenome2_extraction_expanded
+#' 
 #' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
 #' @author Soren M. Karst \email{smk@@bio.aau.dk}
 #' @author Mads Albertsen \email{MadsAlbertsen85@@gmail.com}

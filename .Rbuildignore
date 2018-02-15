@@ -4,3 +4,4 @@
 ^docs$
 ^test$
 .Rhistory
+^\.httr-oauth$

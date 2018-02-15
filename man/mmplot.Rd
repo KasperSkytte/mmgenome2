@@ -48,6 +48,34 @@ A ggplot2 object.
 \description{
 Plots any information about the scaffolds contained in the given mm object as a scatterplot, for example different coverage variables, scaffold length, GC content, or anything else that were loaded with \code{\link{mmload}}. Scaffolds can then be highlighted and extracted using the locator and selection features.
 }
+\examples{
+library(mmgenome2)
+data(mmgenome2)
+mmgenome2
+mmplot(mmgenome2,
+       min_length = 10000,
+       x = "cov_C13.12.03",
+       y = "cov_C14.01.09",
+       color_by = "phylum",
+       #locator = TRUE,
+       x_scale = "log10",
+       y_scale = "log10")
+#Set "locator = TRUE" to interactively capture the coordinates of 
+#mouse clicks in an mmplot, or provide coordinates with "selection":
+selection <- data.frame(cov_C13.12.03 = c(7.676, 5.165, 6.386, 10.933), 
+                        cov_C14.01.09 = c(24.852, 32.545, 53.062, 38.52))
+mmplot(mmgenome2,
+       min_length = 10000,
+       x = "cov_C13.12.03",
+       y = "cov_C14.01.09",
+       color_by = "phylum",
+       x_scale = "log10",
+       y_scale = "log10",
+       x_limits = c(1,NA), #zoom in at minimum 1x coverage
+       y_limits = c(1,NA), #zoom in at minimum 1x coverage
+       selection = selection) #highlight the selection marked with locator
+
+}
 \author{
 Kasper Skytte Andersen \email{ksa@bio.aau.dk}
 

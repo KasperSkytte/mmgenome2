@@ -10,6 +10,12 @@
 #' @import dplyr
 #' @import tidyr
 #' 
+#' @examples 
+#' library(mmgenome2)
+#' data(mmgenome2)
+#' mmgenome2
+#' mmstats(mmgenome2)
+#' 
 #' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
 #' @author Soren M. Karst \email{smk@@bio.aau.dk}
 #' @author Mads Albertsen \email{MadsAlbertsen85@@gmail.com}

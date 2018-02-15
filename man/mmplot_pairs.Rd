@@ -21,6 +21,20 @@ A ggplot2 object.
 \description{
 Plots multiple variables from the given mm object in a grid plot with all pairs of variables using \code{\link{mmplot}}.
 }
+\examples{
+library(mmgenome2)
+data(mmgenome2)
+mmgenome2
+mmplot_pairs(mmgenome2,
+             variables = c("cov_C13.11.14", "cov_C13.11.25", "cov_C13.12.03", "cov_C14.01.09"),
+             min_length = 10000,
+             color_by = "phylum",
+             x_scale = "log10",
+             y_scale = "log10",
+             x_limits = c(1, NA),
+             y_limits = c(1, NA))
+
+}
 \author{
 Kasper Skytte Andersen \email{ksa@bio.aau.dk}
 

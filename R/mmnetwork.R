@@ -29,6 +29,21 @@
 #' @import sp
 #' @import tibble
 #' 
+#' @examples 
+#' library(mmgenome2)
+#' data(mmgenome2)
+#' data(paired_ends)
+#' mmgenome2
+#' selection <- data.frame(cov_C14.01.09 = c(24.852, 32.545, 53.062, 38.52),
+#'                         cov_C13.12.03 = c(7.676, 5.165, 6.386, 10.933))
+#' mmgenome2_extraction <- mmextract(mmgenome2, selection = selection)
+#' mmgenome2_extraction
+#' mmnetwork(mmgenome2_extraction, 
+#'           network = paired_ends, 
+#'           min_connections = 10,
+#'           color_by = "phylum",
+#'           locator = FALSE)
+#' 
 #' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
 #' @author Soren M. Karst \email{smk@@bio.aau.dk}
 #' @author Mads Albertsen \email{MadsAlbertsen85@@gmail.com}
@@ -84,7 +99,9 @@ mmnetwork <- function(mm,
     if(is.factor(mm[[color_by]]) | is.character(mm[[color_by]])) {
       p <- p +
         geom_point(alpha = 0.1, color = "black") +
-        geom_point(data = subset(gpoints, gpoints[[color_by]] != "NA"), shape = 1) +
+        geom_point(data = subset(gpoints, gpoints[[color_by]] != "NA"), 
+                   aes_(color = color_by),
+                   shape = 1) +
         guides(colour = guide_legend(override.aes = list(alpha = 1, size = 5, shape = 19)))
     } else if(is.numeric(mm[[color_by]])) {
       p <- p +
@@ -108,11 +125,10 @@ mmnetwork <- function(mm,
   p <- p + 
     theme(panel.grid.major = element_blank(), 
           panel.grid.minor = element_blank(), 
-          axis.text.x = element_blank(),
-          axis.text.y = element_blank(),
-          axis.title.x = element_blank(),
-          axis.title.y = element_blank(),
+          axis.text = element_blank(),
+          axis.title = element_blank(),
           axis.ticks = element_blank(),
+          axis.line = element_blank(),
           panel.border = element_blank(),
           panel.background = element_blank(),
           legend.key = element_blank())

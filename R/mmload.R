@@ -2,7 +2,7 @@
 #' 
 #' @description Loads, validates and combines multiple aspects of metagenome data into one dataframe for use with all mmgenome2 functions, including scaffold assembly sequences, scaffold coverage, essential genes, taxonomy, and more.
 #'
-#' @param assembly (\emph{required}) A character string with the path to the assembly FASTA file, or the assembly as already loaded with \code{\link[Biostrings]{readDNAStringSet}}.
+#' @param assembly (\emph{required}) A character string with the path to the assembly FASTA file, or the assembly as already loaded with \code{\link{readDNAStringSet}}.
 #' @param coverage (\emph{required}) A \code{vector}, \code{dataframe}, or a \code{list} hereof containing coverage of each scaffold. The prefix \code{"cov_"} will be appended to all coverage column names in the output.
 #' \describe{
 #'   \item{\code{vector}}{If provided as a vector, the elements of the vector must be named by the scaffold names exactly matching those of the assembly.}
@@ -27,6 +27,18 @@
 #' @import dplyr
 #' @import vegan
 #' @import Rtsne.multicore
+#' 
+#' @examples 
+#' \dontrun{
+#'   library(mmgenome2)
+#'   mm <- mmload(
+#'     assembly = "path/to/assembly.fa",
+#'     coverage = list(read.csv("path/to/coveragetable1.csv", col.names = TRUE),
+#'                     read.csv("path/to/coveragetable2.csv", col.names = TRUE)),
+#'     essential_genes = read.csv("path/to/ess_genes.txt", col.names = TRUE),
+#'     verbose = TRUE
+#'   )
+#' }
 #' 
 #' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
 mmload <- function(assembly,

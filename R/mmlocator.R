@@ -17,6 +17,8 @@
 #' @author Soren M. Karst \email{smk@@bio.aau.dk}
 #' @author Mads Albertsen \email{MadsAlbertsen85@@gmail.com}
 mmlocator <- function(plot, x_scale = NULL, y_scale = NULL) {
+  if(!interactive())
+    stop("Locator can only be used interactively by humans!")
   #build ggplot object to be able to extract axis ranges, and show the plot
   suppressWarnings(ggobj <- ggplot2::ggplot_build(plot))
   suppressWarnings(print(ggobj$plot))

@@ -15,6 +15,13 @@ A dataframe with the calculated stats.
 \description{
 Calculates some basic statistics like the N50 length, minimum-, mean-, and maximum scaffold lengths, mean GC content, information about essential genes, and more...
 }
+\examples{
+library(mmgenome2)
+data(mmgenome2)
+mmgenome2
+mmstats(mmgenome2)
+
+}
 \author{
 Kasper Skytte Andersen \email{ksa@bio.aau.dk}
 

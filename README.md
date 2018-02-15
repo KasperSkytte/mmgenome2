@@ -1,9 +1,7 @@
-#mmgenome2
+# mmgenome2
 
-##Installation
+## Installation
 ```r
-if(!require(remotes)) {
-  install.packages("remotes")
-}
-remotes::install_github("MadsAlbertsen/mmgenome2")
+source("https://bioconductor.org/biocLite.R")
+biocLite("kasperskytte/mmgenome2")
 ```
