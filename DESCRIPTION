@@ -33,5 +33,5 @@ Imports:
     tidyr
 Remotes: 
     github::RGLab/Rtsne.multicore,
-    bioc::release/Biostrings
+    bioc::3.5/Biostrings
 RoxygenNote: 6.0.1
