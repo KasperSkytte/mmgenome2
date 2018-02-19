@@ -36,9 +36,9 @@ mmexport <- function(scaffolds,
   if(!any(class(assembly) == "DNAStringSet"))
     stop("The provided assembly is not of class \"DNAStringSet\". Use Biostrings::readDNAStringSet(path, format = \"fasta\") to load the assembly.")
   if(is.data.frame(scaffolds)) {
-    scaffolds <- scaffolds[[1]]
-  } else if(!is.vector(scaffolds) | !is.data.frame(scaffolds)) {
-    stop("Scaffolds must be provided either as a vector or as a dataframe, where the first column contains the scaffold names.")
+    scaffolds <- as.character(scaffolds[[1]])
+  } else if(!any(is.vector(scaffolds), is.data.frame(scaffolds))) {
+    stop("Scaffolds must be provided either as a vector, or as a dataframe, where the first column contains the scaffold names.")
   }
   Biostrings::writeXStringSet(assembly[scaffolds], filepath = file)
 }

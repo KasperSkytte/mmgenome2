@@ -48,9 +48,9 @@ mmexpand_network <- function(mm,
                              min_connections = 2,
                              include_connections = "direct") {
   if(is.data.frame(scaffolds)) {
-    scaffolds <- scaffolds[[1]]
-  } else if(!is.vector(scaffolds) | !is.data.frame(scaffolds)) {
-    stop("Scaffolds must be provided either as a vector or as a dataframe, where the first column contains the scaffold names.")
+    scaffolds <- as.character(scaffolds[[1]])
+  } else if(!any(is.vector(scaffolds), is.data.frame(scaffolds))) {
+    stop("Scaffolds must be provided either as a vector, or as a dataframe, where the first column contains the scaffold names.")
   }
   
   if (include_connections == "direct"){

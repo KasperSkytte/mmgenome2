@@ -5,9 +5,11 @@
 \title{Visualise metagenomes in various ways}
 \usage{
 mmplot(mm, x, y, min_length = 0, color_by = NULL, locator = FALSE,
-  selection = NULL, x_scale = NULL, x_limits = NULL, y_scale = NULL,
-  y_limits = NULL, alpha = 0.1, scaffold_labels = FALSE,
-  fixed_size = NULL, size_scale = 1, shared_genes = FALSE)
+  selection = NULL, network = NULL, shared_genes = FALSE,
+  scaffold_labels = FALSE, highlight = NULL, highlight_color = "darkred",
+  x_scale = NULL, x_limits = NULL, y_scale = NULL, y_limits = NULL,
+  alpha = 0.1, fixed_size = NULL, size_scale = 1,
+  color_vector = c("red", "green", "blue"))
 }
 \arguments{
 \item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}
@@ -24,6 +26,16 @@ mmplot(mm, x, y, min_length = 0, color_by = NULL, locator = FALSE,
 
 \item{selection}{A 2-column dataframe with the x and y coordinates of points with which to draw a polygon onto the plot to highlight a selected region. A selection can be obtained by using the locator feature (by \code{locator = TRUE}). (\emph{Default: } \code{NULL})}
 
+\item{network}{Paired-end or mate-pair connections between scaffolds in long format. The first and second columns must contain all connected scaffold pairs and the third column the number of connections.}
+
+\item{shared_genes}{(\emph{Logical}) If \code{TRUE}, lines will be drawn between scaffolds with any shared gene(s). (\emph{Default: } \code{FALSE})}
+
+\item{scaffold_labels}{Add labels of a selection of scaffolds by providing either a character vector of scaffold names, or a dataframe with scaffold names in the first column. If set to \code{TRUE} then \emph{all} scaffolds will be labelled. (\emph{Default: } \code{FALSE})}
+
+\item{highlight}{A vector of scaffold names or a dataframe loaded with \code{\link{mmload}} containing scaffolds to highlight in the plot with the color set by \code{highlight_color}. (\emph{Default: } \code{NULL})}
+
+\item{highlight_color}{The color with which to highlight the scaffolds set by \code{highlight}. (\emph{Default: } \code{"darkred"})}
+
 \item{x_scale}{Log10-scale (\code{"log10"}) or square-root scale \code{"sqrt"} the x axis. (\emph{Default: } \code{NULL})}
 
 \item{x_limits}{Axis limits of the x axis. (\emph{Default: } \code{NULL})}
@@ -34,13 +46,11 @@ mmplot(mm, x, y, min_length = 0, color_by = NULL, locator = FALSE,
 
 \item{alpha}{The transparancy of the scaffold points, where 0 is invisible and 1 is opaque. (\emph{Default: } \code{0.1})}
 
-\item{scaffold_labels}{Add labels of a selection of scaffolds by providing either a character vector of scaffold names, or a dataframe with scaffold names in the first column. If set to \code{TRUE} then \emph{all} scaffolds will be labelled. (\emph{Default: } \code{FALSE})}
-
 \item{fixed_size}{A fixed size for all scaffolds if set. If \code{NULL} then the scaffolds are scaled by length. (\emph{Default: } \code{NULL})}
 
 \item{size_scale}{A factor to scale the sizes of the scaffolds plotted. Only applies when \code{fixed_size} is set to \code{NULL} and the scaffolds are scaled by length. (\emph{Default: } \code{1})}
 
-\item{shared_genes}{(\emph{Logical}) If \code{TRUE}, lines will be drawn between scaffolds with any shared gene(s). (\emph{Default: } \code{FALSE})}
+\item{color_vector}{The colors from which to generate a color gradient when \code{color_by} is set and the variable is continuous. Any number of colors can be used. (\emph{Default: } \code{c("red", "green", "blue")})}
 }
 \value{
 A ggplot2 object.

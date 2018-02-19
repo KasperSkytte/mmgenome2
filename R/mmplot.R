@@ -14,10 +14,14 @@
 #' @param y_limits Axis limits of the y axis. (\emph{Default: } \code{NULL})
 #' @param color_by Color the scaffolds by a variable in \code{mm}. (\emph{Default: } \code{NULL})
 #' @param alpha The transparancy of the scaffold points, where 0 is invisible and 1 is opaque. (\emph{Default: } \code{0.1})
+#' @param highlight A vector of scaffold names or a dataframe loaded with \code{\link{mmload}} containing scaffolds to highlight in the plot with the color set by \code{highlight_color}. (\emph{Default: } \code{NULL})
+#' @param highlight_color The color with which to highlight the scaffolds set by \code{highlight}. (\emph{Default: } \code{"darkred"})
 #' @param scaffold_labels Add labels of a selection of scaffolds by providing either a character vector of scaffold names, or a dataframe with scaffold names in the first column. If set to \code{TRUE} then \emph{all} scaffolds will be labelled. (\emph{Default: } \code{FALSE})
 #' @param fixed_size A fixed size for all scaffolds if set. If \code{NULL} then the scaffolds are scaled by length. (\emph{Default: } \code{NULL})
 #' @param size_scale A factor to scale the sizes of the scaffolds plotted. Only applies when \code{fixed_size} is set to \code{NULL} and the scaffolds are scaled by length. (\emph{Default: } \code{1})
 #' @param shared_genes (\emph{Logical}) If \code{TRUE}, lines will be drawn between scaffolds with any shared gene(s). (\emph{Default: } \code{FALSE})
+#' @param network Paired-end or mate-pair connections between scaffolds in long format. The first and second columns must contain all connected scaffold pairs and the third column the number of connections. 
+#' @param color_vector The colors from which to generate a color gradient when \code{color_by} is set and the variable is continuous. Any number of colors can be used. (\emph{Default: } \code{c("red", "green", "blue")}) 
 #'
 #' @export
 #' 
@@ -64,15 +68,19 @@ mmplot <- function(mm,
                    color_by = NULL,
                    locator = FALSE,
                    selection = NULL,
+                   network = NULL,
+                   shared_genes = FALSE,
+                   scaffold_labels = FALSE,
+                   highlight = NULL,
+                   highlight_color = "darkred",
                    x_scale = NULL,
                    x_limits = NULL,
                    y_scale = NULL,
                    y_limits = NULL,
                    alpha = 0.1,
-                   scaffold_labels = FALSE,
                    fixed_size = NULL,
                    size_scale = 1,
-                   shared_genes = FALSE) {
+                   color_vector = c("red", "green", "blue")) {
   #Checks and error messages before anything else
   if(isTRUE(locator) & !is.null(selection))
     stop("Using the locator and highlighting a selection at the same time is not supported.")
@@ -102,7 +110,8 @@ mmplot <- function(mm,
     #if color_by is set and is numeric
     if(ifelse(!is.null(color_by), is.numeric(mm[[color_by]]), FALSE)) {
       p <- p + 
-        geom_point(alpha = alpha, na.rm = TRUE)
+        geom_point(alpha = alpha, na.rm = TRUE) +
+        scale_colour_gradientn(colours = color_vector, trans = "log10")
     } else {
       p <- p + 
         geom_point(alpha = alpha, color = "black", na.rm = TRUE) #all other variables than numerics are "black"
@@ -117,8 +126,15 @@ mmplot <- function(mm,
     }
   } else if(!is.null(fixed_size)) {
     #geom_point when fixed_size is NOT set
-    p <- p + 
-      geom_point(alpha = alpha, color = 'black', size = fixed_size, na.rm = TRUE) 
+    #if color_by is set and is numeric
+    if(ifelse(!is.null(color_by), is.numeric(mm[[color_by]]), FALSE)) {
+      p <- p + 
+        geom_point(alpha = alpha, size = fixed_size, na.rm = TRUE) +
+        scale_colour_gradientn(colours = color_vector)
+    } else {
+      p <- p + 
+        geom_point(alpha = alpha, color = "black", size = fixed_size, na.rm = TRUE) #all other variables than numerics are "black"
+    }
     #if color_by is set and is factor or character
     if(ifelse(!is.null(color_by), is.factor(mm[[color_by]]) | is.character(mm[[color_by]]), FALSE)) {
       p <- p +
@@ -181,23 +197,29 @@ mmplot <- function(mm,
   
   ##### network #####
   #extract connections between scaffolds
-  #if (!is.null(network)) {
-  #  snetwork <- subset(network, network$scaffold1 %in% data$scaffolds$scaffold & network$scaffold2 %in% data$scaffolds$scaffold & connections >= nconnections)
-  #  
-  #  links <- merge(snetwork, data$scaffolds[,c("scaffold",x,y)], by.x = "scaffold1", by.y = "scaffold") 
-  #  links <- merge(links, data$scaffolds[,c("scaffold",x,y)], by.x = "scaffold2", by.y = "scaffold") 
-  #  colnames(links)[4:7] <- c("x","y","xend","yend") 
-  #  p <- p +  
-  #    geom_segment(data = links, aes(x = x, y = y, xend = xend, yend = yend), color = "darkgrey", size = 1, alpha = 0.5) +
-  #    geom_point(data = links, aes(x = x, y = y), size = 2, color = "darkgrey") +
-  #    geom_point(data = links, aes(x = xend, y = yend), size = 2, color = "darkgrey")
-  #}
+  if (!is.null(network)) {
+    snetwork <- dplyr::filter(network, network[[1]] %in% mm[[1]] & network[[2]] %in% mm[[1]] & network[["connections"]] >= 1)
+    links <- merge(snetwork, mm[,c("scaffold",x,y)], by.x = 1, by.y = "scaffold") 
+    colnames(links)[(ncol(links)-1):ncol(links)] <- c("x", "y")
+    links <- merge(links, mm[,c("scaffold",x,y)], by.x = 2, by.y = "scaffold") 
+    colnames(links)[(ncol(links)-1):ncol(links)] <- c("xend", "yend")
+    
+    p <- p +  
+      geom_segment(data = links, aes(x = x, y = y, xend = xend, yend = yend), color = "darkgrey", size = 1, alpha = 0.5) +
+      geom_point(data = links, aes(x = x, y = y), size = 2, color = "darkgrey") +
+      geom_point(data = links, aes(x = xend, y = yend), size = 2, color = "darkgrey")
+  }
   
   ##### Highlight selected scaffolds #####
-  
-  #asdqweqwe
-  #qwqeqwe
-  #qweqweqwe
+  if (!is.null(highlight)) {
+    if(is.data.frame(highlight)) {
+      highlight <- as.character(highlight[[1]])
+    } else if(!any(is.vector(highlight), is.data.frame(highlight))) {
+      stop("Scaffolds to highlight must be provided either as a vector, or as a dataframe, where the first column contains the scaffold names.")
+    }
+    p <- p + 
+      geom_point(data = mm[which(mm[[1]] %in% highlight),], color = highlight_color, shape = 1)
+  }
   
   ##### Plot duplicates #####
   if (isTRUE(shared_genes)) {
