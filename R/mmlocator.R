@@ -41,8 +41,8 @@ mmlocator <- function(plot, x_scale = NULL, y_scale = NULL) {
   }
   
   ### Extract axis ranges. WARNING: keep an eye on changes in ggplot2 behind the scenes, accessing ranges has changed a few times already
-  xrange <- ggobj$layout$panel_params[[1]][["x.range"]]
-  yrange <- ggobj$layout$panel_params[[1]][["y.range"]]
+  xrange <- ggobj$layout$panel_ranges[[1]][["x.range"]]
+  yrange <- ggobj$layout$panel_ranges[[1]][["y.range"]]
   #rescale the relative positions by the axis ranges
   points[,1] <- (xrange[2]-xrange[1]) * points[,1] + xrange[1]
   points[,2] <- (yrange[2]-yrange[1]) * points[,2] + yrange[1]

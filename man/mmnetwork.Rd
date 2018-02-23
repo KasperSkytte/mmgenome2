@@ -18,7 +18,7 @@ mmnetwork(mm, network, min_connections = 2, color_by = NULL,
 
 \item{color_by}{Color the scaffolds by a variable in \code{mm}. (\emph{Default: } \code{NULL})}
 
-\item{color_scale_log10}{(\emph{Logical}) Log10-scale the colors of the variable defined by \code{color_by}. (\emph{Default: } \code{FALSE})}
+\item{color_scale_log10}{(\emph{Logical}) Log10-scale the color gradient when \code{color_by} is set and the variable is continuous (\emph{Default: } \code{FALSE})}
 
 \item{locator}{(\emph{Logical}) When \code{TRUE}, left-clicks in the plot are captured and the exact x/y-coordinates of the mouse clicks are captured and returned. These coordinates can be used to highlight a selection of scaffolds in the plot, and to extract all scaffolds within the selection. (\emph{Default: } \code{FALSE})}
 

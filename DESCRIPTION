@@ -16,12 +16,12 @@ License: AGPL-3
 BugReports: https://github.com/MadsAlbertsen/mmgenome2/issues
 LazyData: true
 Depends:
-    R (>= 3.4.3)
+    R (>= 3.4.3),
+    ggplot2 (>= 2.2.1)
 Imports:
     sp,
     grid,
     cowplot,
-    ggplot2,
     dplyr,
     vegan,
     Biostrings,

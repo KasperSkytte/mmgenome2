@@ -9,7 +9,7 @@ mmplot(mm, x, y, min_length = 0, color_by = NULL, locator = FALSE,
   scaffold_labels = FALSE, highlight = NULL, highlight_color = "darkred",
   x_scale = NULL, x_limits = NULL, y_scale = NULL, y_limits = NULL,
   alpha = 0.1, fixed_size = NULL, size_scale = 1,
-  color_vector = c("red", "green", "blue"))
+  color_vector = c("red", "green", "blue"), color_scale_log10 = FALSE)
 }
 \arguments{
 \item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}
@@ -51,6 +51,8 @@ mmplot(mm, x, y, min_length = 0, color_by = NULL, locator = FALSE,
 \item{size_scale}{A factor to scale the sizes of the scaffolds plotted. Only applies when \code{fixed_size} is set to \code{NULL} and the scaffolds are scaled by length. (\emph{Default: } \code{1})}
 
 \item{color_vector}{The colors from which to generate a color gradient when \code{color_by} is set and the variable is continuous. Any number of colors can be used. (\emph{Default: } \code{c("red", "green", "blue")})}
+
+\item{color_scale_log10}{(\emph{Logical}) Log10-scale the color gradient when \code{color_by} is set and the variable is continuous (\emph{Default: } \code{FALSE})}
 }
 \value{
 A ggplot2 object.

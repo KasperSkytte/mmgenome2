@@ -6,7 +6,7 @@
 #' @param network (\emph{required}) Paired-end or mate-pair connections between scaffolds in long format. The first and second columns must contain all connected scaffold pairs and the third column the number of connections. 
 #' @param min_connections Filter all scaffold pairs with equal to or less than this number of connections. (\emph{Default: } \code{2})
 #' @param color_by Color the scaffolds by a variable in \code{mm}. (\emph{Default: } \code{NULL})
-#' @param color_scale_log10 (\emph{Logical}) Log10-scale the colors of the variable defined by \code{color_by}. (\emph{Default: } \code{FALSE})
+#' @param color_scale_log10 (\emph{Logical}) Log10-scale the color gradient when \code{color_by} is set and the variable is continuous (\emph{Default: } \code{FALSE})
 #' @param locator (\emph{Logical}) When \code{TRUE}, left-clicks in the plot are captured and the exact x/y-coordinates of the mouse clicks are captured and returned. These coordinates can be used to highlight a selection of scaffolds in the plot, and to extract all scaffolds within the selection. (\emph{Default: } \code{FALSE})
 #' @param selection A 2-column dataframe with the x and y coordinates of points with which to draw a polygon onto the plot to highlight a selected region. A selection can be obtained by using the locator feature (by \code{locator = TRUE}). (\emph{Default: } \code{NULL})
 #' @param highlight_labels A dataframe or vector of scaffold names whose labels to highlight in the plot (colored by \code{highlight_color}). (\emph{Default: } \code{NULL})
@@ -155,7 +155,7 @@ mmnetwork <- function(mm,
   
   ##### Locator and selection #####
   if(isTRUE(locator)) {
-    points <- mmlocator(p)
+    points <- mmgenome2:::mmlocator(p)
   }
   if(isTRUE(locator) | !is.null(selection)) {
     if(!isTRUE(locator) & !is.null(selection)) {

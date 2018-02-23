@@ -22,6 +22,7 @@
 #' @param shared_genes (\emph{Logical}) If \code{TRUE}, lines will be drawn between scaffolds with any shared gene(s). (\emph{Default: } \code{FALSE})
 #' @param network Paired-end or mate-pair connections between scaffolds in long format. The first and second columns must contain all connected scaffold pairs and the third column the number of connections. 
 #' @param color_vector The colors from which to generate a color gradient when \code{color_by} is set and the variable is continuous. Any number of colors can be used. (\emph{Default: } \code{c("red", "green", "blue")}) 
+#' @param color_scale_log10 (\emph{Logical}) Log10-scale the color gradient when \code{color_by} is set and the variable is continuous (\emph{Default: } \code{FALSE})
 #'
 #' @export
 #' 
@@ -80,7 +81,8 @@ mmplot <- function(mm,
                    alpha = 0.1,
                    fixed_size = NULL,
                    size_scale = 1,
-                   color_vector = c("red", "green", "blue")) {
+                   color_vector = c("red", "green", "blue"),
+                   color_scale_log10 = FALSE) {
   #Checks and error messages before anything else
   if(isTRUE(locator) & !is.null(selection))
     stop("Using the locator and highlighting a selection at the same time is not supported.")
@@ -110,8 +112,15 @@ mmplot <- function(mm,
     #if color_by is set and is numeric
     if(ifelse(!is.null(color_by), is.numeric(mm[[color_by]]), FALSE)) {
       p <- p + 
-        geom_point(alpha = alpha, na.rm = TRUE) +
-        scale_colour_gradientn(colours = color_vector, trans = "log10")
+        geom_point(alpha = alpha, na.rm = TRUE)
+      if(isTRUE(color_scale_log10)) {
+        p <- p +
+          scale_colour_gradientn(colours = color_vector, trans = "log10")
+      } else {
+        p <- p +
+          scale_colour_gradientn(colours = color_vector)
+      }
+      
     } else {
       p <- p + 
         geom_point(alpha = alpha, color = "black", na.rm = TRUE) #all other variables than numerics are "black"
@@ -129,8 +138,14 @@ mmplot <- function(mm,
     #if color_by is set and is numeric
     if(ifelse(!is.null(color_by), is.numeric(mm[[color_by]]), FALSE)) {
       p <- p + 
-        geom_point(alpha = alpha, size = fixed_size, na.rm = TRUE) +
-        scale_colour_gradientn(colours = color_vector)
+        geom_point(alpha = alpha, size = fixed_size, na.rm = TRUE) 
+      if(isTRUE(color_scale_log10)) {
+        p <- p +
+          scale_colour_gradientn(colours = color_vector, trans = "log10")
+      } else {
+        p <- p +
+          scale_colour_gradientn(colours = color_vector)
+      }
     } else {
       p <- p + 
         geom_point(alpha = alpha, color = "black", size = fixed_size, na.rm = TRUE) #all other variables than numerics are "black"
@@ -251,7 +266,7 @@ mmplot <- function(mm,
   
   ##### Locator and selection #####
   if(isTRUE(locator)) {
-    points <- mmlocator(p, x_scale, y_scale)
+    points <- mmgenome2:::mmlocator(p, x_scale, y_scale)
   }
   if(isTRUE(locator) | !is.null(selection)) {
     if(!isTRUE(locator) & !is.null(selection)) {
