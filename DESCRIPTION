@@ -30,7 +30,8 @@ Imports:
     clipr,
     igraph,
     tibble,
-    tidyr
+    tidyr,
+    remotes
 Remotes: 
     github::RGLab/Rtsne.multicore
 RoxygenNote: 6.0.1
