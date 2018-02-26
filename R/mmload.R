@@ -100,8 +100,8 @@ mmload <- function(assembly,
       if(isTRUE(verbose))
         message("Loading essential genes...")
       
-      essential_genes[,1] <- as.character(essential_genes[,1])
-      essential_genes[,2] <- as.character(essential_genes[,2])
+      essential_genes[[1]] <- as.character(essential_genes[[1]])
+      essential_genes[[2]] <- as.character(essential_genes[[2]])
       
       #replace all values to only contain alpha-numerics and dots "."
       essential_genes[,-1] <- dplyr::mutate_all(essential_genes[,-1, drop = FALSE], dplyr::funs(stringr::str_replace_all(., "[^[:alnum:].]", "")))
