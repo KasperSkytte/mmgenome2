@@ -14,16 +14,17 @@
 #' @param y_limits Axis limits of the y axis. (\emph{Default: } \code{NULL})
 #' @param color_by Color the scaffolds by a variable in \code{mm}. (\emph{Default: } \code{NULL})
 #' @param alpha The transparancy of the scaffold points, where 0 is invisible and 1 is opaque. (\emph{Default: } \code{0.1})
-#' @param highlight A vector of scaffold names or a dataframe loaded with \code{\link{mmload}} containing scaffolds to highlight in the plot with the color set by \code{highlight_color}. (\emph{Default: } \code{NULL})
+#' @param highlight_scaffolds A vector of scaffold names or a dataframe loaded with \code{\link{mmload}} containing scaffolds to highlight in the plot with the color set by \code{highlight_color}. (\emph{Default: } \code{NULL})
 #' @param highlight_color The color with which to highlight the scaffolds set by \code{highlight}. (\emph{Default: } \code{"darkred"})
-#' @param scaffold_labels Add labels of a selection of scaffolds by providing either a character vector of scaffold names, or a dataframe with scaffold names in the first column. If set to \code{TRUE} then \emph{all} scaffolds will be labelled. (\emph{Default: } \code{FALSE})
+#' @param label_scaffolds Add text labels (with text from the variable in mm defined by \code{label_scaffolds_by}) to a selection of scaffolds by providing either a character vector of scaffold names, or a dataframe with scaffold names in the first column. If set to \code{TRUE} then \emph{all} scaffolds will be labelled. (\emph{Default: } \code{FALSE})
+#' @param label_scaffolds_by The variable in mm by which to label the scaffolds defined by \code{label_scaffolds}. (\emph{Default: } \code{"scaffold"})
 #' @param fixed_size A fixed size for all scaffolds if set. If \code{NULL} then the scaffolds are scaled by length. (\emph{Default: } \code{NULL})
 #' @param size_scale A factor to scale the sizes of the scaffolds plotted. Only applies when \code{fixed_size} is set to \code{NULL} and the scaffolds are scaled by length. (\emph{Default: } \code{1})
 #' @param shared_genes (\emph{Logical}) If \code{TRUE}, lines will be drawn between scaffolds with any shared gene(s). (\emph{Default: } \code{FALSE})
 #' @param network Paired-end or mate-pair connections between scaffolds in long format. The first and second columns must contain all connected scaffold pairs and the third column the number of connections. 
 #' @param color_vector The colors from which to generate a color gradient when \code{color_by} is set and the variable is continuous. Any number of colors can be used. (\emph{Default: } \code{c("red", "green", "blue")}) 
 #' @param color_scale_log10 (\emph{Logical}) Log10-scale the color gradient when \code{color_by} is set and the variable is continuous (\emph{Default: } \code{FALSE})
-#'
+
 #' @export
 #' 
 #' @return A ggplot2 object.
@@ -71,8 +72,9 @@ mmplot <- function(mm,
                    selection = NULL,
                    network = NULL,
                    shared_genes = FALSE,
-                   scaffold_labels = FALSE,
-                   highlight = NULL,
+                   label_scaffolds = FALSE,
+                   label_scaffolds_by = "scaffold",
+                   highlight_scaffolds = NULL,
                    highlight_color = "darkred",
                    x_scale = NULL,
                    x_limits = NULL,
@@ -170,17 +172,17 @@ mmplot <- function(mm,
           )
   
   #add scaffold names
-  if(isTRUE(scaffold_labels)) {
+  if(isTRUE(label_scaffolds)) {
     p <- p + geom_text(label = mm[[1]], size = 4, color = "black")
-  } else if(is.vector(scaffold_labels) | is.data.frame(scaffold_labels)) {
-    if(is.data.frame(scaffold_labels)) {
-      scaffold_labels <- as.character(scaffold_labels[[1]])
+  } else if(is.vector(label_scaffolds) | is.data.frame(label_scaffolds)) {
+    if(is.data.frame(label_scaffolds)) {
+      label_scaffolds <- as.character(label_scaffolds[[1]])
     }
-    labels_data <- subset(mm, mm[[1]] %in% as.character(scaffold_labels))
+    labels_data <- subset(mm, mm[[1]] %in% as.character(label_scaffolds))
     p <- p + geom_text(data = labels_data, 
                        aes_(x = labels_data[[x]], 
                             y = labels_data[[y]],
-                            label = labels_data[[1]]), 
+                            label = labels_data[[label_scaffolds_by]]), 
                        size = 4, 
                        color = "black",
                        inherit.aes = FALSE)
@@ -226,14 +228,14 @@ mmplot <- function(mm,
   }
   
   ##### Highlight selected scaffolds #####
-  if (!is.null(highlight)) {
-    if(is.data.frame(highlight)) {
-      highlight <- as.character(highlight[[1]])
-    } else if(!any(is.vector(highlight), is.data.frame(highlight))) {
+  if (!is.null(highlight_scaffolds)) {
+    if(is.data.frame(highlight_scaffolds)) {
+      highlight_scaffolds <- as.character(highlight_scaffolds[[1]])
+    } else if(!any(is.vector(highlight_scaffolds), is.data.frame(highlight_scaffolds))) {
       stop("Scaffolds to highlight must be provided either as a vector, or as a dataframe, where the first column contains the scaffold names.")
     }
     p <- p + 
-      geom_point(data = mm[which(mm[[1]] %in% highlight),], color = highlight_color, shape = 1)
+      geom_point(data = mm[which(mm[[1]] %in% highlight_scaffolds),], color = highlight_color, shape = 1)
   }
   
   ##### Plot duplicates #####

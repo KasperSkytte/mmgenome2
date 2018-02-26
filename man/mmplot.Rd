@@ -6,10 +6,11 @@
 \usage{
 mmplot(mm, x, y, min_length = 0, color_by = NULL, locator = FALSE,
   selection = NULL, network = NULL, shared_genes = FALSE,
-  scaffold_labels = FALSE, highlight = NULL, highlight_color = "darkred",
-  x_scale = NULL, x_limits = NULL, y_scale = NULL, y_limits = NULL,
-  alpha = 0.1, fixed_size = NULL, size_scale = 1,
-  color_vector = c("red", "green", "blue"), color_scale_log10 = FALSE)
+  label_scaffolds = FALSE, label_scaffolds_by = "scaffold",
+  highlight_scaffolds = NULL, highlight_color = "darkred", x_scale = NULL,
+  x_limits = NULL, y_scale = NULL, y_limits = NULL, alpha = 0.1,
+  fixed_size = NULL, size_scale = 1, color_vector = c("red", "green",
+  "blue"), color_scale_log10 = FALSE)
 }
 \arguments{
 \item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}
@@ -30,9 +31,11 @@ mmplot(mm, x, y, min_length = 0, color_by = NULL, locator = FALSE,
 
 \item{shared_genes}{(\emph{Logical}) If \code{TRUE}, lines will be drawn between scaffolds with any shared gene(s). (\emph{Default: } \code{FALSE})}
 
-\item{scaffold_labels}{Add labels of a selection of scaffolds by providing either a character vector of scaffold names, or a dataframe with scaffold names in the first column. If set to \code{TRUE} then \emph{all} scaffolds will be labelled. (\emph{Default: } \code{FALSE})}
+\item{label_scaffolds}{Add text labels (with text from the variable in mm defined by \code{label_scaffolds_by}) to a selection of scaffolds by providing either a character vector of scaffold names, or a dataframe with scaffold names in the first column. If set to \code{TRUE} then \emph{all} scaffolds will be labelled. (\emph{Default: } \code{FALSE})}
 
-\item{highlight}{A vector of scaffold names or a dataframe loaded with \code{\link{mmload}} containing scaffolds to highlight in the plot with the color set by \code{highlight_color}. (\emph{Default: } \code{NULL})}
+\item{label_scaffolds_by}{The variable in mm by which to label the scaffolds defined by \code{label_scaffolds}. (\emph{Default: } \code{"scaffold"})}
+
+\item{highlight_scaffolds}{A vector of scaffold names or a dataframe loaded with \code{\link{mmload}} containing scaffolds to highlight in the plot with the color set by \code{highlight_color}. (\emph{Default: } \code{NULL})}
 
 \item{highlight_color}{The color with which to highlight the scaffolds set by \code{highlight}. (\emph{Default: } \code{"darkred"})}
 
