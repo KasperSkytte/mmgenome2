@@ -18,6 +18,8 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -25,6 +27,10 @@
 <script src="../pkgdown.js"></script>
   
   
+<meta property="og:title" content="Network plot of mate-pair or paired-end connected scaffold reads — mmnetwork" />
+
+<meta property="og:description" content="Plots all connected scaffolds in a network plot. Scaffolds can then be highlighted and extracted using the locator and selection features." />
+<meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -116,7 +122,7 @@
     </tr>
     <tr>
       <th>color_scale_log10</th>
-      <td><p>(<em>Logical</em>) Log10-scale the colors of the variable defined by <code>color_by</code>. (<em>Default: </em> <code>FALSE</code>)</p></td>
+      <td><p>(<em>Logical</em>) Log10-scale the color gradient when <code>color_by</code> is set and the variable is continuous (<em>Default: </em> <code>FALSE</code>)</p></td>
     </tr>
     <tr>
       <th>locator</th>
@@ -182,8 +188,7 @@
 #&gt; # ... with 97,275 more rows, and 4 more variables: cov_C14.01.09 &lt;dbl&gt;,
 #&gt; #   geneID &lt;chr&gt;, phylum &lt;fct&gt;, rRNA16S &lt;fct&gt;</div><div class='input'><span class='no'>selection</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>cov_C14.01.09</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>24.852</span>, <span class='fl'>32.545</span>, <span class='fl'>53.062</span>, <span class='fl'>38.52</span>),
                         <span class='kw'>cov_C13.12.03</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>7.676</span>, <span class='fl'>5.165</span>, <span class='fl'>6.386</span>, <span class='fl'>10.933</span>))
-<span class='no'>mmgenome2_extraction</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mmextract.html'>mmextract</a></span>(<span class='no'>mmgenome2</span>, <span class='kw'>selection</span> <span class='kw'>=</span> <span class='no'>selection</span>)
-<span class='no'>mmgenome2_extraction</span></div><div class='output co'>#&gt; # A tibble: 91 x 10
+<span class='no'>mmgenome2_extraction</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mmextract.html'>mmextract</a></span>(<span class='no'>mmgenome2</span>, <span class='kw'>selection</span> <span class='kw'>=</span> <span class='no'>selection</span>)</div><div class='output co'>#&gt; <span class='message'>91 scaffolds (or 2.58% of the scaffolds in mm, weighted by length) remain after 97194 of 97285 scaffolds have been filtered.</span></div><div class='input'><span class='no'>mmgenome2_extraction</span></div><div class='output co'>#&gt; # A tibble: 91 x 10
 #&gt;    scaffold length    gc cov_C13.11.14 cov_C13.11.25 cov_C13.12.03
 #&gt;    &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
 #&gt;  1 180       22093  74.0         0.298          12.0          7.34
@@ -201,7 +206,7 @@
           <span class='kw'>network</span> <span class='kw'>=</span> <span class='no'>paired_ends</span>,
           <span class='kw'>min_connections</span> <span class='kw'>=</span> <span class='fl'>10</span>,
           <span class='kw'>color_by</span> <span class='kw'>=</span> <span class='st'>"phylum"</span>,
-          <span class='kw'>locator</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='mmnetwork-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+          <span class='kw'>locator</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='mmnetwork-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

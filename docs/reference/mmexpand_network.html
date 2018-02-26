@@ -18,6 +18,8 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -25,6 +27,10 @@
 <script src="../pkgdown.js"></script>
   
   
+<meta property="og:title" content="Find connections of a subset of scaffolds in a larger set of scaffolds — mmexpand_network" />
+
+<meta property="og:description" content="Searches for all connections between the given set of scaffolds and the scaffolds in mm. The given set of scaffolds is often a subset of mm, but can also be a manually selected set of scaffolds from which to find connections in mm." />
+<meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -149,8 +155,7 @@
 <span class='no'>mmgenome2_extraction</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mmextract.html'>mmextract</a></span>(<span class='no'>mmgenome2</span>,
                                   <span class='kw'>min_length</span> <span class='kw'>=</span> <span class='fl'>3000</span>,
                                   <span class='kw'>selection</span> <span class='kw'>=</span> <span class='no'>selection</span>,
-                                  <span class='kw'>inverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='no'>mmgenome2_extraction</span></div><div class='output co'>#&gt; # A tibble: 83 x 10
+                                  <span class='kw'>inverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>83 scaffolds (or 2.58% of the scaffolds in mm, weighted by length) remain after 97202 of 97285 scaffolds have been filtered.</span></div><div class='input'><span class='no'>mmgenome2_extraction</span></div><div class='output co'>#&gt; # A tibble: 83 x 10
 #&gt;    scaffold length    gc cov_C13.11.14 cov_C13.11.25 cov_C13.12.03
 #&gt;    &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
 #&gt;  1 180       22093  74.0         0.298          12.0          7.34
@@ -168,8 +173,8 @@
                                                   <span class='kw'>scaffolds</span> <span class='kw'>=</span> <span class='no'>mmgenome2_extraction</span>,
                                                   <span class='kw'>network</span> <span class='kw'>=</span> <span class='no'>paired_ends</span>,
                                                   <span class='kw'>min_connections</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-                                                  <span class='kw'>include_connections</span> <span class='kw'>=</span> <span class='st'>"direct"</span>)
-<span class='no'>mmgenome2_extraction_expanded</span></div><div class='output co'>#&gt; # A tibble: 101 x 10
+                                                  <span class='kw'>include_connections</span> <span class='kw'>=</span> <span class='st'>"direct"</span>)</div><div class='output co'>#&gt; <span class='message'>The provided 83 scaffolds had 18 additional direct connections to other scaffolds in mm.</span>
+#&gt; <span class='message'>Total: 101 scaffolds (or 3.13% of the scaffolds in mm, weighted by length).</span></div><div class='input'><span class='no'>mmgenome2_extraction_expanded</span></div><div class='output co'>#&gt; # A tibble: 101 x 10
 #&gt;    scaffold length    gc cov_C13.11.14 cov_C13.11.25 cov_C13.12.03
 #&gt;    &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
 #&gt;  1 180       22093  74.0         0.298          12.0          7.34
