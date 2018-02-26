@@ -68,5 +68,17 @@ mmexpand_network <- function(mm,
     ext.scaffolds <- dplyr::filter(clusters, clusters$cluster %in% ext.clusters$cluster)
     out <- dplyr::filter(mm, mm[[1]] %in% scaffolds | mm[[1]] %in% ext.scaffolds$scaffold)
   }
+  nscaf <- length(scaffolds)
+  message(paste0("The provided ", 
+                 nscaf, 
+                 " scaffolds had ", 
+                 nrow(out)-nscaf, 
+                 " additional",
+                 ifelse(include_connections == "direct", " direct ", " "), 
+                 "connections to other scaffolds in mm.\nTotal: ",
+                 nrow(out), 
+                 " scaffolds (or ", 
+                 round(sum(out$length)/sum(mm$length)*100, 2),
+                 "% of the scaffolds in mm, weighted by length)."))
   return(tibble::as_tibble(out))
 }

@@ -38,16 +38,26 @@ mmextract <-  function(mm,
     stop("Could not find any variable names in mm matching those in the selection.")
   
   #filter based on minimum length
-  mm <- dplyr::filter(mm, length >= min_length)
+  mms <- dplyr::filter(mm, length >= min_length)
   
   #return scaffolds only in the selection polygon
-  in_polygon <- sp::point.in.polygon(point.x = mm[[colnames(selection)[1]]],
-                                     point.y = mm[[colnames(selection)[2]]],
+  in_polygon <- sp::point.in.polygon(point.x = mms[[colnames(selection)[1]]],
+                                     point.y = mms[[colnames(selection)[2]]],
                                      pol.x = selection[[1]],
                                      pol.y = selection[[2]],
                                      mode.checked = TRUE)
   ifelse(isTRUE(inverse), 
-         mm <- dplyr::filter(mm, in_polygon == 0), 
-         mm <- dplyr::filter(mm, in_polygon > 0))
-  return(tibble::as_tibble(mm))
+         mms <- dplyr::filter(mmss, in_polygon == 0), 
+         mms <- dplyr::filter(mms, in_polygon > 0))
+  nrowBefore <- nrow(mm)
+  nrowAfter <- nrow(mms)
+  message(paste0(nrowAfter,
+                 " scaffolds (or ", 
+                 round(sum(mms$length)/sum(mm$length)*100, 2), 
+                 "% of the scaffolds in mm, weighted by length) remain after ", 
+                 nrowBefore-nrowAfter, 
+                 " of ", 
+                 nrowBefore,
+                 " scaffolds have been filtered."))
+  return(tibble::as_tibble(mms))
 }
