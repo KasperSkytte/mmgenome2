@@ -11,6 +11,7 @@
 #' 
 #' @return A ggplot2 object.
 #' 
+#' @importFrom magrittr %>%
 #' @importFrom cowplot plot_grid
 #' @importFrom dplyr select starts_with
 #' @import ggplot2

@@ -22,6 +22,7 @@ Imports:
     sp,
     grid,
     cowplot,
+    magrittr,
     dplyr,
     vegan,
     Biostrings,

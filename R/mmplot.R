@@ -30,6 +30,7 @@
 #' @return A ggplot2 object.
 #' 
 #' @import ggplot2
+#' @importFrom magrittr %>%
 #' @importFrom tidyr separate_rows
 #' @importFrom dplyr filter
 #' @importFrom tibble as_tibble

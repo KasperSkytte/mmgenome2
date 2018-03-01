@@ -22,6 +22,7 @@
 #' @return A dataframe (tibble) compatible with other mmgenome2 functions.
 #' 
 #' @importFrom tibble add_column as.tibble tibble
+#' @importFrom magrittr %>%
 #' @importFrom digest digest
 #' @importFrom Biostrings width readDNAStringSet letterFrequency oligonucleotideFrequency reverseComplement
 #' @importFrom dplyr mutate_all funs group_by left_join summarise_all
