@@ -8,7 +8,7 @@
 #' @return A dataframe with the calculated stats.
 #'
 #' @importFrom dplyr select starts_with
-#' @import tidyr separate_rows
+#' @importFrom tidyr separate_rows
 #' 
 #' @examples 
 #' library(mmgenome2)

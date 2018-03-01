@@ -8,7 +8,7 @@
 #'
 #' @return A data frame with the x/y coordinates of the mousepositions clicked in the ggplot2 plot.
 #' 
-#' @importFrom ggplot2 ggplot_build
+#' @import ggplot2
 #' @importFrom grid current.vpTree gpar grid.locator grid.points seekViewport
 #' @importFrom clipr write_clip
 #' 
