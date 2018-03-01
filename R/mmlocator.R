@@ -8,9 +8,9 @@
 #'
 #' @return A data frame with the x/y coordinates of the mousepositions clicked in the ggplot2 plot.
 #' 
-#' @import ggplot2
-#' @import grid
-#' @import clipr
+#' @importFrom ggplot2 ggplot_build
+#' @importFrom grid current.vpTree gpar grid.locator grid.points seekViewport
+#' @importFrom clipr write_clip
 #' 
 #' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
 #' @author Rasmus Hansen Kirkegaard \email{rhk@@bio.aau.dk}

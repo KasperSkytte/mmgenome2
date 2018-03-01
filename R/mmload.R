@@ -21,11 +21,13 @@
 #' 
 #' @return A dataframe (tibble) compatible with other mmgenome2 functions.
 #' 
-#' @import tibble
-#' @import digest
-#' @import Biostrings
-#' @import dplyr
-#' @import vegan
+#' @importFrom tibble add_column as.tibble tibble
+#' @importFrom digest digest
+#' @importFrom Biostrings readDNAStringSet letterFrequency oligonucleotideFrequency reverseComplement
+#' @importFrom BiocGenerics width
+#' @importFrom dplyr mutate_all funs group_by left_join summarise_all
+#' @importFrom stringr str_replace_all
+#' @importFrom vegan rda scores
 #' @import Rtsne.multicore
 #' 
 #' @examples 

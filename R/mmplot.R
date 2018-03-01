@@ -30,8 +30,9 @@
 #' @return A ggplot2 object.
 #' 
 #' @import ggplot2
-#' @import tidyr
-#' @import tibble
+#' @importFrom tidyr separate_rows
+#' @importFrom dplyr filter
+#' @importFrom tibble as_tibble
 #' 
 #' @examples 
 #' library(mmgenome2)

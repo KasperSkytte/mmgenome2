@@ -11,8 +11,8 @@
 #' 
 #' @return A ggplot2 object.
 #' 
-#' @import cowplot
-#' @import dplyr
+#' @importFrom cowplot plot_grid
+#' @importFrom dplyr select starts_with
 #' @import ggplot2
 #' 
 #' @examples

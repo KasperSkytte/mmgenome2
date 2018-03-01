@@ -7,8 +7,8 @@
 #'
 #' @return A dataframe with the calculated stats.
 #'
-#' @import dplyr
-#' @import tidyr
+#' @importFrom dplyr select starts_with
+#' @import tidyr separate_rows
 #' 
 #' @examples 
 #' library(mmgenome2)
@@ -28,7 +28,10 @@ mmstats <- function(mm) {
   N50 <- lengths[which(cumsum(lengths) >= lengthTotal/2)[1]]
   
   #essential genes
-  ess.genes <- tidyr::separate_rows(mm[!is.na(mm[,"geneID"]),c("scaffold", "geneID")], "geneID")[["geneID"]]
+  if(any(colnames(mm) == "geneID")) {
+    ess.genes <- tidyr::separate_rows(mm[!is.na(mm[,"geneID"]),c("scaffold", "geneID")], "geneID")[["geneID"]]
+  } else
+    ess.genes <- NULL
   
   stats <- c(Scaffolds = length(mm$scaffold),
              N50 = N50,

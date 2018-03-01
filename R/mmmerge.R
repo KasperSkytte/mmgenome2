@@ -6,7 +6,8 @@
 #' @param y Object to merge with \code{x}
 #' @param type Character string defining the type of data being merged
 #' 
-#' @import dplyr
+#' @importFrom dplyr left_join intersect filter
+#' @importFrom tibble enframe
 #'
 #' @return A tibble.
 #' 
@@ -42,7 +43,7 @@ mmmerge <- function(x, y, type) {
       
       #print missing or excess scaffolds between x and y[[i]]
       if(!all(x$scaffold %in% y[[i]][["scaffold"]])) {
-        missingScaffolds <- filter(x, !scaffold %in% sharedScaffolds)[[1]]
+        missingScaffolds <- dplyr::filter(x, !scaffold %in% sharedScaffolds)[[1]]
         warning(paste0("Only ", length(sharedScaffolds), " of all ", length(x$scaffold), " scaffolds in the assembly match in ", string,  ". The following ", length(missingScaffolds), " scaffolds are missing:\n\"", paste(missingScaffolds, collapse = "\", \""), "\""))
       } else if(!all(y[[i]][["scaffold"]] %in% x$scaffold)) {
         excessScaffolds <- filter(y, !scaffold %in% sharedScaffolds)[[1]]

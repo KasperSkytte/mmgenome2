@@ -11,9 +11,9 @@
 #' 
 #' @return A dataframe (tibble) compatible with other mmgenome2 functions.
 #' 
-#' @import sp
-#' @import dplyr
-#' @import tibble
+#' @importFrom sp point.in.polygon
+#' @importFrom dplyr filter
+#' @importFrom tibble as_tibble
 #' 
 #' @examples 
 #' library(mmgenome2)

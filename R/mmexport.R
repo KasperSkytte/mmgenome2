@@ -8,7 +8,7 @@
 #'
 #' @export
 #' 
-#' @import Biostrings
+#' @importFrom Biostrings writeXStringSet
 #' 
 #' @examples 
 #' \dontrun{

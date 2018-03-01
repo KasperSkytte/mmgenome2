@@ -16,9 +16,9 @@
 #' 
 #' @return A dataframe (tibble) compatible with other mmgenome2 functions.
 #' 
-#' @import igraph
-#' @import dplyr
-#' @import tibble
+#' @importFrom igraph clusters graph.data.frame V
+#' @importFrom dplyr filter
+#' @importFrom tibble as_tibble
 #' 
 #' @examples 
 #' library(mmgenome2)
