@@ -17,7 +17,7 @@
             "New release of ", pkg, " (", github_version, ") is available! Install the latest release with: \nremotes::install_github(\"madsalbertsen/mmgenome2@*release\")\n\nRead the release notes at: https://github.com/MadsAlbertsen/mmgenome2/releases/tag/", github_version)
         }
       }, error=function(e) {
-        packageStartupMessage("Can't reach GitHub to check for new releases just now. Trying again next time. \n")
+        packageStartupMessage("Can't reach GitHub to check for new releases just now. Trying again next time.")
       })
     }
   }
