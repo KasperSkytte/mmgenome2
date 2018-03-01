@@ -23,7 +23,7 @@
 #' 
 #' @importFrom tibble add_column as.tibble tibble
 #' @importFrom digest digest
-#' @importFrom Biostrings readDNAStringSet letterFrequency oligonucleotideFrequency reverseComplement
+#' @importFrom Biostrings width readDNAStringSet letterFrequency oligonucleotideFrequency reverseComplement
 #' @importFrom dplyr mutate_all funs group_by left_join summarise_all
 #' @importFrom stringr str_replace_all
 #' @importFrom vegan rda scores
@@ -81,7 +81,7 @@ mmload <- function(assembly,
   if(isTRUE(verbose))
     message("Calculating GC content...")
   mm <- tibble::tibble(scaffold = as.character(names(assembly)),
-                       length = as.numeric(as.data.frame(assembly@ranges)$width),
+                       length = as.numeric(Biostrings::width(assembly)),
                        gc = round(as.numeric(Biostrings::letterFrequency(assembly, letters = c("CG"), as.prob=T))*100, digits = 2)
   )
   
