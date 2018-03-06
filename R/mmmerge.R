@@ -36,6 +36,12 @@ mmmerge <- function(x, y, type) {
         y[[i]] <- tibble::enframe(y[[i]], name = "scaffold", value = ifelse((is.null(names(y)) | names(y)[[i]] == ""), paste0(type, i), names(y)[[i]]))
       }
       
+      #if y[[i]] is a 2 column data frame, name the resulting column in x by the name of the dataframe as provided in the list, if any.
+      #Otherwise if the y[[i]] has no name in the list, keep the current column name
+      ifelse(any(class(y[[i]]) %in% c("data.frame", "tbl", "tbl_df")) & length(y[[i]]) == 2 & !(is.null(names(y)[[i]]) | names(y)[[i]] == ""), 
+             colnames(y[[i]])[2] <- names(y)[[i]],
+             colnames(y[[i]])[2] <- colnames(y[[i]])[2])
+      
       #merge x and y[[i]] by scaffold
       colnames(y[[i]])[1] <- "scaffold" #first columns must have same name
       y[[i]][1] <- lapply(y[[i]][1], as.character) #and must be character

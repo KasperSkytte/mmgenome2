@@ -5,6 +5,21 @@
 #' @param mm (\emph{required}) A dataframe loaded with \code{\link{mmload}}.
 #' @export
 #'
+#' @details 
+#' The returned stats are calculated as follows:
+#' \itemize{
+#'    \item Scaffolds: The number of different scaffolds in the assembly.
+#'    \item N50: The shortest sequence length at 50% of the assembly.
+#'    \item Length.total: The total size of the assembly.
+#'    \item Length.max: The size of the largest scaffold in the assembly.
+#'    \item Length.mean: The average scaffold size in the assembly.
+#'    \item Length.min: The size of the smallest scaffold in the assembly.
+#'    \item weighted_GC_mean: The average GC content in the assembly, weighted by scaffold sizes.
+#'    \item cov_*: The average coverage of each coverage variable in mm, weighted by scaffold sizes. (Only columns starting with "cov_" will be shown)
+#'    \item Ess.genes.total: The total number of essential genes, if any have been loaded. 
+#'    \item Ess.genes.unique: The number of unique essential genes, if any have been loaded. 
+#' }
+#' 
 #' @return A dataframe with the calculated stats.
 #'
 #' @importFrom dplyr select starts_with
