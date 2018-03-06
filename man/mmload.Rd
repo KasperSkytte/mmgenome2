@@ -11,12 +11,13 @@ mmload(assembly, coverage, essential_genes = NULL, taxonomy = NULL,
 \arguments{
 \item{assembly}{(\emph{required}) A character string with the path to the assembly FASTA file, or the assembly as already loaded with \code{\link{readDNAStringSet}}.}
 
-\item{coverage}{(\emph{required}) A \code{vector}, \code{dataframe}, or a \code{list} hereof containing coverage of each scaffold. The prefix \code{"cov_"} will be appended to all coverage column names in the output.
+\item{coverage}{(\emph{required}) A \code{vector}, \code{dataframe}, or a \code{list} hereof containing coverage of each scaffold. The prefix \code{"cov_"} will be appended to all coverage column names in the output so that \code{\link{mmstats}} knows which columns are coverage columns.
 \describe{
   \item{\code{vector}}{If provided as a vector, the elements of the vector must be named by the scaffold names exactly matching those of the assembly.}
   \item{\code{dataframe}}{If provided as a dataframe, the first column must contain the scaffold names exactly matching those of the assembly, and any additional column(s) contain coverage of each scaffold.}
   \item{\code{list}}{If provided as a list, it must contain any number of \code{vector} or \code{dataframe} objects as described above.}
-}}
+}
+If the coverage is provided as a list, then the assigned names of the objects in the list will be used as column names in the output (does not apply to any dataframes that may have more than 2 columns, however).}
 
 \item{essential_genes}{A 2-column dataframe with scaffold names in the first column and gene ID's in the second. Can contain duplicates. (\emph{Default: } \code{NULL})}
 
@@ -43,8 +44,8 @@ Loads, validates and combines multiple aspects of metagenome data into one dataf
   library(mmgenome2)
   mm <- mmload(
     assembly = "path/to/assembly.fa",
-    coverage = list(read.csv("path/to/coveragetable1.csv", col.names = TRUE),
-                    read.csv("path/to/coveragetable2.csv", col.names = TRUE)),
+    coverage = list(nameofcoverage1 = read.csv("path/to/coveragetable1.csv", col.names = TRUE),
+                    nameofcoverage2 = read.csv("path/to/coveragetable2.csv", col.names = TRUE)),
     essential_genes = read.csv("path/to/ess_genes.txt", col.names = TRUE),
     verbose = TRUE
   )
