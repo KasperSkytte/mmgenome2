@@ -62,5 +62,9 @@ mmstats <- function(mm) {
   df <- data.frame(stats)
   colnames(df)[1] <- "General stats"
   df[,1] <- as.character(df[,1])
-  return(df)
+  print.data.frame(df, 
+                   quote = FALSE,
+                   right = TRUE,
+                   row.names = TRUE,
+                   max = nrow(df))
 }
