@@ -4,7 +4,7 @@
     return()
   } else {
     local_version <- utils::packageVersion("mmgenome2")
-    packageStartupMessage("This is ", pkg, " version ", local_version, ". Great documentation is available at the mmgenome2 website: https://madsalbertsen.github.io/mmgenome2/\n", appendLF = TRUE)
+    packageStartupMessage("This is ", pkg, " version ", local_version, ". Great documentation is available at the mmgenome2 website: https://madsalbertsen.github.io/mmgenome2/", appendLF = TRUE)
     options(scipen = 6)
     if(requireNamespace("remotes", quietly = TRUE)) {
       tryCatch({
@@ -14,10 +14,10 @@
         github_version <- package_version(gsub("v", "", github_ref))
         if(local_version < github_version) {
           packageStartupMessage(
-            "New release of ", pkg, " (", github_version, ") is available! Install the latest release with: \nremotes::install_github(\"madsalbertsen/mmgenome2@*release\")\n\nRead the release notes at: https://github.com/MadsAlbertsen/mmgenome2/releases/tag/", github_version)
+            "\nNew release of ", pkg, " (", github_version, ") is available! Install the latest release with: \nremotes::install_github(\"madsalbertsen/mmgenome2@*release\")\n\nRead the release notes at: https://github.com/MadsAlbertsen/mmgenome2/releases/tag/", github_version)
         }
       }, error=function(e) {
-        packageStartupMessage("Can't reach GitHub to check for new releases just now. Trying again next time.")
+        packageStartupMessage("\nCan't reach GitHub to check for new releases just now. Trying again next time.")
       })
     }
   }
