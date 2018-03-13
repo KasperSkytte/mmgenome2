@@ -1,0 +1,9 @@
+# Introduction to mmgenome2
+bla bla bla....
+First, install mmgenome2 as described on the frontpage
+
+# Loading data
+
+examples
+export
+more

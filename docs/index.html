@@ -70,8 +70,16 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>As ADMINISTRATOR!</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">"https://bioconductor.org/biocLite.R"</span>)
-<span class="kw">biocLite</span>(<span class="st">"kasperskytte/mmgenome2"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#check for bioconductor installer</span>
+<span class="cf">if</span>(<span class="op">!</span><span class="kw">require</span>(BiocInstaller)) 
+  <span class="kw">source</span>(<span class="st">"https://bioconductor.org/biocLite.R"</span>)
+  
+<span class="co">#check for devtools</span>
+<span class="cf">if</span>(<span class="op">!</span><span class="kw">require</span>(devtools))
+  <span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
+  
+<span class="co">#install mmgenome2</span>
+BiocInstaller<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/BiocInstaller/topics/biocLite">biocLite</a></span>(<span class="st">"kasperskytte/mmgenome2"</span>)</code></pre></div>
 </div>
 </div>
   </div>

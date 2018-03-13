@@ -9,7 +9,7 @@
 #' @return A data frame with the x/y coordinates of the mousepositions clicked in the ggplot2 plot.
 #' 
 #' @import ggplot2
-#' @importFrom grid current.vpTree gpar grid.locator grid.points seekViewport
+#' @importFrom shiny actionButton div fillPage icon observeEvent p plotOutput reactiveValues renderPlot runApp shinyApp stopApp
 #' @importFrom clipr write_clip
 #' 
 #' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
@@ -17,60 +17,117 @@
 #' @author Soren M. Karst \email{smk@@bio.aau.dk}
 #' @author Mads Albertsen \email{MadsAlbertsen85@@gmail.com}
 mmlocator <- function(plot, x_scale = NULL, y_scale = NULL) {
-  if(!interactive())
-    stop("Locator can only be used interactively by humans!")
-  #build ggplot object to be able to extract axis ranges, and show the plot
-  suppressWarnings(ggobj <- ggplot2::ggplot_build(plot))
-  suppressWarnings(print(ggobj$plot))
-  #find the active panel
-  panel <- unlist(grid::current.vpTree())
-  panel <- unname(panel[grep("\\.name$", names(panel))])
-  panel <- grep("panel", panel, fixed = TRUE, value = TRUE)
-  if(length(panel) != 1){
-    stop("no ggplot detected in current device")
-  }
-  grid::seekViewport(panel, recording = FALSE)
-  #store the relative positions clicked (relative to the plot window 0-1) in a data frame and plot the positions as darkred dots. Repeat until user clicks "finish"
-  points <- data.frame(x = as.numeric(), y = as.numeric())
-  repeat {
-    point <- grid::grid.locator(unit = "native")
-    if(is.null(point))
-      break
-    grid::grid.points(point[1], point[2], pch = 16, gp = grid::gpar(cex = 0.5, col = "darkred"))
-    points <- rbind(points, as.numeric(point))
-  }
-  
-  ### Extract axis ranges. WARNING: keep an eye on changes in ggplot2 behind the scenes, accessing ranges has changed a few times already
-  xrange <- ggobj$layout$panel_ranges[[1]][["x.range"]]
-  yrange <- ggobj$layout$panel_ranges[[1]][["y.range"]]
-  #rescale the relative positions by the axis ranges
-  points[,1] <- (xrange[2]-xrange[1]) * points[,1] + xrange[1]
-  points[,2] <- (yrange[2]-yrange[1]) * points[,2] + yrange[1]
-  #adjust points if log10 or square-root scales have been applied in the plot
-  if(!is.null(x_scale)) {
-    if(x_scale == "log10") {
-      points[,1] <- 10^points[,1]
-    } else if(x_scale == "sqrt") {
-      points[,1] <- points[,1]^2
+  axisnames <- c(plot[["mapping"]][["x"]], plot[["mapping"]][["y"]])
+  app <- shinyApp(
+    ui = fillPage(padding = c(5,5,50),
+                  div(style="display: inline-block;",
+                      actionButton(
+                        inputId = "undo",
+                        label = "Undo",
+                        icon = icon("undo")
+                      ),
+                      actionButton(
+                        inputId = "stop",
+                        label = "Finish",
+                        icon = icon("check")
+                      )
+                  ),
+                  p(),
+                  plotOutput("plot", 
+                             click = "plot_click",
+                             height = "100%",
+                             width = "100%")
+    ),
+    server = function(input, output, session) {
+      clickData <- reactiveValues(
+        x = numeric(),
+        y = numeric()
+      )
+      
+      observeEvent(input$plot_click, {
+        new_x <- input$plot_click$x
+        new_y <- input$plot_click$y
+        
+        #adjust points if square-root scale have been applied in the plot
+        if(!is.null(x_scale)) {
+          if(x_scale == "sqrt")
+            new_x <- new_x^2
+        }
+        if(!is.null(y_scale)) {
+          if(y_scale == "sqrt")
+            new_y <- new_y^2
+        }
+        
+        #add the click coordinates to clickData
+        clickData[["x"]] <- append(clickData[["x"]], new_x)
+        clickData[["y"]] <- append(clickData[["y"]], new_y)
+        
+        #Update selection object in global environment
+        df <- get(".current_selection", envir = globalenv())
+        assign(".current_selection", 
+               rbind(df,
+                     data.frame(x = new_x,
+                                y = new_y)),
+               envir = globalenv())
+        #message("point clicked:\n",
+        #        "\t", colnames(df)[1], " = ", round(df[nrow(df), 1], 3),
+        #        "\t", colnames(df)[2], " = ", round(df[nrow(df), 2], 3))
+      })
+      
+      observeEvent(input$undo, {
+        #remove the last point clicked
+        lastPoint <- length(clickData[["x"]])
+        clickData[["x"]] <- clickData[["x"]][-lastPoint]
+        clickData[["y"]] <- clickData[["y"]][-lastPoint]
+        #Update selection object in global environment
+        df <- get(".current_selection", envir = globalenv())
+        assign(".current_selection", df[-lastPoint,], envir = globalenv())
+      })
+      
+      observeEvent(input$stop, {
+        stopApp()
+      })
+      
+      output$plot <- renderPlot({
+        p <- plot + 
+          geom_point(data = data.frame(x = clickData[["x"]],
+                                       y = clickData[["y"]]),
+                     aes_string(x = "x",
+                                y = "y"),
+                     color = "black",
+                     inherit.aes = FALSE,
+                     na.rm = TRUE) +
+          geom_polygon(data = data.frame(x = clickData[["x"]],
+                                         y = clickData[["y"]]),
+                       aes_string(x = "x",
+                                  y = "y"),
+                       fill = NA,
+                       size = 0.5,
+                       lty = 2,
+                       color = "darkred",
+                       inherit.aes = FALSE, 
+                       na.rm = TRUE)
+        return(p)
+      })
+    }, 
+    onStart = function() {
+      df <- data.frame(x = numeric(), y = numeric())
+      colnames(df) <- axisnames
+      assign(".current_selection", df, envir = globalenv())
     }
-  }
-  if(!is.null(y_scale)) {
-    if(y_scale == "log10") {
-      points[,2] <- 10^points[,2]
-    } else if(y_scale == "sqrt") {
-      points[,2] <- points[,2]^2
-    }
-  }
-  #print the points as data frame code ready to copy/paste and store as a selection
-  colnames(points) <- c(ggobj$plot$mapping$x, ggobj$plot$mapping$y)
+  )
+  suppressWarnings(
+    runApp(app, 
+           quiet = TRUE,
+           launch.browser = rstudioapi::viewer))
   selection <- paste0("data.frame(", 
-                      colnames(points[1]), 
+                      colnames(.current_selection[1]), 
                       " = ", 
-                      paste0(round(points[1], 3)),
+                      paste0(round(.current_selection[1], 3)),
                       ", ",
-                      colnames(points[2]),
+                      colnames(.current_selection[2]),
                       " = ",
-                      paste0(round(points[2], 3)),
+                      paste0(round(.current_selection[2], 3)),
                       ")"
   )
   message(paste0("Selection:\n", selection))
@@ -78,6 +135,5 @@ mmlocator <- function(plot, x_scale = NULL, y_scale = NULL) {
   if(tolower(userChoice) %in% c("y", "", "yes")) {
     clipr::write_clip(selection)
   }
-  #and return the selection
-  return(points)
+  return(.current_selection)
 }

@@ -20,7 +20,6 @@ Depends:
     ggplot2 (>= 2.2.1)
 Imports:
     sp,
-    grid,
     cowplot,
     magrittr,
     dplyr,
@@ -33,7 +32,8 @@ Imports:
     tibble,
     tidyr,
     stringr,
-    remotes
+    remotes,
+    shiny
 Remotes: 
     github::RGLab/Rtsne.multicore
 RoxygenNote: 6.0.1
