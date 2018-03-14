@@ -41,7 +41,7 @@
 #' mmnetwork(mmgenome2_extraction, 
 #'           network = paired_ends, 
 #'           min_connections = 10,
-#'           color_by = "phylum",
+#'           color_by = "taxonomy",
 #'           locator = FALSE)
 #' 
 #' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}

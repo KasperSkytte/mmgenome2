@@ -95,6 +95,7 @@ mmlocator <- function(plot, x_scale = NULL, y_scale = NULL) {
                      aes_string(x = "x",
                                 y = "y"),
                      color = "black",
+                     size = 2,
                      inherit.aes = FALSE,
                      na.rm = TRUE) +
           geom_polygon(data = data.frame(x = clickData[["x"]],
@@ -120,20 +121,23 @@ mmlocator <- function(plot, x_scale = NULL, y_scale = NULL) {
     runApp(app, 
            quiet = TRUE,
            launch.browser = rstudioapi::viewer))
-  selection <- paste0("data.frame(", 
-                      colnames(.current_selection[1]), 
-                      " = ", 
-                      paste0(round(.current_selection[1], 3)),
-                      ", ",
-                      colnames(.current_selection[2]),
-                      " = ",
-                      paste0(round(.current_selection[2], 3)),
-                      ")"
-  )
-  message(paste0("Selection:\n", selection))
-  userChoice <- readline(prompt = "Do you want to copy the selection to clipboard? (y/n or ENTER/ESC): ")
-  if(tolower(userChoice) %in% c("y", "", "yes")) {
-    clipr::write_clip(selection)
+  df <- get(".current_selection", df, envir = globalenv())
+  if(nrow(df) > 0) {
+    selection <- paste0("data.frame(", 
+                        colnames(df[1]), 
+                        " = ", 
+                        paste0(round(df[1], 3)),
+                        ", ",
+                        colnames(df[2]),
+                        " = ",
+                        paste0(round(df[2], 3)),
+                        ")"
+    )
+    message(paste0("Selection:\n", selection))
+    userChoice <- readline(prompt = "Do you want to copy the selection to clipboard? (y/n or ENTER/ESC): ")
+    if(tolower(userChoice) %in% c("y", "", "yes")) {
+      clipr::write_clip(selection)
+    }
   }
-  return(.current_selection)
+  return(df)
 }

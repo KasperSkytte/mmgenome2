@@ -43,7 +43,7 @@
 #'        min_length = 10000,
 #'        x = "cov_C13.12.03",
 #'        y = "cov_C14.01.09",
-#'        color_by = "phylum",
+#'        color_by = "taxonomy",
 #'        #locator = TRUE,
 #'        x_scale = "log10",
 #'        y_scale = "log10")
@@ -55,7 +55,7 @@
 #'        min_length = 10000,
 #'        x = "cov_C13.12.03",
 #'        y = "cov_C14.01.09",
-#'        color_by = "phylum",
+#'        color_by = "taxonomy",
 #'        x_scale = "log10",
 #'        y_scale = "log10",
 #'        x_limits = c(1,NA), #zoom in at minimum 1x coverage
