@@ -36,4 +36,6 @@ Imports:
     shiny
 Remotes: 
     github::RGLab/Rtsne.multicore
+Suggests:
+    tidyverse
 RoxygenNote: 6.0.1

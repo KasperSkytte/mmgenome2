@@ -1,9 +1,127 @@
+```{r, warning=FALSE,message=FALSE,echo=FALSE,error=FALSE}
+library(mmgenome2)
+library(tidyverse)
+```
+
+
 # Introduction to mmgenome2
-bla bla bla....
-First, install mmgenome2 as described on the frontpage
+This is a brief guide explaining the basics of how to use `mmgenome2` for genome binning and extraction from metagenomes. It is meant to only demonstrate fundamental principles and operations. For more detailed documentation of all mmgenome2 functions, their arguments, as well as example code, please refer to the [Functions](https://madsalbertsen.github.io/mmgenome2/reference/index.html) page. First, install `mmgenome2` as described on the frontpage.
 
-# Loading data
+## Loading data
+`mmgenome2` requires at minimum two types of data; the assembly and at minimum one coverage profile. Any number of coverage profiles can be loaded at once. Other than the assembly and coverage profiles, optional data includes essential genes found in the scaffolds, taxonomy, small subunit taxonomic classification, and anything else that could be relevant. The only requirement is that the data is in a row-by-column format, so that the first column contains scaffold names matching those in the assembly, and then any number of columns containing relevant information for the binning process. 
 
-examples
-export
-more
+Metagenome data often consists of numerous files that have to be loaded into R. Most of the data generated is in raw text or CSV format, and R houses several different `read` functions, each for different types of data. It is therefore important to know which characters are used as separator, decimal, and comments, and use the appropriate `read` function for each file, see `help(read.table)` to find the correct one. The various files are then loaded with the `mmload` function, which checks, adjusts, and combines the data into a single data frame, which will be used in all other `mmgenome2` functions, for example like so:
+
+```{r, eval = FALSE}
+library(mmgenome2)
+mm <- mmload(
+    assembly = "path/to/assembly.fa",
+    coverage = list(nameofcoverage1 = read.csv("path/to/coveragetable1.csv"),
+                    nameofcoverage2 = read.csv("path/to/coveragetable2.csv")),
+    essential_genes = read.csv("path/to/ess_genes.txt"),
+    additional = NULL,
+    verbose = TRUE,
+    kmer_pca = FALSE,
+    kmer_BH_tSNE = FALSE
+  )
+```
+
+`mmload` by default calculates the scaffold lengths as well as the GC content of each scaffold. Notice that it is also possible perform Principal Components Analysis and t-SNE on tetranucleotide frequencies by setting `kmer_pca = TRUE` and `kmer_BH_tSNE = TRUE`, which will then also be available in the output data frame. Any additional data can be provided with `additional`. A few raw data files are included in `mmgenome2` to demonstrate how to load raw data. Their file paths are found by `system.file`, as it depends on which system R is installed:
+```{r}
+assembly_path <- system.file("extdata", "min_example.assembly.fa", package = "mmgenome2")
+cov_sample1_path <- system.file("extdata", "min_example.sample1_cov.csv", package = "mmgenome2")
+cov_sample2_path <- system.file("extdata", "min_example.sample2_cov.csv", package = "mmgenome2")
+cov_sample3_path <- system.file("extdata", "min_example.sample3_cov.csv", package = "mmgenome2")
+cov_sample4_path <- system.file("extdata", "min_example.sample4_cov.csv", package = "mmgenome2")
+essgenes_path <- system.file("extdata", "min_example.essgenes.csv", package = "mmgenome2")
+tax_path <- system.file("extdata", "min_example.taxonomy.csv", package = "mmgenome2")
+```
+
+These particular files can then be loaded with `mmload` into the object `mm` like so:
+```{r, warning=FALSE, results="hide", message=FALSE}
+mm <- mmload(assembly = assembly_path,
+             coverage = list(sample1 = read.csv(cov_sample1_path),
+                             sample2 = read.csv(cov_sample2_path),
+                             sample3 = read.csv(cov_sample3_path),
+                             sample4 = read.csv(cov_sample4_path)),
+             essential_genes = read.csv(essgenes_path),
+             taxonomy = read.csv(tax_path))
+```
+
+By simply typing the name of the object in the console we get a brief overview of the data frame: 
+```{r}
+mm
+```
+
+The `mmstats` function can also calculate some basic statistics about the data:
+```{r}
+mmstats(mm)
+```
+
+## Interactive scaffold extraction
+In `mmgenome2` there are 3 different plotting functions; `mmplot`, `mmplot_pairs`, and `mmnetwork`. `mmplot` can for example be used to generate a differential coverage plot with any *two* coverage variables from the `mm` data frame, for example sample1 and sample2. It is often a good idea to apply a log10 scale to the axes, or to adjust the axis limits to get a symmetrical plot or to zoom in at selected regions. In the following plot the scaffolds are colored by taxonomy, but we could also color by GC content or any other variable in `mm`:
+```{r}
+mmplot(mm,
+       x = "cov_sample1",
+       y = "cov_sample2",
+       color_by = "taxonomy",
+       x_scale = "log10",
+       x_limits = c(1, 100),
+       y_scale = "log10",
+       y_limits = c(1, 100))
+```
+
+In both `mmplot` and `mmnetwork` there is incorporated a locator feature, which makes it possible to click in the plot and capture the exact positions of the mouse clicks on the axes plotted. This is enabled by setting `locator = TRUE` and is used to extract scaffolds within a region of interest, reproducibly. The selection of points can then be highlighted as a polygon by the `selection` argument:
+
+```{r}
+selection <- data.frame(cov_sample1 = c(2.202, 3.253, 3.324, 2.155, 1.812), 
+                        cov_sample2 = c(28.742, 32.001, 47.107, 44.167, 33.766))
+mmplot(mm,
+       x = "cov_sample1",
+       y = "cov_sample2",
+       color_by = "taxonomy",
+       x_scale = "log10",
+       x_limits = c(1, 100),
+       y_scale = "log10",
+       y_limits = c(1, 100),
+       selection = selection)
+```
+
+To extract all scaffolds within the selection polygon (including those not shown in the plot if a `min_length` has been set) from `mm` use `mmextract` and provide the selection in the same way as with `mmplot(mm, ..., selection = selection)`, and then save in a new object:
+```{r}
+mm_subset <- mmextract(mm, selection = selection)
+```
+
+Then the extracted set of scaffolds can be plotted separately to get a better view:
+```{r}
+mmplot(mm_subset,
+       x = "cov_sample1",
+       y = "cov_sample2",
+       color_by = "taxonomy",
+       x_scale = "log10",
+       y_scale = "log10")
+```
+
+To remove any eventual contaminants we can use the `mmplot_pairs` function to plot more than one coverage profile at the same time as well as any other variables. To see which variables that are available to plot simply type the name of the object in the console or use `colnames(mm_subset)`:
+```{r}
+colnames(mm_subset)
+mmplot_pairs(mm_subset,
+             variables = c("cov_sample1", 
+                           "cov_sample2",
+                           "cov_sample3", 
+                           "cov_sample4",
+                           "gc"),
+             color_by = "taxonomy",
+             x_scale = "log10",
+             y_scale = "log10")
+```
+
+
+
+
+
+
+
+
+
+Preloaded data is also available with `data("mmgenome2")`

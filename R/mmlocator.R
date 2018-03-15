@@ -17,7 +17,6 @@
 #' @author Soren M. Karst \email{smk@@bio.aau.dk}
 #' @author Mads Albertsen \email{MadsAlbertsen85@@gmail.com}
 mmlocator <- function(plot, x_scale = NULL, y_scale = NULL) {
-  axisnames <- c(plot[["mapping"]][["x"]], plot[["mapping"]][["y"]])
   app <- shinyApp(
     ui = fillPage(padding = c(5,5,50),
                   div(style="display: inline-block;",
@@ -122,12 +121,14 @@ mmlocator <- function(plot, x_scale = NULL, y_scale = NULL) {
            quiet = TRUE,
            launch.browser = rstudioapi::viewer))
   df <- get(".current_selection", df, envir = globalenv())
+  colnames(df) <- c(plot[["mapping"]][["x"]], plot[["mapping"]][["y"]])
+  assign(".current_selection", df, envir = globalenv())
   if(nrow(df) > 0) {
     selection <- paste0("data.frame(", 
                         colnames(df[1]), 
                         " = ", 
                         paste0(round(df[1], 3)),
-                        ", ",
+                        ",\n           ",
                         colnames(df[2]),
                         " = ",
                         paste0(round(df[2], 3)),
