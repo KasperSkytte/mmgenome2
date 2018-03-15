@@ -35,6 +35,7 @@
 mmplot_pairs <- function(mm, 
                          variables = NULL, 
                          textsize = 5,
+                         axis_ticks = TRUE,
                          ...) {
   args <- list(...)
   if(any(names(args) == "locator")) {
@@ -102,11 +103,13 @@ mmplot_pairs <- function(mm,
     sqrt() %>%
     floor() %>%
     as.integer()
-  for(i in 0:(ncol-2)) {
-    plotID <- 2+(ncol+1)*i
-    temp[[plotID]] <- temp[[plotID]] +
-      theme(axis.text = element_text(),
-            axis.ticks = element_line())
+  if(isTRUE(axis_ticks)) {
+    for(i in 0:(ncol-2)) {
+      plotID <- 2+(ncol+1)*i
+      temp[[plotID]] <- temp[[plotID]] +
+        theme(axis.text = element_text(),
+              axis.ticks = element_line())
+    }
   }
   do.call(cowplot::plot_grid, c(temp, ncol = ncol, align = "hv"))
 }
