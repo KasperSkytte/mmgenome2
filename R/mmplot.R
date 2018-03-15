@@ -270,7 +270,7 @@ mmplot <- function(mm,
   
   ##### Locator and selection #####
   if(isTRUE(locator)) {
-    points <- mmgenome2:::mmlocator(p, x_scale, y_scale)
+    points <- mmlocator(p, x_scale, y_scale)
   }
   if(isTRUE(locator) | !is.null(selection)) {
     if(!isTRUE(locator) & !is.null(selection)) {

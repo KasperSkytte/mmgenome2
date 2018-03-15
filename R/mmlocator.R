@@ -112,7 +112,6 @@ mmlocator <- function(plot, x_scale = NULL, y_scale = NULL) {
     }, 
     onStart = function() {
       df <- data.frame(x = numeric(), y = numeric())
-      colnames(df) <- axisnames
       assign(".current_selection", df, envir = globalenv())
     }
   )
