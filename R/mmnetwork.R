@@ -100,15 +100,19 @@ mmnetwork <- function(mm,
       p <- p +
         geom_point(alpha = 0.1, color = "black") +
         geom_point(data = subset(gpoints, gpoints[[color_by]] != "NA"), 
-                   aes_(color = color_by),
+                   aes_string(color = color_by),
                    shape = 1) +
         guides(colour = guide_legend(override.aes = list(alpha = 1, size = 5, shape = 19)))
     } else if(is.numeric(mm[[color_by]])) {
       p <- p +
-        geom_point(alpha = 0.7) +
-        ifelse(isTRUE(color_scale_log10), 
-               scale_colour_gradientn(colours = c("red", "green", "blue"), trans = "log10"), 
-               scale_colour_gradientn(colours = c("red", "green", "blue")))
+        geom_point(alpha = 0.7, aes_string(color = color_by)) 
+      if(isTRUE(color_scale_log10)) {
+        p <- p +
+          scale_colour_gradientn(colours = c("red", "green", "blue"), trans = "log10")
+      } else {
+        p <- p +
+          scale_colour_gradientn(colours = c("red", "green", "blue"))
+      }
     }
   } else {
     p <- p +
