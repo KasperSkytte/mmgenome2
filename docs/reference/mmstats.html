@@ -66,9 +66,6 @@
 <li>
   <a href="../reference/index.html">Functions</a>
 </li>
-<li>
-  <a href="../articles/assembly.html">Assembly guides</a>
-</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -131,20 +128,19 @@
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>mmgenome2</span>)
 <span class='fu'>data</span>(<span class='no'>mmgenome2</span>)
 <span class='no'>mmgenome2</span></div><div class='output co'>#&gt; # A tibble: 97,285 x 10
-#&gt;    scaffold length    gc cov_C13.11.14 cov_C13.11.25 cov_C13.12.03
-#&gt;    &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
-#&gt;  1 1         8264.  57.8       1.44             53.6         0.   
-#&gt;  2 2         1027.  57.0       0.625            24.2         0.   
-#&gt;  3 3         1665.  55.9      13.5             434.          0.166
-#&gt;  4 4         9056.  35.9       0.0100           23.4         0.   
-#&gt;  5 5         3343.  64.0       3.20             16.4         0.   
-#&gt;  6 6        98207.  39.1       0.00966          24.5         3.29 
-#&gt;  7 7         6480.  63.0       2.61             19.2         1.46 
-#&gt;  8 8        15790.  61.7       2.78             21.2         1.62 
-#&gt;  9 9         1403.  70.4      85.1             192.          0.   
-#&gt; 10 10        2018.  70.2      50.3             101.          0.   
-#&gt; # ... with 97,275 more rows, and 4 more variables: cov_C14.01.09 &lt;dbl&gt;,
-#&gt; #   geneID &lt;chr&gt;, phylum &lt;fct&gt;, rRNA16S &lt;fct&gt;</div><div class='input'><span class='fu'>mmstats</span>(<span class='no'>mmgenome2</span>)</div><div class='output co'>#&gt;                  General stats
+#&gt;    scaffold length    gc cov_C13.11.14 cov_C13.11.25 cov_C13.12.03 cov_C14.01.09 geneID              taxonomy      rRNA16S
+#&gt;    &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt; &lt;chr&gt;               &lt;fct&gt;         &lt;fct&gt;  
+#&gt;  1 1         8264.  57.8       1.44             53.6         0.           0.0660 &lt;NA&gt;                &lt;NA&gt;          &lt;NA&gt;   
+#&gt;  2 2         1027.  57.0       0.625            24.2         0.           0.     &lt;NA&gt;                &lt;NA&gt;          &lt;NA&gt;   
+#&gt;  3 3         1665.  55.9      13.5             434.          0.166        0.177  &lt;NA&gt;                &lt;NA&gt;          &lt;NA&gt;   
+#&gt;  4 4         9056.  35.9       0.0100           23.4         0.           0.     &lt;NA&gt;                &lt;NA&gt;          &lt;NA&gt;   
+#&gt;  5 5         3343.  64.0       3.20             16.4         0.           0.     &lt;NA&gt;                &lt;NA&gt;          &lt;NA&gt;   
+#&gt;  6 6        98207.  39.1       0.00966          24.5         3.29         9.85   TIGR00043,TIGR00663 Bacteroidetes &lt;NA&gt;   
+#&gt;  7 7         6480.  63.0       2.61             19.2         1.46        12.3    &lt;NA&gt;                &lt;NA&gt;          &lt;NA&gt;   
+#&gt;  8 8        15790.  61.7       2.78             21.2         1.62        10.3    &lt;NA&gt;                &lt;NA&gt;          &lt;NA&gt;   
+#&gt;  9 9         1403.  70.4      85.1             192.          0.           0.     &lt;NA&gt;                &lt;NA&gt;          &lt;NA&gt;   
+#&gt; 10 10        2018.  70.2      50.3             101.          0.           0.     &lt;NA&gt;                &lt;NA&gt;          &lt;NA&gt;   
+#&gt; # ... with 97,275 more rows</div><div class='input'><span class='fu'>mmstats</span>(<span class='no'>mmgenome2</span>)</div><div class='output co'>#&gt;                  General stats
 #&gt; Scaffolds                97285
 #&gt; N50                       5291
 #&gt; Length.total         331908376

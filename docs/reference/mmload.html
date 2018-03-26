@@ -66,9 +66,6 @@
 <li>
   <a href="../reference/index.html">Functions</a>
 </li>
-<li>
-  <a href="../articles/assembly.html">Assembly guides</a>
-</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -109,11 +106,12 @@
     </tr>
     <tr>
       <th>coverage</th>
-      <td><p>(<em>required</em>) A <code>vector</code>, <code>dataframe</code>, or a <code>list</code> hereof containing coverage of each scaffold. The prefix <code>"cov_"</code> will be appended to all coverage column names in the output so that <code><a href='mmstats.html'>mmstats</a></code> knows which columns are coverage columns.</p><dl class='dl-horizontal'>
+      <td><p>(<em>required</em>) A path to a folder to scan for coverage files, or otherwise a <code>vector</code>, <code>data.frame</code>, or a <code>list</code> hereof containing coverage of each scaffold. The prefix <code>"cov_"</code> will be appended to all coverage column names in the output so that <code><a href='mmstats.html'>mmstats</a></code> knows which columns are coverage columns.</p><dl class='dl-horizontal'>
   <dt><code>vector</code></dt><dd><p>If provided as a vector, the elements of the vector must be named by the scaffold names exactly matching those of the assembly.</p></dd>
-  <dt><code>dataframe</code></dt><dd><p>If provided as a dataframe, the first column must contain the scaffold names exactly matching those of the assembly, and any additional column(s) contain coverage of each scaffold.</p></dd>
-  <dt><code>list</code></dt><dd><p>If provided as a list, it must contain any number of <code>vector</code> or <code>dataframe</code> objects as described above.</p></dd>
-</dl><p>If the coverage is provided as a list, then the assigned names of the objects in the list will be used as column names in the output (does not apply to any dataframes that may have more than 2 columns, however).</p></td>
+  <dt><code>data.frame</code></dt><dd><p>If provided as a dataframe, the first column must contain the scaffold names exactly matching those of the assembly, and any additional column(s) contain coverage of each scaffold.</p></dd>
+  <dt><code>list</code></dt><dd><p>If provided as a list, it must contain any number of <code>vector</code>'s or <code>data.frame</code>'s as described above. If names are assigned to the objects in the list, then they will be used as column names in the output (does not apply to any dataframes that may have more than 2 columns, however).</p></dd>
+  <dt><code>path</code></dt><dd><p>If a path to a folder is provided, then all files with filenames ending with <code>"_cov"</code> will be loaded (by the <code><a href='http://www.rdocumentation.org/packages/data.table/topics/fread'>fread</a></code> function) into a list of <code>data.frame</code>'s and treated as if a <code>list</code> of <code>data.frame</code>'s were provided. The filenames (stripped from extension and <code>"_cov"</code>) will then be used as column names in the output. <strong>Note: only the first 2 columns will be used in the loaded files!</strong></p></dd>
+</dl></td>
     </tr>
     <tr>
       <th>essential_genes</th>

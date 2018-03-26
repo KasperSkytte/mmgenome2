@@ -19,7 +19,10 @@ Depends:
     R (>= 3.4.3),
     ggplot2 (>= 2.2.1)
 Imports:
+    tidyverse,
+    tools,
     sp,
+    data.table,
     cowplot,
     magrittr,
     dplyr,
@@ -36,6 +39,4 @@ Imports:
     shiny
 Remotes: 
     github::RGLab/Rtsne.multicore
-Suggests:
-    tidyverse
 RoxygenNote: 6.0.1

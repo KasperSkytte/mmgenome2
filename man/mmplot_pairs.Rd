@@ -4,7 +4,7 @@
 \alias{mmplot_pairs}
 \title{Plot multiple combinations of variables in a pairs plot}
 \usage{
-mmplot_pairs(mm, variables = NULL, textsize = 5, ...)
+mmplot_pairs(mm, variables = NULL, textsize = 5, axis_ticks = TRUE, ...)
 }
 \arguments{
 \item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}

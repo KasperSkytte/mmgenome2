@@ -3,13 +3,13 @@
 #' @description Loads, validates and combines multiple aspects of metagenome data into one dataframe for use with all mmgenome2 functions, including scaffold assembly sequences, scaffold coverage, essential genes, taxonomy, and more.
 #'
 #' @param assembly (\emph{required}) A character string with the path to the assembly FASTA file, or the assembly as already loaded with \code{\link{readDNAStringSet}}.
-#' @param coverage (\emph{required}) A \code{vector}, \code{dataframe}, or a \code{list} hereof containing coverage of each scaffold. The prefix \code{"cov_"} will be appended to all coverage column names in the output so that \code{\link{mmstats}} knows which columns are coverage columns.
+#' @param coverage (\emph{required}) A path to a folder to scan for coverage files, or otherwise a \code{vector}, \code{data.frame}, or a \code{list} hereof containing coverage of each scaffold. The prefix \code{"cov_"} will be appended to all coverage column names in the output so that \code{\link{mmstats}} knows which columns are coverage columns.
 #' \describe{
 #'   \item{\code{vector}}{If provided as a vector, the elements of the vector must be named by the scaffold names exactly matching those of the assembly.}
-#'   \item{\code{dataframe}}{If provided as a dataframe, the first column must contain the scaffold names exactly matching those of the assembly, and any additional column(s) contain coverage of each scaffold.}
-#'   \item{\code{list}}{If provided as a list, it must contain any number of \code{vector} or \code{dataframe} objects as described above.}
+#'   \item{\code{data.frame}}{If provided as a dataframe, the first column must contain the scaffold names exactly matching those of the assembly, and any additional column(s) contain coverage of each scaffold.}
+#'   \item{\code{list}}{If provided as a list, it must contain any number of \code{vector}'s or \code{data.frame}'s as described above. If names are assigned to the objects in the list, then they will be used as column names in the output (does not apply to any dataframes that may have more than 2 columns, however).}
+#'   \item{\code{path}}{If a path to a folder is provided, then all files with filenames ending with \code{"_cov"} will be loaded (by the \code{\link[data.table]{fread}} function) into a list of \code{data.frame}'s and treated as if a \code{list} of \code{data.frame}'s were provided. The filenames (stripped from extension and \code{"_cov"}) will then be used as column names in the output. \strong{Note: only the first 2 columns will be used in the loaded files!}}
 #' }
-#' If the coverage is provided as a list, then the assigned names of the objects in the list will be used as column names in the output (does not apply to any dataframes that may have more than 2 columns, however).
 #' @param essential_genes A 2-column dataframe with scaffold names in the first column and gene ID's in the second. Can contain duplicates. (\emph{Default: } \code{NULL}) 
 #' @param taxonomy A dataframe containing taxonomy assigned to the scaffolds. The first column must contain the scaffold names. (\emph{Default: } \code{NULL})
 #' @param additional A dataframe containing any additional data. The first column must contain the scaffold names. (\emph{Default: } \code{NULL})
@@ -27,13 +27,15 @@
 #' @importFrom digest digest
 #' @importFrom Biostrings width readDNAStringSet letterFrequency oligonucleotideFrequency reverseComplement
 #' @importFrom dplyr mutate_all funs group_by left_join summarise_all
-#' @importFrom stringr str_replace_all
+#' @importFrom stringr str_replace_all str_remove
 #' @importFrom vegan rda scores
+#' @importFrom data.table fread
+#' @importFrom tools file_path_sans_ext
 #' @import Rtsne.multicore
 #' 
 #' @examples 
 #' \dontrun{
-#'   library(mmgenome2)
+#'   library(mmgenome2)   
 #'   mm <- mmload(
 #'     assembly = "path/to/assembly.fa",
 #'     coverage = list(nameofcoverage1 = read.csv("path/to/coveragetable1.csv", col.names = TRUE),
@@ -90,6 +92,22 @@ mmload <- function(assembly,
   ##### Coverage #####
   if(isTRUE(verbose))
     message("Loading coverage data...")
+  if(is.character(coverage)) {
+    filepaths <- list.files(path = coverage, 
+                            pattern = "*._cov",
+                            full.names = TRUE,
+                            all.files = FALSE, 
+                            recursive = FALSE,
+                            ignore.case = TRUE)
+    if(length(filepaths) > 0) {
+      filenames <- basename(filepaths)
+      coverage <- list()
+      for (i in 1:length(filenames)) {
+        coverage[[stringr::str_remove(tools::file_path_sans_ext(filenames)[i], "_cov$")]] <- data.table::fread(filepaths[i], data.table = FALSE)[,1:2]
+      }
+    } else
+      stop("No files with a filename ending with \"_cov\" were found in the folder \"", coverage, "\"", call. = FALSE)
+  }
   beforeMerge <- ncol(mm)
   mm <- mmmerge(x = mm,
                 y = coverage,
