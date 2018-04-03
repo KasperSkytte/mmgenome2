@@ -25,11 +25,11 @@ mmmerge <- function(x, y, type) {
         y[[i]] <- as.character(y[[i]])
       #first column must be the sequence names
       if(any(class(y[[i]]) %in% c("data.frame", "tbl", "tbl_df")) & length(y[[i]]) < 2)
-        stop(paste0(string, " not accepted: Data frames must contain at least 2 columns where the first column contains the sequence names exactly matching those of the assembly."))
+        stop(paste0(string, " not accepted: Data frames must contain at least 2 columns where the first column contains the sequence names exactly matching those of the assembly."), call. = FALSE)
       
       #vectors must be named to be able to merge with mm
       if(is.atomic(y[[i]]) & is.null(names(y[[i]])))
-        stop(paste0(string, " not accepted: The vector is not a named vector. The vector elements must be named by sequence names exactly matching those of the assembly."))
+        stop(paste0(string, " not accepted: The vector is not a named vector. The vector elements must be named by sequence names exactly matching those of the assembly."), call. = FALSE)
       
       #column names are preserved from data frames, but not from vectors. Use names of the provided list, or else create a dummy name
       if(is.atomic(y[[i]]) & !is.null(names(y[[i]]))) {
@@ -56,12 +56,12 @@ mmmerge <- function(x, y, type) {
         warning(paste0(string, " contains more scaffolds than the assembly. The following ", length(excessScaffolds), " scaffolds have not been loaded:\n\"", paste(excessScaffolds, collapse = "\", \""), "\""))
       } else if (!any(x$scaffold %in% y[[i]][["scaffold"]]))
         #no match sucks
-        stop("No scaffold names match between the assembly and ", string, ". ")
+        stop("No scaffold names match between the assembly and ", string, ". ", call. = FALSE)
       x <- dplyr::left_join(x, 
                             y[[i]], 
                             by = "scaffold")
     }
   } else
-    stop("Data must be provided as a data frame, named vector, or a list of multiple data frames and/or named vectors.")
+    stop("Data must be provided as a data frame, named vector, or a list of multiple data frames and/or named vectors.", call. = FALSE)
   return(x)
 }

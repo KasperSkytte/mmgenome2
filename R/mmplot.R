@@ -89,17 +89,17 @@ mmplot <- function(mm,
                    color_scale_log10 = FALSE) {
   #Checks and error messages before anything else
   if(isTRUE(locator) & !is.null(selection))
-    stop("Using the locator and highlighting a selection at the same time is not supported.")
+    stop("Using the locator and highlighting a selection at the same time is not supported.", call. = FALSE)
   
   if(!is.null(selection)) {
     selection <- as.data.frame(selection)
     if(ncol(selection) != 2)
-      stop("A selection must be provided as a 2-column data frame or matrix containing the x- (first column) and y- (second column) coordinates of the points in the selection.")
+      stop("A selection must be provided as a 2-column data frame or matrix containing the x- (first column) and y- (second column) coordinates of the points in the selection.", call. = FALSE)
   }
   
   if(!is.null(x_scale) | !is.null(y_scale)) {
     if(any(!c(x_scale, y_scale) %in% c("sqrt", "log10")) | length(x_scale) > 1 | length(y_scale) > 1)
-      stop("Axis scales must be either \"log10\" or \"sqrt\"")
+      stop("Axis scales must be either \"log10\" or \"sqrt\"", call. = FALSE)
   }
   
   #filter based on minimum length
@@ -234,7 +234,7 @@ mmplot <- function(mm,
     if(is.data.frame(highlight_scaffolds)) {
       highlight_scaffolds <- as.character(highlight_scaffolds[[1]])
     } else if(!any(is.vector(highlight_scaffolds), is.data.frame(highlight_scaffolds))) {
-      stop("Scaffolds to highlight must be provided either as a vector, or as a dataframe, where the first column contains the scaffold names.")
+      stop("Scaffolds to highlight must be provided either as a vector, or as a dataframe, where the first column contains the scaffold names.", call. = FALSE)
     }
     p <- p + 
       geom_point(data = mm[which(mm[[1]] %in% highlight_scaffolds),], color = highlight_color, shape = 1)

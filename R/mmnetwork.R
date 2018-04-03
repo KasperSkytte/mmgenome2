@@ -62,7 +62,7 @@ mmnetwork <- function(mm,
                       seed = 0) {
   #Checks and error messages before anything else
   if(isTRUE(locator) & !is.null(selection))
-    stop("Using the locator and highlighting a selection at the same time is not supported.")
+    stop("Using the locator and highlighting a selection at the same time is not supported.", call. = FALSE)
   
   ## Subset the network
   snetwork <- dplyr::filter(network, network[[1]] %in% mm[[1]] & network[[2]] %in% mm[[1]] & network[["connections"]] >= min_connections)

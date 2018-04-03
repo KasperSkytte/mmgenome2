@@ -19,8 +19,8 @@
 #' library(mmgenome2)
 #' data(mmgenome2)
 #' mmgenome2
-#' selection <- data.frame(cov_C14.01.09 = c(24.852, 32.545, 53.062, 38.52),
-#'                         cov_C13.12.03 = c(7.676, 5.165, 6.386, 10.933))
+#' selection <- data.frame(cov_C13.12.03 = c(7.676, 5.165, 6.386, 10.933), 
+#'                         cov_C14.01.09 = c(24.852, 32.545, 53.062, 38.52))
 #' mmgenome2_extraction <- mmextract(mmgenome2, 
 #'                                   min_length = 3000,
 #'                                   selection = selection,
@@ -35,7 +35,7 @@ mmextract <-  function(mm,
                        min_length = 0,
                        inverse = FALSE) {
   if(!any(colnames(selection) %in% colnames(mm)))
-    stop("Could not find any variable names in mm matching those in the selection.")
+    stop("Could not find any variable names in mm matching those in the selection.", call. = FALSE)
   
   #filter based on minimum length
   mms <- dplyr::filter(mm, length >= min_length)

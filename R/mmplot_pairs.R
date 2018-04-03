@@ -40,19 +40,19 @@ mmplot_pairs <- function(mm,
   args <- list(...)
   if(any(names(args) == "locator")) {
     if(isTRUE(args[["locator"]]))
-      stop("mmplot_pairs does not support the locator feature")
+      stop("mmplot_pairs does not support the locator feature", call. = FALSE)
   }
   if(any(names(args) == "selection")) {
     if(!is.null(args[["selection"]]))
-      stop("mmplot_pairs cannot highlight a \"selection\", use mmplot instead")
+      stop("mmplot_pairs cannot highlight a \"selection\", use mmplot instead", call. = FALSE)
   }
   if(is.null(variables)) {
     variables <- names(dplyr::select(mm, dplyr::starts_with("cov_")))
   }
   if(length(variables) == 2)
-    stop("Plotting only two variables is better done with mmplot")
+    stop("Plotting only two variables is better done with mmplot", call. = FALSE)
   if(!is.character(variables))
-    stop("The variables to plot must be provided as a character vector with 3 or more variable names")
+    stop("The variables to plot must be provided as a character vector with 3 or more variable names", call. = FALSE)
   ## Make a blank plot
   emp <- data.frame(x = 0, y = 0)
   

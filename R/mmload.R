@@ -63,7 +63,7 @@ mmload <- function(assembly,
   if(is.character(assembly)) {
     assembly <- Biostrings::readDNAStringSet(assembly, format = "fasta")
   } else if (!class(assembly) == "DNAStringSet") {
-    stop("The assembly must either be an object of class \"DNAStringSet\" loaded with readDNAStringSet() from the Biostrings package, or a file path to the assembly FASTA file to be loaded.")
+    stop("The assembly must either be an object of class \"DNAStringSet\" loaded with readDNAStringSet() from the Biostrings package, or a file path to the assembly FASTA file to be loaded.", call. = FALSE)
   }
   
   #check if a different assembly already exists in global environment
@@ -74,12 +74,12 @@ mmload <- function(assembly,
     if(any(tolower(userChoice) %in% c("y", "yes", ""))) {
       assign("assembly", assembly, envir = .GlobalEnv)
     } else
-      stop("Aborted by user.")
+      stop("Aborted by user.", call. = FALSE)
   }
   
   #duplicate sequence names are not allowed
   if(any(duplicated(names(assembly)))) 
-    stop("The assembly contains duplicate sequence names")
+    stop("The assembly contains duplicate sequence names", call. = FALSE)
   
   ##### Create base mm object #####
   if(isTRUE(verbose))
@@ -136,7 +136,7 @@ mmload <- function(assembly,
                              essential_genes, 
                              by = "scaffold")
     } else
-      stop("Essential genes must be provided as a 2 column data frame, where the first column contains the sequence names exactly matching those of the assembly, and the second column the gene names/IDs.")
+      stop("Essential genes must be provided as a 2 column data frame, where the first column contains the sequence names exactly matching those of the assembly, and the second column the gene names/IDs.", call. = FALSE)
   }
   
   ##### calculate tetranucleotides frequencies #####
