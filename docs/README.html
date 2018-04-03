@@ -86,7 +86,6 @@
       <h1>/home/kapper/Dropbox/R/github/mmgenome2/README.md</h1>
     </div>
 
-
 <div id="tools-for-extracting-individual-genomes-from-metagenomes" class="section level1">
 <h1 class="hasAnchor">
 <a href="#tools-for-extracting-individual-genomes-from-metagenomes" class="anchor"></a>Tools for extracting individual genomes from metagenomes</h1>
@@ -94,30 +93,24 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>First, install <a href="https://mirrors.dotsrc.org/cran/">R (3.4.3 or later)</a> and <a href="https://www.rstudio.com/products/rstudio/download/#download">RStudio</a>. Windows users should also install <a href="https://mirrors.dotsrc.org/cran/bin/windows/Rtools/">RTools</a>. Then open RStudio as administrator (!) and run the following commands (just copy/taste) to install <code>mmgenome2</code> from the console: ```{r, message = FALSE, warning = FALSE, eval = FALSE}</p>
+<p>First, install <a href="https://mirrors.dotsrc.org/cran/">R (3.4.3 or later)</a> and <a href="https://www.rstudio.com/products/rstudio/download/#download">RStudio</a>. Windows users should also install <a href="https://mirrors.dotsrc.org/cran/bin/windows/Rtools/">RTools</a>. Then open RStudio as administrator (!) and run the following commands (just copy/taste) to install <code>mmgenome2</code> from the console:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#check for bioconductor installer</span>
+<span class="cf">if</span>(<span class="op">!</span><span class="kw">require</span>(BiocInstaller)) 
+  <span class="kw">source</span>(<span class="st">"https://bioconductor.org/biocLite.R"</span>)
+  
+<span class="co">#check for devtools</span>
+<span class="cf">if</span>(<span class="op">!</span><span class="kw">require</span>(devtools))
+  <span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
+  
+<span class="co">#install mmgenome2</span>
+BiocInstaller<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/BiocInstaller/topics/biocLite">biocLite</a></span>(<span class="st">"madsalbertsen/mmgenome2"</span>)</code></pre></div>
 </div>
-</div>
-<div id="check-for-bioconductor-installer" class="section level1">
-<h1 class="hasAnchor">
-<a href="#check-for-bioconductor-installer" class="anchor"></a>check for bioconductor installer</h1>
-<p>if(!require(BiocInstaller)) source(“<a href="https://bioconductor.org/biocLite.R" class="uri">https://bioconductor.org/biocLite.R</a>”)</p>
-</div>
-<div id="check-for-devtools" class="section level1">
-<h1 class="hasAnchor">
-<a href="#check-for-devtools" class="anchor"></a>check for devtools</h1>
-<p>if(!require(devtools)) install.packages(“devtools”)</p>
-</div>
-<div id="install-mmgenome2" class="section level1">
-<h1 class="hasAnchor">
-<a href="#install-mmgenome2" class="anchor"></a>install mmgenome2</h1>
-<p>BiocInstaller::biocLite(“madsalbertsen/mmgenome2”) ```</p>
 <div id="get-started" class="section level2">
 <h2 class="hasAnchor">
 <a href="#get-started" class="anchor"></a>Get started</h2>
 <p>For a brief guide about the basics of mmgenome2 go to the <a href="https://madsalbertsen.github.io/mmgenome2/articles/ampvis2.html">Get Started</a> page.</p>
 </div>
 </div>
-
 
   </div>
 

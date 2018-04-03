@@ -19,7 +19,7 @@ mmload(assembly, coverage, essential_genes = NULL, taxonomy = NULL,
   \item{\code{path}}{If a path to a folder is provided, then all files with filenames ending with \code{"_cov"} will be loaded (by the \code{\link[data.table]{fread}} function) into a list of \code{data.frame}'s and treated as if a \code{list} of \code{data.frame}'s were provided. The filenames (stripped from extension and \code{"_cov"}) will then be used as column names in the output. \strong{Note: only the first 2 columns will be used in the loaded files!}}
 }}
 
-\item{essential_genes}{A 2-column dataframe with scaffold names in the first column and gene ID's in the second. Can contain duplicates. (\emph{Default: } \code{NULL})}
+\item{essential_genes}{Either a path to a delimited file (with a 1-space delimiter: " ") containing the essential genes, or a 2-column dataframe with scaffold names in the first column and gene ID's in the second. Can contain duplicates. (\emph{Default: } \code{NULL})}
 
 \item{taxonomy}{A dataframe containing taxonomy assigned to the scaffolds. The first column must contain the scaffold names. (\emph{Default: } \code{NULL})}
 
@@ -46,9 +46,10 @@ Loads, validates and combines multiple aspects of metagenome data into one dataf
     assembly = "path/to/assembly.fa",
     coverage = list(nameofcoverage1 = read.csv("path/to/coveragetable1.csv", col.names = TRUE),
                     nameofcoverage2 = read.csv("path/to/coveragetable2.csv", col.names = TRUE)),
-    essential_genes = read.csv("path/to/ess_genes.txt", col.names = TRUE),
+    essential_genes = "path/to/ess_genes.txt",
     verbose = TRUE
   )
+  mm
 }
 
 }

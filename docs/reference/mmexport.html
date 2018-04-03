@@ -115,20 +115,45 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'>library</span>(<span class='no'>mmgenome2</span>)
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>mmgenome2</span>)
 <span class='fu'>data</span>(<span class='no'>mmgenome2</span>)
-<span class='no'>mmgenome2</span>
-<span class='no'>selection</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>cov_C14.01.09</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>24.852</span>, <span class='fl'>32.545</span>, <span class='fl'>53.062</span>, <span class='fl'>38.52</span>),
-                        <span class='kw'>cov_C13.12.03</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>7.676</span>, <span class='fl'>5.165</span>, <span class='fl'>6.386</span>, <span class='fl'>10.933</span>))
+<span class='no'>mmgenome2</span></div><div class='output co'>#&gt; # A tibble: 97,285 x 10
+#&gt;    scaffold length    gc cov_C13.11.14 cov_C13.11.25 cov_C13.12.03
+#&gt;    &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+#&gt;  1 1         8264.  57.8       1.44             53.6         0.   
+#&gt;  2 2         1027.  57.0       0.625            24.2         0.   
+#&gt;  3 3         1665.  55.9      13.5             434.          0.166
+#&gt;  4 4         9056.  35.9       0.0100           23.4         0.   
+#&gt;  5 5         3343.  64.0       3.20             16.4         0.   
+#&gt;  6 6        98207.  39.1       0.00966          24.5         3.29 
+#&gt;  7 7         6480.  63.0       2.61             19.2         1.46 
+#&gt;  8 8        15790.  61.7       2.78             21.2         1.62 
+#&gt;  9 9         1403.  70.4      85.1             192.          0.   
+#&gt; 10 10        2018.  70.2      50.3             101.          0.   
+#&gt; # ... with 97,275 more rows, and 4 more variables: cov_C14.01.09 &lt;dbl&gt;,
+#&gt; #   geneID &lt;chr&gt;, taxonomy &lt;fct&gt;, rRNA16S &lt;fct&gt;</div><div class='input'><span class='no'>selection</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>cov_C13.12.03</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>7.676</span>, <span class='fl'>5.165</span>, <span class='fl'>6.386</span>, <span class='fl'>10.933</span>),
+                        <span class='kw'>cov_C14.01.09</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>24.852</span>, <span class='fl'>32.545</span>, <span class='fl'>53.062</span>, <span class='fl'>38.52</span>))
 <span class='no'>mmgenome2_extraction</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mmextract.html'>mmextract</a></span>(<span class='no'>mmgenome2</span>,
                                   <span class='kw'>min_length</span> <span class='kw'>=</span> <span class='fl'>3000</span>,
                                   <span class='kw'>selection</span> <span class='kw'>=</span> <span class='no'>selection</span>,
-                                  <span class='kw'>inverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='no'>mmgenome2_extraction</span>
+                                  <span class='kw'>inverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>83 scaffolds (or 2.58% of the scaffolds in mm, weighted by length) remain after 97202 of 97285 scaffolds have been filtered.</span></div><div class='input'><span class='no'>mmgenome2_extraction</span></div><div class='output co'>#&gt; # A tibble: 83 x 10
+#&gt;    scaffold  length    gc cov_C13.11.14 cov_C13.11.25 cov_C13.12.03
+#&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+#&gt;  1 180       22093.  74.0         0.298          12.0          7.34
+#&gt;  2 227      190826.  65.4         0.348          13.0          6.91
+#&gt;  3 253      296715.  70.2         1.06           15.2          7.00
+#&gt;  4 315      218862.  71.7         0.366          12.6          7.17
+#&gt;  5 386      164942.  68.2         0.359          12.3          6.73
+#&gt;  6 396        7448.  72.6         0.329          13.0          7.59
+#&gt;  7 423      100199.  68.7         1.40           15.3          6.71
+#&gt;  8 431      446220.  72.4         0.409          12.6          6.80
+#&gt;  9 460      420964.  71.1         0.421          13.4          6.97
+#&gt; 10 484      454223.  72.6         0.379          12.6          7.09
+#&gt; # ... with 73 more rows, and 4 more variables: cov_C14.01.09 &lt;dbl&gt;,
+#&gt; #   geneID &lt;chr&gt;, taxonomy &lt;fct&gt;, rRNA16S &lt;fct&gt;</div><span class='co'># NOT RUN {</span>
 <span class='fu'>mmexport</span>(<span class='no'>mmgenome2_extraction</span>,
          <span class='kw'>assembly</span> <span class='kw'>=</span> <span class='no'>assembly</span>,
-         <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"exported_assembly.fa"</span>)
+         <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"bins/exported_assembly.fa"</span>)
 <span class='co'># }</span><div class='input'>
 </div></pre>
   </div>

@@ -153,37 +153,39 @@
                                   <span class='kw'>min_length</span> <span class='kw'>=</span> <span class='fl'>3000</span>,
                                   <span class='kw'>selection</span> <span class='kw'>=</span> <span class='no'>selection</span>,
                                   <span class='kw'>inverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>83 scaffolds (or 2.58% of the scaffolds in mm, weighted by length) remain after 97202 of 97285 scaffolds have been filtered.</span></div><div class='input'><span class='no'>mmgenome2_extraction</span></div><div class='output co'>#&gt; # A tibble: 83 x 10
-#&gt;    scaffold  length    gc cov_C13.11.14 cov_C13.11.25 cov_C13.12.03 cov_C14.01.09 geneID                                                 taxonomy rRNA16S
-#&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt; &lt;chr&gt;                                                  &lt;fct&gt;    &lt;fct&gt;  
-#&gt;  1 180       22093.  74.0         0.298          12.0          7.34          37.9 &lt;NA&gt;                                                   &lt;NA&gt;     &lt;NA&gt;   
-#&gt;  2 227      190826.  65.4         0.348          13.0          6.91          38.5 &lt;NA&gt;                                                   &lt;NA&gt;     &lt;NA&gt;   
-#&gt;  3 253      296715.  70.2         1.06           15.2          7.00          41.1 &lt;NA&gt;                                                   &lt;NA&gt;     &lt;NA&gt;   
-#&gt;  4 315      218862.  71.7         0.366          12.6          7.17          38.8 TIGR00388                                              Actinob… &lt;NA&gt;   
-#&gt;  5 386      164942.  68.2         0.359          12.3          6.73          37.2 &lt;NA&gt;                                                   &lt;NA&gt;     &lt;NA&gt;   
-#&gt;  6 396        7448.  72.6         0.329          13.0          7.59          41.0 &lt;NA&gt;                                                   &lt;NA&gt;     &lt;NA&gt;   
-#&gt;  7 423      100199.  68.7         1.40           15.3          6.71          40.0 TIGR00086                                              Actinob… &lt;NA&gt;   
-#&gt;  8 431      446220.  72.4         0.409          12.6          6.80          37.9 PF00162.14,TIGR00009,TIGR00043,TIGR00152,TIGR00418,TI… Actinob… &lt;NA&gt;   
-#&gt;  9 460      420964.  71.1         0.421          13.4          6.97          38.1 PF00276.15,PF00281.14,PF00297.17,PF00347.18,PF00366.1… Actinob… &lt;NA&gt;   
-#&gt; 10 484      454223.  72.6         0.379          12.6          7.09          38.2 PF00750.14,PF01795.14,TIGR00001,TIGR00002,TIGR00009,T… Actinob… &lt;NA&gt;   
-#&gt; # ... with 73 more rows</div><div class='input'><span class='no'>mmgenome2_extraction_expanded</span> <span class='kw'>&lt;-</span> <span class='fu'>mmexpand_network</span>(<span class='kw'>mm</span> <span class='kw'>=</span> <span class='no'>mmgenome2</span>,
+#&gt;    scaffold  length    gc cov_C13.11.14 cov_C13.11.25 cov_C13.12.03
+#&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+#&gt;  1 180       22093.  74.0         0.298          12.0          7.34
+#&gt;  2 227      190826.  65.4         0.348          13.0          6.91
+#&gt;  3 253      296715.  70.2         1.06           15.2          7.00
+#&gt;  4 315      218862.  71.7         0.366          12.6          7.17
+#&gt;  5 386      164942.  68.2         0.359          12.3          6.73
+#&gt;  6 396        7448.  72.6         0.329          13.0          7.59
+#&gt;  7 423      100199.  68.7         1.40           15.3          6.71
+#&gt;  8 431      446220.  72.4         0.409          12.6          6.80
+#&gt;  9 460      420964.  71.1         0.421          13.4          6.97
+#&gt; 10 484      454223.  72.6         0.379          12.6          7.09
+#&gt; # ... with 73 more rows, and 4 more variables: cov_C14.01.09 &lt;dbl&gt;,
+#&gt; #   geneID &lt;chr&gt;, taxonomy &lt;fct&gt;, rRNA16S &lt;fct&gt;</div><div class='input'><span class='no'>mmgenome2_extraction_expanded</span> <span class='kw'>&lt;-</span> <span class='fu'>mmexpand_network</span>(<span class='kw'>mm</span> <span class='kw'>=</span> <span class='no'>mmgenome2</span>,
                                                   <span class='kw'>scaffolds</span> <span class='kw'>=</span> <span class='no'>mmgenome2_extraction</span>,
                                                   <span class='kw'>network</span> <span class='kw'>=</span> <span class='no'>paired_ends</span>,
                                                   <span class='kw'>min_connections</span> <span class='kw'>=</span> <span class='fl'>10</span>,
                                                   <span class='kw'>include_connections</span> <span class='kw'>=</span> <span class='st'>"direct"</span>)</div><div class='output co'>#&gt; <span class='message'>The provided 83 scaffolds had 18 additional direct connections to other scaffolds in mm.</span>
 #&gt; <span class='message'>Total: 101 scaffolds (or 3.13% of the scaffolds in mm, weighted by length).</span></div><div class='input'><span class='no'>mmgenome2_extraction_expanded</span></div><div class='output co'>#&gt; # A tibble: 101 x 10
-#&gt;    scaffold  length    gc cov_C13.11.14 cov_C13.11.25 cov_C13.12.03 cov_C14.01.09 geneID                                               taxonomy   rRNA16S
-#&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt; &lt;chr&gt;                                                &lt;fct&gt;      &lt;fct&gt;  
-#&gt;  1 180       22093.  74.0         0.298          12.0          7.34          37.9 &lt;NA&gt;                                                 &lt;NA&gt;       &lt;NA&gt;   
-#&gt;  2 181        2970.  68.0         0.340          13.9          7.37          38.6 &lt;NA&gt;                                                 &lt;NA&gt;       &lt;NA&gt;   
-#&gt;  3 227      190826.  65.4         0.348          13.0          6.91          38.5 &lt;NA&gt;                                                 &lt;NA&gt;       &lt;NA&gt;   
-#&gt;  4 253      296715.  70.2         1.06           15.2          7.00          41.1 &lt;NA&gt;                                                 &lt;NA&gt;       &lt;NA&gt;   
-#&gt;  5 315      218862.  71.7         0.366          12.6          7.17          38.8 TIGR00388                                            Actinobac… &lt;NA&gt;   
-#&gt;  6 343       27203.  57.6         0.235          10.7          5.07          32.0 &lt;NA&gt;                                                 &lt;NA&gt;       &lt;NA&gt;   
-#&gt;  7 386      164942.  68.2         0.359          12.3          6.73          37.2 &lt;NA&gt;                                                 &lt;NA&gt;       &lt;NA&gt;   
-#&gt;  8 396        7448.  72.6         0.329          13.0          7.59          41.0 &lt;NA&gt;                                                 &lt;NA&gt;       &lt;NA&gt;   
-#&gt;  9 423      100199.  68.7         1.40           15.3          6.71          40.0 TIGR00086                                            Actinobac… &lt;NA&gt;   
-#&gt; 10 431      446220.  72.4         0.409          12.6          6.80          37.9 PF00162.14,TIGR00009,TIGR00043,TIGR00152,TIGR00418,… Actinobac… &lt;NA&gt;   
-#&gt; # ... with 91 more rows</div><div class='input'>
+#&gt;    scaffold  length    gc cov_C13.11.14 cov_C13.11.25 cov_C13.12.03
+#&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+#&gt;  1 180       22093.  74.0         0.298          12.0          7.34
+#&gt;  2 181        2970.  68.0         0.340          13.9          7.37
+#&gt;  3 227      190826.  65.4         0.348          13.0          6.91
+#&gt;  4 253      296715.  70.2         1.06           15.2          7.00
+#&gt;  5 315      218862.  71.7         0.366          12.6          7.17
+#&gt;  6 343       27203.  57.6         0.235          10.7          5.07
+#&gt;  7 386      164942.  68.2         0.359          12.3          6.73
+#&gt;  8 396        7448.  72.6         0.329          13.0          7.59
+#&gt;  9 423      100199.  68.7         1.40           15.3          6.71
+#&gt; 10 431      446220.  72.4         0.409          12.6          6.80
+#&gt; # ... with 91 more rows, and 4 more variables: cov_C14.01.09 &lt;dbl&gt;,
+#&gt; #   geneID &lt;chr&gt;, taxonomy &lt;fct&gt;, rRNA16S &lt;fct&gt;</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
