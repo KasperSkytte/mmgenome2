@@ -10,7 +10,7 @@
 #'   \item{\code{list}}{If provided as a list, it must contain any number of \code{vector}'s or \code{data.frame}'s as described above. If names are assigned to the objects in the list, then they will be used as column names in the output (does not apply to any dataframes that may have more than 2 columns, however).}
 #'   \item{\code{path}}{If a path to a folder is provided, then all files with filenames ending with \code{"_cov"} will be loaded (by the \code{\link[data.table]{fread}} function) into a list of \code{data.frame}'s and treated as if a \code{list} of \code{data.frame}'s were provided. The filenames (stripped from extension and \code{"_cov"}) will then be used as column names in the output. \strong{Note: only the first 2 columns will be used in the loaded files!}}
 #' }
-#' @param essential_genes A 2-column dataframe with scaffold names in the first column and gene ID's in the second. Can contain duplicates. (\emph{Default: } \code{NULL}) 
+#' @param essential_genes Either a path to a delimited file (with a 1-space delimiter: " ") containing the essential genes, or a 2-column dataframe with scaffold names in the first column and gene ID's in the second. Can contain duplicates. (\emph{Default: } \code{NULL}) 
 #' @param taxonomy A dataframe containing taxonomy assigned to the scaffolds. The first column must contain the scaffold names. (\emph{Default: } \code{NULL})
 #' @param additional A dataframe containing any additional data. The first column must contain the scaffold names. (\emph{Default: } \code{NULL})
 #' @param kmer_pca (\emph{Logical}) Perform Principal Components Analysis of tetranucleotide frequencies of each scaffold and merge the scores of the 3 most significant axes. (\emph{Default: } \code{FALSE}) 
@@ -40,9 +40,10 @@
 #'     assembly = "path/to/assembly.fa",
 #'     coverage = list(nameofcoverage1 = read.csv("path/to/coveragetable1.csv", col.names = TRUE),
 #'                     nameofcoverage2 = read.csv("path/to/coveragetable2.csv", col.names = TRUE)),
-#'     essential_genes = read.csv("path/to/ess_genes.txt", col.names = TRUE),
+#'     essential_genes = "path/to/ess_genes.txt",
 #'     verbose = TRUE
 #'   )
+#'   mm
 #' }
 #' 
 #' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
@@ -117,10 +118,19 @@ mmload <- function(assembly,
   
   ##### Essential genes #####
   if(!is.null(essential_genes)) {
+    if(isTRUE(verbose))
+      message("Loading essential genes...")
+    if(is.character(essential_genes)) {
+      if(length(essential_genes) == 1) {
+        essential_genes <- read.delim(essential_genes,
+                                      sep = " ", 
+                                      comment.char = "#",
+                                      header = TRUE, 
+                                      colClasses = "character")
+        essential_genes <- essential_genes[,-which(colnames(essential_genes) == "orf")]
+      }
+    }
     if(is.data.frame(essential_genes) & ncol(essential_genes) == 2) {
-      if(isTRUE(verbose))
-        message("Loading essential genes...")
-      
       essential_genes[[1]] <- as.character(essential_genes[[1]])
       essential_genes[[2]] <- as.character(essential_genes[[2]])
       
@@ -132,11 +142,11 @@ mmload <- function(assembly,
         dplyr::group_by(scaffold) %>% 
         dplyr::summarise_all(dplyr::funs(paste(., collapse = ",")))
       
-      mm <- dplyr::left_join(mm, 
-                             essential_genes, 
+      mm <- dplyr::left_join(mm,
+                             essential_genes,
                              by = "scaffold")
     } else
-      stop("Essential genes must be provided as a 2 column data frame, where the first column contains the sequence names exactly matching those of the assembly, and the second column the gene names/IDs.", call. = FALSE)
+      stop("Essential genes must be a 2 column table, where the first column contains the sequence names exactly matching those of the assembly, and the second column the gene names/IDs.", call. = FALSE)
   }
   
   ##### calculate tetranucleotides frequencies #####
