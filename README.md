@@ -3,7 +3,8 @@
 
 ## Installation
 First, install [R (3.4.3 or later)](https://mirrors.dotsrc.org/cran/) and [RStudio](https://www.rstudio.com/products/rstudio/download/#download). Windows users should also install [RTools](https://mirrors.dotsrc.org/cran/bin/windows/Rtools/). Then open RStudio as administrator (!) and run the following commands (just copy/taste) to install `mmgenome2` from the console:
-```{r, message = FALSE, warning = FALSE, eval = FALSE}
+
+```r
 #check for bioconductor installer
 if(!require(BiocInstaller)) 
   source("https://bioconductor.org/biocLite.R")
