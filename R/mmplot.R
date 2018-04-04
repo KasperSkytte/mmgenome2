@@ -85,7 +85,7 @@ mmplot <- function(mm,
                    alpha = 0.1,
                    fixed_size = NULL,
                    size_scale = 1,
-                   color_vector = c("red", "green", "blue"),
+                   color_vector = c("blue", "green", "red"),
                    color_scale_log10 = FALSE) {
   #Checks and error messages before anything else
   if(isTRUE(locator) & !is.null(selection))
@@ -119,10 +119,10 @@ mmplot <- function(mm,
         geom_point(alpha = alpha, na.rm = TRUE)
       if(isTRUE(color_scale_log10)) {
         p <- p +
-          scale_colour_gradientn(colours = color_vector, trans = "log10")
+          scale_colour_gradientn(colours = color_vector, trans = "log10", breaks = c(20,40,60,80))
       } else {
         p <- p +
-          scale_colour_gradientn(colours = color_vector)
+          scale_colour_gradientn(colours = color_vector, breaks = c(20,40,60,80))
       }
       
     } else {
@@ -145,10 +145,10 @@ mmplot <- function(mm,
         geom_point(alpha = alpha, size = fixed_size, na.rm = TRUE) 
       if(isTRUE(color_scale_log10)) {
         p <- p +
-          scale_colour_gradientn(colours = color_vector, trans = "log10")
+          scale_colour_gradientn(colours = color_vector, trans = "log10", breaks = c(20,40,60,80))
       } else {
         p <- p +
-          scale_colour_gradientn(colours = color_vector)
+          scale_colour_gradientn(colours = color_vector, breaks = c(20,40,60,80))
       }
     } else {
       p <- p + 
