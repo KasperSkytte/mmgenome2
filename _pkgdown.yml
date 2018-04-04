@@ -21,6 +21,7 @@ reference:
     contents: 
     - mmplot
     - mmplot_pairs
+    - mmplot_cov_profiles
     - mmnetwork
   - title: Extracting scaffolds from metagenomes
     desc: Functions for extracting individual genomes from metagenomes for further exploration or exportation with `mmexport`. 
