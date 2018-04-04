@@ -10,7 +10,7 @@
 #'   \item{\code{list}}{If provided as a list, it must contain any number of \code{vector}'s or \code{data.frame}'s as described above. If names are assigned to the objects in the list, then they will be used as column names in the output (does not apply to any dataframes that may have more than 2 columns, however).}
 #'   \item{\code{path}}{If a path to a folder is provided, then all files with filenames ending with \code{"_cov"} will be loaded (by the \code{\link[data.table]{fread}} function) into a list of \code{data.frame}'s and treated as if a \code{list} of \code{data.frame}'s were provided. The filenames (stripped from extension and \code{"_cov"}) will then be used as column names in the output. \strong{Note: only the first 2 columns will be used in the loaded files!}}
 #' }
-#' @param essential_genes Either a path to a delimited file (with a 1-space delimiter: " ") containing the essential genes, or a 2-column dataframe with scaffold names in the first column and gene ID's in the second. Can contain duplicates. (\emph{Default: } \code{NULL}) 
+#' @param essential_genes Either a path to a CSV file (comma-delimited ",") containing the essential genes, or a 2-column dataframe with scaffold names in the first column and gene ID's in the second. Can contain duplicates. (\emph{Default: } \code{NULL}) 
 #' @param taxonomy A dataframe containing taxonomy assigned to the scaffolds. The first column must contain the scaffold names. (\emph{Default: } \code{NULL})
 #' @param additional A dataframe containing any additional data. The first column must contain the scaffold names. (\emph{Default: } \code{NULL})
 #' @param kmer_pca (\emph{Logical}) Perform Principal Components Analysis of tetranucleotide frequencies of each scaffold and merge the scores of the 3 most significant axes. (\emph{Default: } \code{FALSE}) 
@@ -122,11 +122,10 @@ mmload <- function(assembly,
       message("Loading essential genes...")
     if(is.character(essential_genes)) {
       if(length(essential_genes) == 1) {
-        essential_genes <- read.delim(essential_genes,
-                                      sep = " ", 
-                                      comment.char = "#",
-                                      header = TRUE, 
-                                      colClasses = "character")
+        essential_genes <- read.csv(essential_genes,
+                                    comment.char = "#",
+                                    header = TRUE, 
+                                    colClasses = "character")
         essential_genes <- essential_genes[,-which(colnames(essential_genes) == "orf")]
       }
     }
