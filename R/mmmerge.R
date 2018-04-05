@@ -38,7 +38,7 @@ mmmerge <- function(x, y, type) {
       
       #if y[[i]] is a 2 column data frame, name the resulting column in x by the name of the dataframe as provided in the list, if any.
       #Otherwise if the y[[i]] has no name in the list, keep the current column name
-      ifelse(any(class(y[[i]]) %in% c("data.frame", "tbl", "tbl_df")) & length(y[[i]]) == 2 & !(is.null(names(y)[[i]]) | names(y)[[i]] == ""), 
+      ifelse(any(class(y[[i]]) %in% c("data.frame", "tbl", "tbl_df")) & length(y[[i]]) == 2 & !(is.null(names(y)[[i]]) || names(y)[[i]] == ""), 
              colnames(y[[i]])[2] <- names(y)[[i]],
              colnames(y[[i]])[2] <- colnames(y[[i]])[2])
       
@@ -64,7 +64,7 @@ mmmerge <- function(x, y, type) {
                        "\""),
                 call. = FALSE)
       } else if(!all(y[[i]][["scaffold"]] %in% x$scaffold)) {
-        excessScaffolds <- filter(y, !scaffold %in% sharedScaffolds)[[1]]
+        excessScaffolds <- filter(y[[i]], !scaffold %in% sharedScaffolds)[[1]]
         warning(paste0(string,
                        " contains more scaffolds than the assembly. The following ",
                        length(excessScaffolds), 

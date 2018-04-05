@@ -126,7 +126,8 @@ mmload <- function(assembly,
                                     comment.char = "#",
                                     header = TRUE, 
                                     colClasses = "character")
-        essential_genes <- essential_genes[,-which(colnames(essential_genes) == "orf")]
+        if(any(tolower(colnames(essential_genes)) == "orf"))
+          essential_genes <- essential_genes[,-which(colnames(essential_genes) == "orf")]
       }
     }
     if(is.data.frame(essential_genes) & ncol(essential_genes) == 2) {
@@ -172,7 +173,7 @@ mmload <- function(assembly,
   }
   
   ##### BH tSNE of tetranucleotides #####
-  if(isTRUE(kmer_BH_tSNE)){
+  if(isTRUE(kmer_BH_tSNE)) {
     if(isTRUE(verbose))
       message("Calculating Barnes-Hut t-Distributed Stochastic Neighbor Embedding representations of tetranucleotide frequencies...")
     set.seed(42) # Sets seed for reproducibility
