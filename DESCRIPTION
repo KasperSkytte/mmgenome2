@@ -32,6 +32,7 @@ Imports:
     digest,
     clipr,
     igraph,
+    ggrepel,
     tibble,
     tidyr,
     stringr,

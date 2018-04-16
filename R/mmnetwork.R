@@ -28,6 +28,7 @@
 #' @importFrom dplyr filter
 #' @importFrom sp point.in.polygon
 #' @importFrom tibble as_tibble
+#' @importFrom ggrepel geom_text_repel
 #' 
 #' @examples 
 #' library(mmgenome2)
@@ -107,10 +108,10 @@ mmnetwork <- function(mm,
         geom_point(alpha = 0.7, aes_string(color = color_by)) 
       if(isTRUE(color_scale_log10)) {
         p <- p +
-          scale_colour_gradientn(colours = c("red", "green", "blue"), trans = "log10")
+          scale_colour_gradientn(colours = c("blue", "green", "red"), trans = "log10")
       } else {
         p <- p +
-          scale_colour_gradientn(colours = c("red", "green", "blue"))
+          scale_colour_gradientn(colours = c("blue", "green", "red"))
       }
     }
   } else {
@@ -120,7 +121,7 @@ mmnetwork <- function(mm,
   
   if (isTRUE(scaffold_labels)) {
     p <- p + 
-      geom_text(label = gpoints[[1]], 
+      ggrepel::geom_text_repel(label = gpoints[[1]], 
                 size = 4,
                 color = "black")
   }

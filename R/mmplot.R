@@ -34,6 +34,7 @@
 #' @importFrom tidyr separate_rows
 #' @importFrom dplyr filter
 #' @importFrom tibble as_tibble
+#' @importFrom ggrepel geom_text_repel
 #' 
 #' @examples 
 #' library(mmgenome2)
@@ -181,7 +182,7 @@ mmplot <- function(mm,
       label_scaffolds <- as.character(label_scaffolds[[1]])
     }
     labels_data <- subset(mm, mm[[1]] %in% as.character(label_scaffolds))
-    p <- p + geom_text(data = labels_data, 
+    p <- p + ggrepel::geom_text_repel(data = labels_data, 
                        aes_(x = labels_data[[x]], 
                             y = labels_data[[y]],
                             label = labels_data[[label_scaffolds_by]]), 
