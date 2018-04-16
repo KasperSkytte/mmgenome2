@@ -174,23 +174,6 @@ mmplot <- function(mm,
           legend.key = element_blank() 
           )
   
-  #add scaffold names
-  if(isTRUE(label_scaffolds)) {
-    p <- p + geom_text(label = mm[[1]], size = 4, color = "black")
-  } else if(is.vector(label_scaffolds) | is.data.frame(label_scaffolds)) {
-    if(is.data.frame(label_scaffolds)) {
-      label_scaffolds <- as.character(label_scaffolds[[1]])
-    }
-    labels_data <- subset(mm, mm[[1]] %in% as.character(label_scaffolds))
-    p <- p + ggrepel::geom_text_repel(data = labels_data, 
-                       aes_(x = labels_data[[x]], 
-                            y = labels_data[[y]],
-                            label = labels_data[[label_scaffolds_by]]), 
-                       size = 4, 
-                       color = "black",
-                       inherit.aes = FALSE)
-  }
-  
   #axis scales and limits
   if(!is.null(x_scale)) {
     if(x_scale == "log10") {
@@ -239,6 +222,23 @@ mmplot <- function(mm,
     }
     p <- p + 
       geom_point(data = mm[which(mm[[1]] %in% highlight_scaffolds),], color = highlight_color, shape = 1)
+  }
+  
+  ##### label scaffolds #####
+  if(isTRUE(label_scaffolds)) {
+    p <- p + geom_text(label = mm[[1]], size = 4, color = "black")
+  } else if(is.vector(label_scaffolds) | is.data.frame(label_scaffolds)) {
+    if(is.data.frame(label_scaffolds)) {
+      label_scaffolds <- as.character(label_scaffolds[[1]])
+    }
+    labels_data <- subset(mm, mm[[1]] %in% as.character(label_scaffolds))
+    p <- p + ggrepel::geom_text_repel(data = labels_data, 
+                                      aes_(x = labels_data[[x]], 
+                                           y = labels_data[[y]],
+                                           label = labels_data[[label_scaffolds_by]]), 
+                                      size = 4, 
+                                      color = "black",
+                                      inherit.aes = FALSE)
   }
   
   ##### Plot duplicates #####

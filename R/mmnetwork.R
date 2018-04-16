@@ -119,13 +119,6 @@ mmnetwork <- function(mm,
       geom_point(alpha = 0.1, color = "black")
   }
   
-  if (isTRUE(scaffold_labels)) {
-    p <- p + 
-      ggrepel::geom_text_repel(label = gpoints[[1]], 
-                size = 4,
-                color = "black")
-  }
-  
   p <- p + 
     theme(panel.grid.major = element_blank(), 
           panel.grid.minor = element_blank(), 
@@ -137,7 +130,7 @@ mmnetwork <- function(mm,
           panel.background = element_blank(),
           legend.key = element_blank())
   
-  ### Highlight selected scaffolds
+  ##### Highlight selected scaffolds #####
   if (!is.null(highlight_labels)) {
     if(is.data.frame(highlight_labels)) {
       highlight_labels <- highlight_labels[[1]]
@@ -149,6 +142,14 @@ mmnetwork <- function(mm,
                 color = highlight_color,
                 size = 4,
                 label = d[["scaffold"]])
+  }
+  
+  ##### label all scaffolds #####
+  if (isTRUE(scaffold_labels)) {
+    p <- p + 
+      ggrepel::geom_text_repel(label = gpoints[[1]], 
+                               size = 4,
+                               color = "black")
   }
   
   if(isTRUE(print_nolinks)){
