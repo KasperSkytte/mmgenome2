@@ -49,29 +49,34 @@ mmmerge <- function(x, y, type) {
       
       #print missing or excess scaffolds between x and y[[i]]
       if(!all(x$scaffold %in% y[[i]][["scaffold"]])) {
-        missingScaffolds <- dplyr::filter(x, !scaffold %in% sharedScaffolds)[[1]]
+        #missingScaffolds <- dplyr::filter(x, !scaffold %in% sharedScaffolds)[[1]]
         warning(paste0("Only ", 
                        length(sharedScaffolds), 
                        " of all ",
                        length(x$scaffold), 
                        " scaffolds in the assembly match in ", 
                        string, 
-                       ". The following ",
-                       length(missingScaffolds),
-                       " scaffolds are missing:\n\"", 
-                       paste(missingScaffolds, 
-                             collapse = "\", \""),
-                       "\""),
+                       "."
+                       #, " The following "
+                       #, length(missingScaffolds),
+                       #," scaffolds are missing:\n\""
+                       #,paste(missingScaffolds, 
+                       #       collapse = "\", \""),
+                       #"\""
+                       ),
                 call. = FALSE)
       } else if(!all(y[[i]][["scaffold"]] %in% x$scaffold)) {
         excessScaffolds <- filter(y[[i]], !scaffold %in% sharedScaffolds)[[1]]
         warning(paste0(string,
-                       " contains more scaffolds than the assembly. The following ",
+                       " contains ", 
                        length(excessScaffolds), 
-                       " scaffolds have not been loaded:\n\"",
-                       paste(excessScaffolds, 
-                             collapse = "\", \""),
-                       "\""),
+                       " more scaffolds than the assembly. "
+                       #,"The following ",
+                       #," scaffolds have not been loaded:\n\"",
+                       #paste(excessScaffolds, 
+                       #       collapse = "\", \""),
+                       #"\""
+                       ),
                 call. = FALSE)
       } else if (!any(x$scaffold %in% y[[i]][["scaffold"]]))
         #no match sucks

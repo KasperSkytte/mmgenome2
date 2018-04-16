@@ -1,9 +1,9 @@
-url: https://github.com/MadsAlbertsen/mmgenome2
+url: https://github.com/kasperskytte/mmgenome2
 
 home:
   links:
     - text: Latest stable release
-      href: https://github.com/MadsAlbertsen/mmgenome2/releases/latest/
+      href: https://github.com/kasperskytte/mmgenome2/releases/latest/
 
 template:
   params:
@@ -42,4 +42,4 @@ navbar:
     #  href: articles/assembly.html
   right:
   - icon: fa-github fa-lg
-    href: https://github.com/MadsAlbertsen/mmgenome2
+    href: https://github.com/kasperskytte/mmgenome2

@@ -34,22 +34,21 @@
 #' data(mmgenome2)
 #' data(paired_ends)
 #' mmgenome2
-#' selection <- data.frame(cov_C14.01.09 = c(24.852, 32.545, 53.062, 38.52),
-#'                         cov_C13.12.03 = c(7.676, 5.165, 6.386, 10.933))
+#' selection <- data.frame(cov_C13.12.03 = c(6.935, 7.889, 16.199, 12.766),
+#'                         cov_C14.01.09 = c(34.041, 29.421, 59.631, 68.058))
 #' mmgenome2_extraction <- mmextract(mmgenome2, selection = selection)
 #' mmgenome2_extraction
-#' mmnetwork(mmgenome2_extraction, 
-#'           network = paired_ends, 
-#'           min_connections = 10,
-#'           color_by = "taxonomy",
-#'           locator = FALSE)
+#' p <- mmnetwork(mmgenome2_extraction, 
+#'                network = paired_ends, 
+#'                min_connections = 1,
+#'                color_by = "taxonomy")
 #' 
 #' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
 #' @author Soren M. Karst \email{smk@@bio.aau.dk}
 #' @author Mads Albertsen \email{MadsAlbertsen85@@gmail.com}
 mmnetwork <- function(mm,
                       network, 
-                      min_connections = 2,
+                      min_connections = 1,
                       color_by = NULL,
                       color_scale_log10 = FALSE,
                       locator = FALSE,

@@ -14,8 +14,8 @@ if(!require(devtools))
   install.packages("devtools")
   
 #install mmgenome2
-BiocInstaller::biocLite("madsalbertsen/mmgenome2")
+BiocInstaller::biocLite("kasperskytte/mmgenome2")
 ```
 
 ## Get started
-For a brief guide about the basics of mmgenome2 go to the [Get Started](https://madsalbertsen.github.io/mmgenome2/articles/ampvis2.html) page. 
+For a brief guide about the basics of mmgenome2 go to the [Get Started](https://kasperskytte.github.io/mmgenome2/articles/ampvis2.html) page. 

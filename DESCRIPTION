@@ -13,7 +13,7 @@ Reference: Albertsen, M., Hugenholtz, P., Skarshewski, A., Nielsen, K. L.,
     bacteria obtained by differential coverage binning of multiple metagenomes.
     Nature biotechnology, 31(6), 533-8. doi:10.1038/nbt.2579
 License: AGPL-3
-BugReports: https://github.com/MadsAlbertsen/mmgenome2/issues
+BugReports: https://github.com/kasperskytte/mmgenome2/issues
 LazyData: true
 Depends:
     R (>= 3.4.3),
