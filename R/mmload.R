@@ -86,7 +86,7 @@ mmload <- function(assembly,
   if(isTRUE(verbose))
     message("Calculating GC content...")
   mm <- tibble::tibble(scaffold = as.character(names(assembly)),
-                       length = as.numeric(Biostrings::width(assembly)),
+                       length = as.integer(Biostrings::width(assembly)),
                        gc = round(as.numeric(Biostrings::letterFrequency(assembly, letters = c("CG"), as.prob=T))*100, digits = 2)
   )
   
@@ -188,8 +188,16 @@ mmload <- function(assembly,
   if(!is.null(taxonomy)) {
     if(isTRUE(verbose))
       message("Loading taxonomy...")
+    if(is.character(taxonomy)) {
+      if(length(taxonomy) == 1) {
+        taxonomy <- read.csv(taxonomy,
+                             comment.char = "#",
+                             header = TRUE, 
+                             colClasses = "character")
+      }
+    }
     if(any(class(taxonomy) %in% c("data.frame", "tbl", "tbl_df")) | is.atomic(taxonomy)) {
-      its_a_vector <- ifelse(is.atomic(taxonomy), TRUE, FALSE)
+      its_a_vector <- if(is.atomic(taxonomy)) TRUE else FALSE
       replacements <- c(" <phylum>" = "",
                         "unclassified Bacteria" = "Unclassified Bacteria",
                         "Fibrobacteres/Acidobacteria group" = "Acidobacteria",
