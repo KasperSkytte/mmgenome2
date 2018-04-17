@@ -43,7 +43,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/MadsAlbertsen/mmgenome2">
+  <a href="https://github.com/kasperskytte/mmgenome2">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -67,11 +67,252 @@
     
     
 <div class="contents">
-<p>coming up…</p>
+<p>This is a brief guide explaining the basics of how to use <code>mmgenome2</code> for genome binning and extraction from metagenomes. It is meant to only demonstrate fundamental principles and operations. For more detailed documentation of all mmgenome2 functions, their arguments, as well as example code, please refer to the <a href="reference/index.html">Functions</a> page. First, install <code>mmgenome2</code> as described on the frontpage, and then download the example data from <a href="https://doi.org/10.6084/m9.figshare.6115655">figshare</a> and unzip the contained files into a folder of choice. Preloaded data is also available with <code>data("mmgenome2")</code>.</p>
+<div id="loading-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#loading-data" class="anchor"></a>Loading data</h2>
+<p><code>mmgenome2</code> requires at minimum two types of data; the assembly and at minimum one coverage profile. Any number of coverage profiles can be loaded at once. Other than the assembly and coverage profiles, optional data includes essential genes, taxonomy, small subunit taxonomic classification, and anything else that could be relevant. The only requirement is that the data is in a row-by-column format, so that the first column contains scaffold names matching those in the assembly, and then any number of columns containing relevant information for the binning process. Metagenome data often consists of numerous files that first have to be loaded into R. The various files are loaded with the <code>mmload</code> function, which checks, adjusts, and combines the data into a single data frame, here called <code>mm</code>, which will be used in all other <code>mmgenome2</code> functions:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mmgenome2)
+mm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mmload.html">mmload</a></span>(
+    <span class="dt">assembly =</span> <span class="st">"data/assembly.fa"</span>,
+    <span class="dt">coverage =</span> <span class="st">"data/"</span>,
+    <span class="dt">essential_genes =</span> <span class="st">"data/essential.csv"</span>,
+    <span class="dt">taxonomy =</span> <span class="st">"data/tax.csv"</span>,
+    <span class="dt">additional =</span> <span class="kw">read.csv</span>(<span class="st">"data/phylopythias.csv"</span>),
+    <span class="dt">verbose =</span> <span class="ot">TRUE</span>,
+    <span class="dt">kmer_pca =</span> <span class="ot">FALSE</span>,
+    <span class="dt">kmer_BH_tSNE =</span> <span class="ot">FALSE</span>
+  )</code></pre></div>
+<p>This loads all the files into a single data frame object called <code>mm</code>. By giving a folder path to <code>coverage</code>, <code>mmload</code> expects all files in the folder that end with <code>"_cov"</code> to be coverage profiles, and will automatically load them all and name them by filename. By default the scaffold lengths as well as the GC content of each scaffold are calculated. Notice that it is also possible to perform Principal Components Analysis and t-SNE on tetra-nucleotide frequencies by setting <code>kmer_pca = TRUE</code> and <code>kmer_BH_tSNE = TRUE</code>, which will then also be available in the output data frame <code>mm</code> to aid the binning process. Any additional data can be provided with <code>additional</code>.</p>
+<p>By simply typing the name of the object in the console we get a brief overview of the data frame:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mm</code></pre></div>
+<pre><code>## # A tibble: 97,285 x 18
+##    scaffold length    gc cov_C13.11.14 cov_C13.11.25 cov_C13.12.03
+##    &lt;chr&gt;     &lt;int&gt; &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+##  1 1          8264  57.8       1.44             53.6         0.   
+##  2 2          1027  57.0       0.625            24.2         0.   
+##  3 3          1665  55.9      13.5             434.          0.166
+##  4 4          9056  35.9       0.0100           23.4         0.   
+##  5 5          3343  64.0       3.20             16.4         0.   
+##  6 6         98207  39.1       0.00966          24.5         3.29 
+##  7 7          6480  63.0       2.61             19.2         1.46 
+##  8 8         15790  61.7       2.78             21.2         1.62 
+##  9 9          1403  70.4      85.1             192.          0.   
+## 10 10         2018  70.2      50.3             101.          0.   
+## # ... with 97,275 more rows, and 12 more variables: cov_C14.01.09 &lt;dbl&gt;,
+## #   geneID &lt;chr&gt;, phylum &lt;chr&gt;, count &lt;chr&gt;, all.phylum.assignments &lt;chr&gt;,
+## #   class &lt;chr&gt;, all.class.assignments &lt;chr&gt;, pps_phylum &lt;fct&gt;,
+## #   pps_class &lt;fct&gt;, pps_order &lt;fct&gt;, pps_family &lt;fct&gt;, pps_genus &lt;fct&gt;</code></pre>
+<p>The <code>mmstats</code> function can also calculate some basic statistics about the data:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/mmstats.html">mmstats</a></span>(mm)</code></pre></div>
+<pre><code>##                  General stats
+## Scaffolds                97285
+## N50                       5291
+## Length.total         331908376
+## Length.max             1446979
+## Length.mean            3411.71
+## Length.min                1000
+## weighted_GC_mean         52.22
+## cov_C13.11.14             2.62
+## cov_C13.11.25            16.06
+## cov_C13.12.03             2.91
+## cov_C14.01.09            11.58
+## Ess.genes.total           7138
+## Ess.genes.unique           109</code></pre>
+</div>
+<div id="initial-scaffold-extraction" class="section level2">
+<h2 class="hasAnchor">
+<a href="#initial-scaffold-extraction" class="anchor"></a>Initial scaffold extraction</h2>
+<p>In <code>mmgenome2</code> there are currently 4 different plotting functions; <code>mmplot</code>, <code>mmplot_pairs</code>, <code>mmplot_cov_profiles</code>, and <code>mmnetwork</code>. <code>mmplot</code> can for example be used to generate a differential coverage plot with any <em>two</em> coverage profiles from the <code>mm</code> data frame, for example <code>cov_C13.11.25</code> and <code>cov_C14.01.09</code>. It is often a good idea to apply a log10 scale to the axes, or to adjust the axis limits to get a symmetrical plot or to zoom in at selected regions. By default the axes are automatically scaled. In the following plot the scaffolds are colored by taxonomy, but we could also color by GC content or any other variable in <code>mm</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/mmplot.html">mmplot</a></span>(mm,
+       <span class="dt">x =</span> <span class="st">"cov_C13.11.25"</span>,
+       <span class="dt">y =</span> <span class="st">"cov_C14.01.09"</span>,
+       <span class="dt">color_by =</span> <span class="st">"phylum"</span>,
+       <span class="dt">x_limits =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="ot">NA</span>), <span class="co">#show only coverage higher than 1 on x-axis</span>
+       <span class="dt">y_limits =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="ot">NA</span>), <span class="co">#show only coverage higher than 1 on y-axis</span>
+       <span class="dt">x_scale =</span> <span class="st">"log10"</span>,
+       <span class="dt">y_scale =</span> <span class="st">"log10"</span>)</code></pre></div>
+<p><img src="mmgenome2_files/figure-html/unnamed-chunk-5-1.png" width="864"></p>
+<p>In both <code>mmplot</code> and <code>mmnetwork</code> there is incorporated a locator feature, which makes it possible to interactively click in the plot and capture the exact positions of the mouse clicks on the axes plotted. This is enabled by setting <code>locator = TRUE</code> and is used to extract scaffolds within a region of interest, reproducibly. The selection of points can then be highlighted as a polygon by the <code>selection</code> argument:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">selection &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">cov_C13.11.25 =</span> <span class="kw">c</span>(<span class="fl">7.2</span>, <span class="fl">16.2</span>, <span class="fl">25.2</span>, <span class="fl">23.3</span>, <span class="fl">10.1</span>),
+                        <span class="dt">cov_C14.01.09 =</span> <span class="kw">c</span>(<span class="dv">47</span>, <span class="dv">77</span>, <span class="fl">52.8</span>, <span class="fl">29.5</span>, <span class="fl">22.1</span>))
+<span class="kw"><a href="../reference/mmplot.html">mmplot</a></span>(mm,
+       <span class="dt">x =</span> <span class="st">"cov_C13.11.25"</span>,
+       <span class="dt">y =</span> <span class="st">"cov_C14.01.09"</span>,
+       <span class="dt">min_length =</span> <span class="dv">3000</span>,
+       <span class="dt">color_by =</span> <span class="st">"phylum"</span>,
+       <span class="dt">x_scale =</span> <span class="st">"log10"</span>,
+       <span class="dt">x_limits =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">100</span>),
+       <span class="dt">y_scale =</span> <span class="st">"log10"</span>,
+       <span class="dt">y_limits =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">100</span>),
+       <span class="co">#locator = TRUE, #uncomment to use the locator and return a selection</span>
+       <span class="dt">selection =</span> selection)</code></pre></div>
+<p><img src="mmgenome2_files/figure-html/unnamed-chunk-6-1.png" width="864"></p>
+<p>To extract all scaffolds within the selection polygon (including those not shown in the plot if a <code>min_length</code> has been set) from <code>mm</code> use <code>mmextract</code> and provide the selection in the same way as with <code><a href="../reference/mmplot.html">mmplot(mm, ..., selection = selection)</a></code>, and then save in a new object <code>mm_subset1</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mm_subset1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mmextract.html">mmextract</a></span>(mm, <span class="dt">selection =</span> selection)</code></pre></div>
+<pre><code>## 61 scaffolds (or 1.34% of the scaffolds in mm, weighted by length) remain after 97224 of 97285 scaffolds have been filtered.</code></pre>
+<p>Then the extracted set of scaffolds can be plotted separately to get a closer look (no log10 scaled axes or min_length set this time):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/mmplot.html">mmplot</a></span>(mm_subset1,
+       <span class="dt">x =</span> <span class="st">"cov_C13.11.25"</span>,
+       <span class="dt">y =</span> <span class="st">"cov_C14.01.09"</span>,
+       <span class="dt">color_by =</span> <span class="st">"phylum"</span>)</code></pre></div>
+<p><img src="mmgenome2_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
+<p>To look for any eventual contaminants or to have a look at the scaffolds at different coverage profiles we can use the <code>mmplot_pairs</code> function to plot more than two coverage profiles at the same time as well as any other variables. To see which variables that are available to plot simply type the name of the object in the console again (it is recommended to only plot continuous/numerical variables). Note that this time no log10 scale is applied to the axes and the points are not scaled by scaffold size, but is set to a fixed size <code>3</code> instead:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(mm_subset1)</code></pre></div>
+<pre><code>##  [1] "scaffold"               "length"                
+##  [3] "gc"                     "cov_C13.11.14"         
+##  [5] "cov_C13.11.25"          "cov_C13.12.03"         
+##  [7] "cov_C14.01.09"          "geneID"                
+##  [9] "phylum"                 "count"                 
+## [11] "all.phylum.assignments" "class"                 
+## [13] "all.class.assignments"  "pps_phylum"            
+## [15] "pps_class"              "pps_order"             
+## [17] "pps_family"             "pps_genus"</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/mmplot_pairs.html">mmplot_pairs</a></span>(mm_subset1,
+             <span class="dt">variables =</span> <span class="kw">c</span>(<span class="st">"cov_C13.11.14"</span>,
+                           <span class="st">"cov_C13.11.25"</span>,
+                           <span class="st">"cov_C13.12.03"</span>,
+                           <span class="st">"cov_C14.01.09"</span>,
+                           <span class="st">"gc"</span>),
+             <span class="dt">color_by =</span> <span class="st">"pps_phylum"</span>,
+             <span class="dt">x_scale =</span> <span class="st">"log10"</span>,
+             <span class="dt">y_scale =</span> <span class="st">"log10"</span>,
+             <span class="dt">alpha =</span> <span class="fl">0.4</span>,
+             <span class="dt">fixed_size =</span> <span class="dv">3</span>,
+             <span class="dt">textsize =</span> <span class="dv">4</span>) </code></pre></div>
+<p><img src="mmgenome2_files/figure-html/unnamed-chunk-9-1.png" width="768"></p>
+</div>
+<div id="second-extraction-from-the-initial-extraction" class="section level1">
+<h1 class="hasAnchor">
+<a href="#second-extraction-from-the-initial-extraction" class="anchor"></a>Second extraction from the initial extraction</h1>
+<p>Using different coverage profiles than in the initial extraction, for example <code>cov_C13.11.14</code> and <code>cov_C13.12.03</code>, it may be easier to spot and remove contaminants. Note that we now override the previous <code>selection</code> with different coordinates on different axes:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">selection &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">cov_C13.12.03 =</span> <span class="kw">c</span>(<span class="fl">3.48</span>, <span class="fl">4.95</span>, <span class="fl">6.97</span>, <span class="fl">13.6</span>, <span class="fl">15.7</span>, <span class="fl">9.68</span>, <span class="fl">4.48</span>),
+                        <span class="dt">cov_C13.11.14 =</span> <span class="kw">c</span>(<span class="fl">0.407</span>, <span class="fl">1.72</span>, <span class="fl">2.92</span>, <span class="fl">1.45</span>, <span class="fl">0.264</span>, <span class="fl">0.17</span>, <span class="fl">0.163</span>))
+<span class="kw"><a href="../reference/mmplot.html">mmplot</a></span>(mm_subset1,
+       <span class="dt">x =</span> <span class="st">"cov_C13.12.03"</span>,
+       <span class="dt">y =</span> <span class="st">"cov_C13.11.14"</span>,
+       <span class="dt">x_scale =</span> <span class="st">"log10"</span>,
+       <span class="dt">y_scale =</span> <span class="st">"log10"</span>,
+       <span class="dt">color_by =</span> <span class="st">"pps_phylum"</span>, 
+       <span class="dt">selection =</span> selection)</code></pre></div>
+<p><img src="mmgenome2_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
+<p>Now we can extract the scaffolds into a second subset of scaffolds, let’s save it as <code>mm_subset2</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mm_subset2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mmextract.html">mmextract</a></span>(mm_subset1, <span class="dt">selection =</span> selection)</code></pre></div>
+<pre><code>## 45 scaffolds (or 98.46% of the scaffolds in mm, weighted by length) remain after 16 of 61 scaffolds have been filtered.</code></pre>
+<div id="paired-end-connections-to-remove-contaminants" class="section level2">
+<h2 class="hasAnchor">
+<a href="#paired-end-connections-to-remove-contaminants" class="anchor"></a>Paired end connections to remove contaminants</h2>
+<p>Until now we have only extracted scaffolds based on coverage profiles. Using paired-end reads we can look for scaffolds that may have had a different coverage (fx due to repeats) than the current set of scaffolds, even though they may be related. This is visualised by the <code>mmnetwork</code> function, which creates a network plot (generated by <a href="http://igraph.org/r/">igraph</a>) of connected scaffolds. First we need to load the paired-end data:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">paired_ends &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">"data/paired_ends.csv"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/mmnetwork.html">mmnetwork</a></span>(mm_subset2, 
+          <span class="dt">network =</span> paired_ends,
+          <span class="dt">color_by =</span> <span class="st">"phylum"</span>,
+          <span class="dt">min_connections =</span> <span class="dv">1</span>)</code></pre></div>
+<p><img src="mmgenome2_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
+<p>The thickness of the lines between the scaffolds is then scaled by the number of connections between the scaffolds according to the paired-end reads. Only the scaffolds in <code>mm_subset2</code> are plotted, and these may have connections to other scaffolds that are not in the current subset. To find additional connected scaffolds in the full dataset <code>mm</code> we use the <code>mmexpand_network</code> function. Here we set the minimum connections to 1 and only direct connections are extracted (meaning no connections of connections)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mm_subset2_exp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mmexpand_network.html">mmexpand_network</a></span>(<span class="dt">mm =</span> mm, 
+                                   <span class="dt">scaffolds =</span> mm_subset2,
+                                   <span class="dt">network =</span> paired_ends,
+                                   <span class="dt">min_connections =</span> <span class="dv">1</span>,
+                                   <span class="dt">include_connections =</span> <span class="st">"direct"</span>)</code></pre></div>
+<pre><code>## The provided 45 scaffolds had 36 additional direct connections to other scaffolds in mm.
+## Total: 81 scaffolds (or 2.24% of the scaffolds in mm, weighted by length).</code></pre>
+<p>As the message states, there were 36 additional connections to the 45 scaffolds in <code>mm_subset2</code>. This resulted in additional repeats being included, but also 3 groups of scaffolds that do not seem to be related to the genome bin, as seen below. To further refine the genome bin we can now plot the expanded subset again to identify these contaminants and again use the locator feature to remove them:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">selection &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="fl">0.521</span>, <span class="op">-</span><span class="fl">0.43</span>, <span class="fl">3.028</span>, <span class="fl">7.376</span>, <span class="fl">10.709</span>, <span class="fl">13.462</span>, <span class="fl">14.622</span>, <span class="fl">14.216</span>, <span class="fl">10.94</span>, <span class="fl">3.238</span>),
+                        <span class="dt">y =</span> <span class="kw">c</span>(<span class="fl">3.443</span>, <span class="fl">10.425</span>, <span class="fl">14.678</span>, <span class="fl">13.155</span>, <span class="fl">9.664</span>, <span class="fl">6.934</span>, <span class="fl">6.649</span>, <span class="fl">4.586</span>, <span class="fl">0.936</span>, <span class="fl">0.945</span>))
+p &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mmnetwork.html">mmnetwork</a></span>(mm_subset2_exp,
+               <span class="dt">network =</span> paired_ends,
+               <span class="dt">color_by =</span> <span class="st">"pps_phylum"</span>,
+               <span class="co">#locator = TRUE, #uncomment to mark a selection to highlight and extract</span>
+               <span class="dt">min_connections =</span> <span class="dv">1</span>,
+               <span class="dt">selection =</span> selection)
+p</code></pre></div>
+<p><img src="mmgenome2_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mm_subset3 &lt;-<span class="st"> </span>p<span class="op">$</span>data_in_selection <span class="co">#there is no separate mmextract() function for network plots</span></code></pre></div>
+<p>Beware that with <code>mmnetwork</code> there is no separate extract function like <code>mmextract</code> is for <code>mmplot</code>. This is because the axes in a network plot are synthetic and are not directly contained within the data like for example coverage profiles are. Therefore, to extract all scaffolds in the selected subspace in the network plot it is instead available in the returned plot object. If for example the network plot is assigned to the object <code>p</code>, then the subset data in the selection is available with <code>p$data_in_selection</code>. The above selection then removed 20 scaffolds and there is now 61 scaffolds remaining:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mm_subset3</code></pre></div>
+<pre><code>## # A tibble: 61 x 18
+##    scaffold length    gc cov_C13.11.14 cov_C13.11.25 cov_C13.12.03
+##    &lt;chr&gt;     &lt;int&gt; &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+##  1 180       22093  74.0         0.298          12.0          7.34
+##  2 181        2970  68.0         0.340          13.9          7.37
+##  3 227      190826  65.4         0.348          13.0          6.91
+##  4 253      296715  70.2         1.06           15.2          7.00
+##  5 315      218862  71.7         0.366          12.6          7.17
+##  6 343       27203  57.6         0.235          10.7          5.07
+##  7 386      164942  68.2         0.359          12.3          6.73
+##  8 396        7448  72.6         0.329          13.0          7.59
+##  9 423      100199  68.7         1.40           15.3          6.71
+## 10 431      446220  72.4         0.409          12.6          6.80
+## # ... with 51 more rows, and 12 more variables: cov_C14.01.09 &lt;dbl&gt;,
+## #   geneID &lt;chr&gt;, phylum &lt;chr&gt;, count &lt;chr&gt;, all.phylum.assignments &lt;chr&gt;,
+## #   class &lt;chr&gt;, all.class.assignments &lt;chr&gt;, pps_phylum &lt;fct&gt;,
+## #   pps_class &lt;fct&gt;, pps_order &lt;fct&gt;, pps_family &lt;fct&gt;, pps_genus &lt;fct&gt;</code></pre>
+</div>
+</div>
+<div id="final-overview" class="section level1">
+<h1 class="hasAnchor">
+<a href="#final-overview" class="anchor"></a>Final overview</h1>
+<p>It may be useful to have a look at the basic stats of the genome bin data using <code>mmstats</code> again:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/mmstats.html">mmstats</a></span>(mm_subset3)</code></pre></div>
+<pre><code>##                  General stats
+## Scaffolds                   61
+## N50                     199460
+## Length.total           4540108
+## Length.max              454223
+## Length.mean              74428
+## Length.min                1066
+## weighted_GC_mean         70.67
+## cov_C13.11.14             0.69
+## cov_C13.11.25            13.68
+## cov_C13.12.03             6.71
+## cov_C14.01.09            37.52
+## Ess.genes.total            116
+## Ess.genes.unique           105</code></pre>
+<p>As seen in the network plot, there are two scaffolds (181 and 6603) that may not be related to the other scaffolds in the genome bin even though they have several paired-end connections to several other scaffolds. To keep an eye on them they can be identified by setting <code>scaffold_labels = TRUE</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/mmnetwork.html">mmnetwork</a></span>(mm_subset3,
+          <span class="dt">network =</span> paired_ends,
+          <span class="dt">min_connections =</span> <span class="dv">1</span>,
+          <span class="dt">color_by =</span> <span class="st">"pps_phylum"</span>,
+          <span class="dt">scaffold_labels =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="mmgenome2_files/figure-html/unnamed-chunk-19-1.png" width="672"></p>
+<p>By highligting the genome bin (<code>highlight_scaffolds = mm_subset3</code>) in a differential coverage plot of the complete metagenome, we can clearly see that binning based on coverage profiles alone is insufficient as several of the scaffolds in the bin have a significantly different coverage, yet they are connected by paired-end reads. Furthermore, the two scaffolds assigned to the phylum Proteobacteria are labeled:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/mmplot.html">mmplot</a></span>(mm,
+       <span class="dt">x =</span> <span class="st">"cov_C14.01.09"</span>,
+       <span class="dt">y =</span> <span class="st">"cov_C13.11.25"</span>,
+       <span class="dt">x_scale =</span> <span class="st">"log10"</span>,
+       <span class="dt">y_scale =</span> <span class="st">"log10"</span>,
+       <span class="dt">highlight_scaffolds =</span> mm_subset3,
+       <span class="dt">label_scaffolds =</span> <span class="kw">c</span>(<span class="st">"181"</span>, <span class="st">"6603"</span>))</code></pre></div>
+<p><img src="mmgenome2_files/figure-html/unnamed-chunk-20-1.png" width="864"></p>
+</div>
+<div id="export-the-scaffolds-in-the-genome-bin-from-the-assembly" class="section level1">
+<h1 class="hasAnchor">
+<a href="#export-the-scaffolds-in-the-genome-bin-from-the-assembly" class="anchor"></a>Export the scaffolds in the genome bin from the assembly</h1>
+<p>Now that we are happy with the genome bin we can export the sequences of the scaffolds from the assembly to a separate FASTA file using <code>mmexport</code> and repeat the analysis to make another bin:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/mmexport.html">mmexport</a></span>(mm_subset3,
+         <span class="dt">assembly =</span> assembly,
+         <span class="dt">file =</span> <span class="st">"bins/bin1.fa"</span>)</code></pre></div>
+</div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+        <div id="tocnav">
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+<li><a href="#loading-data">Loading data</a></li>
+      <li><a href="#initial-scaffold-extraction">Initial scaffold extraction</a></li>
+      <li>
+<a href="#second-extraction-from-the-initial-extraction">Second extraction from the initial extraction</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#paired-end-connections-to-remove-contaminants">Paired end connections to remove contaminants</a></li>
+      </ul>
+</li>
+      <li><a href="#final-overview">Final overview</a></li>
+      <li><a href="#export-the-scaffolds-in-the-genome-bin-from-the-assembly">Export the scaffolds in the genome bin from the assembly</a></li>
+      </ul>
+</div>
       </div>
 
 </div>

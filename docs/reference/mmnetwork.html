@@ -70,7 +70,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/MadsAlbertsen/mmgenome2">
+  <a href="https://github.com/kasperskytte/mmgenome2">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -93,7 +93,7 @@
     <p>Plots all connected scaffolds in a network plot. Scaffolds can then be highlighted and extracted using the locator and selection features.</p>
     
 
-    <pre class="usage"><span class='fu'>mmnetwork</span>(<span class='no'>mm</span>, <span class='no'>network</span>, <span class='kw'>min_connections</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>color_by</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>mmnetwork</span>(<span class='no'>mm</span>, <span class='no'>network</span>, <span class='kw'>min_connections</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>color_by</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>color_scale_log10</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>locator</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>selection</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>highlight_labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>highlight_color</span> <span class='kw'>=</span> <span class='st'>"darkred"</span>, <span class='kw'>links_scale</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>scaffold_labels</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>print_nolinks</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
@@ -183,28 +183,26 @@
 #&gt;  9 9         1403.  70.4      85.1             192.          0.   
 #&gt; 10 10        2018.  70.2      50.3             101.          0.   
 #&gt; # ... with 97,275 more rows, and 4 more variables: cov_C14.01.09 &lt;dbl&gt;,
-#&gt; #   geneID &lt;chr&gt;, taxonomy &lt;fct&gt;, rRNA16S &lt;fct&gt;</div><div class='input'><span class='no'>selection</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>cov_C14.01.09</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>24.852</span>, <span class='fl'>32.545</span>, <span class='fl'>53.062</span>, <span class='fl'>38.52</span>),
-                        <span class='kw'>cov_C13.12.03</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>7.676</span>, <span class='fl'>5.165</span>, <span class='fl'>6.386</span>, <span class='fl'>10.933</span>))
-<span class='no'>mmgenome2_extraction</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mmextract.html'>mmextract</a></span>(<span class='no'>mmgenome2</span>, <span class='kw'>selection</span> <span class='kw'>=</span> <span class='no'>selection</span>)</div><div class='output co'>#&gt; <span class='message'>91 scaffolds (or 2.58% of the scaffolds in mm, weighted by length) remain after 97194 of 97285 scaffolds have been filtered.</span></div><div class='input'><span class='no'>mmgenome2_extraction</span></div><div class='output co'>#&gt; # A tibble: 91 x 10
+#&gt; #   geneID &lt;chr&gt;, taxonomy &lt;fct&gt;, rRNA16S &lt;fct&gt;</div><div class='input'><span class='no'>selection</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>cov_C13.12.03</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>6.935</span>, <span class='fl'>7.889</span>, <span class='fl'>16.199</span>, <span class='fl'>12.766</span>),
+                        <span class='kw'>cov_C14.01.09</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>34.041</span>, <span class='fl'>29.421</span>, <span class='fl'>59.631</span>, <span class='fl'>68.058</span>))
+<span class='no'>mmgenome2_extraction</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mmextract.html'>mmextract</a></span>(<span class='no'>mmgenome2</span>, <span class='kw'>selection</span> <span class='kw'>=</span> <span class='no'>selection</span>)</div><div class='output co'>#&gt; <span class='message'>60 scaffolds (or 1.41% of the scaffolds in mm, weighted by length) remain after 97225 of 97285 scaffolds have been filtered.</span></div><div class='input'><span class='no'>mmgenome2_extraction</span></div><div class='output co'>#&gt; # A tibble: 60 x 10
 #&gt;    scaffold  length    gc cov_C13.11.14 cov_C13.11.25 cov_C13.12.03
 #&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
-#&gt;  1 180       22093.  74.0         0.298          12.0          7.34
-#&gt;  2 181        2970.  68.0         0.340          13.9          7.37
-#&gt;  3 227      190826.  65.4         0.348          13.0          6.91
-#&gt;  4 253      296715.  70.2         1.06           15.2          7.00
-#&gt;  5 315      218862.  71.7         0.366          12.6          7.17
-#&gt;  6 386      164942.  68.2         0.359          12.3          6.73
-#&gt;  7 396        7448.  72.6         0.329          13.0          7.59
-#&gt;  8 423      100199.  68.7         1.40           15.3          6.71
-#&gt;  9 431      446220.  72.4         0.409          12.6          6.80
-#&gt; 10 438        2956.  52.8        13.6            67.8          6.56
-#&gt; # ... with 81 more rows, and 4 more variables: cov_C14.01.09 &lt;dbl&gt;,
-#&gt; #   geneID &lt;chr&gt;, taxonomy &lt;fct&gt;, rRNA16S &lt;fct&gt;</div><div class='input'><span class='fu'>mmnetwork</span>(<span class='no'>mmgenome2_extraction</span>,
-          <span class='kw'>network</span> <span class='kw'>=</span> <span class='no'>paired_ends</span>,
-          <span class='kw'>min_connections</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-          <span class='kw'>color_by</span> <span class='kw'>=</span> <span class='st'>"taxonomy"</span>,
-          <span class='kw'>locator</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='mmnetwork-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
-</div></pre>
+#&gt;  1 573       53197.  68.6       1.69            35.7          13.3 
+#&gt;  2 611       14875.  63.4       0.00881          1.23          8.46
+#&gt;  3 612       14057.  62.6       0.0610           1.44          7.97
+#&gt;  4 1097     320615.  63.4       0.0580           1.43          8.17
+#&gt;  5 2521      75392.  63.4       0.0440           1.48          8.42
+#&gt;  6 3345      95626.  62.6       0.0610           1.57          8.56
+#&gt;  7 4013     124582.  63.3       0.0500           1.40          7.80
+#&gt;  8 4344      19127.  68.5       1.73            38.5          13.4 
+#&gt;  9 4889     245496.  64.4       0.0710           1.74          9.48
+#&gt; 10 4968      56501.  64.2       0.0450           1.31          8.48
+#&gt; # ... with 50 more rows, and 4 more variables: cov_C14.01.09 &lt;dbl&gt;,
+#&gt; #   geneID &lt;chr&gt;, taxonomy &lt;fct&gt;, rRNA16S &lt;fct&gt;</div><div class='input'><span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'>mmnetwork</span>(<span class='no'>mmgenome2_extraction</span>,
+               <span class='kw'>network</span> <span class='kw'>=</span> <span class='no'>paired_ends</span>,
+               <span class='kw'>min_connections</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+               <span class='kw'>color_by</span> <span class='kw'>=</span> <span class='st'>"taxonomy"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
