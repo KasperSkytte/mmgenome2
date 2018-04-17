@@ -4,7 +4,7 @@
     return()
   } else {
     local_version <- utils::packageVersion("mmgenome2")
-    packageStartupMessage("This is ", pkg, " version ", local_version, ". Great documentation is available at the mmgenome2 website: https://kasperskytte/mmgenome2/", appendLF = TRUE)
+    packageStartupMessage("This is ", pkg, " version ", local_version, ". Great documentation is available at the mmgenome2 website: https://kasperskytte.github.io/mmgenome2/", appendLF = TRUE)
     options(scipen = 6)
     if(requireNamespace("remotes", quietly = TRUE)) {
       tryCatch({
