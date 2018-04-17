@@ -178,3 +178,5 @@ pip-log.txt
 mmgenome.Rproj
 test/
 .httr-oauth
+vignettes/data/
+docs/articles/data/
