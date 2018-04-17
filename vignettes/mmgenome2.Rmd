@@ -43,20 +43,20 @@ mmstats(mm)
 
 ## Initial scaffold extraction
 In `mmgenome2` there are currently 4 different plotting functions; `mmplot`, `mmplot_pairs`, `mmplot_cov_profiles`, and `mmnetwork`. `mmplot` can for example be used to generate a differential coverage plot with any *two* coverage profiles from the `mm` data frame, for example `cov_C13.11.25` and `cov_C14.01.09`. It is often a good idea to apply a log10 scale to the axes, or to adjust the axis limits to get a symmetrical plot or to zoom in at selected regions. By default the axes are automatically scaled. In the following plot the scaffolds are colored by taxonomy, but we could also color by GC content or any other variable in `mm`:
-```{r, warning = FALSE, fig.width=9, fig.height=8}
+```{r, warning = FALSE, fig.width=9, fig.height=7}
 mmplot(mm,
        x = "cov_C13.11.25",
        y = "cov_C14.01.09",
        color_by = "phylum",
-       x_limits = c(1,NA), #uncomment to show only coverage above 1 on x-axis
-       y_limits = c(1,NA), #uncomment to show only coverage above 1 on y-axis
+       x_limits = c(1,NA), #show only coverage higher than 1 on x-axis
+       y_limits = c(1,NA), #show only coverage higher than 1 on y-axis
        x_scale = "log10",
        y_scale = "log10")
 ```
 
 In both `mmplot` and `mmnetwork` there is incorporated a locator feature, which makes it possible to interactively click in the plot and capture the exact positions of the mouse clicks on the axes plotted. This is enabled by setting `locator = TRUE` and is used to extract scaffolds within a region of interest, reproducibly. The selection of points can then be highlighted as a polygon by the `selection` argument:
 
-```{r, warning = FALSE, fig.width=8, fig.height=8}
+```{r, warning = FALSE, fig.width=9, fig.height=7}
 selection <- data.frame(cov_C13.11.25 = c(7.2, 16.2, 25.2, 23.3, 10.1),
                         cov_C14.01.09 = c(47, 77, 52.8, 29.5, 22.1))
 mmplot(mm,
@@ -196,7 +196,7 @@ mmnetwork(mm_subset3,
 ```
 
 By highligting the genome bin (`highlight_scaffolds = mm_subset3`) in a differential coverage plot of the complete metagenome, we can clearly see that binning based on coverage profiles alone is insufficient as several of the scaffolds in the bin have a significantly different coverage, yet they are connected by paired-end reads. Furthermore, the two scaffolds assigned to the phylum Proteobacteria are labeled:
-```{r, warning = FALSE, message = FALSE}
+```{r, warning = FALSE, message = FALSE, fig.width=9, fig.height=7}
 mmplot(mm,
        x = "cov_C14.01.09",
        y = "cov_C13.11.25",
