@@ -55,7 +55,12 @@ mmstats <- function(mm) {
              Length.mean = round(mean(mm$length) ,2),
              Length.min = min(mm$length),
              weighted_GC_mean = round(sum(mm$gc*mm$length)/lengthTotal, 2),
-             unlist(lapply(dplyr::select(mm, dplyr::starts_with("cov_")), function(x) {round(sum(x*mm$length)/lengthTotal, 2)})),
+             unlist(lapply(dplyr::select(mm, dplyr::starts_with("cov_")), 
+                           function(x) {
+                             nonEmptyIDs <- which(complete.cases(x))
+                             nonEmpty_mm <- mm[nonEmptyIDs,]
+                             round(sum(x[nonEmptyIDs]*nonEmpty_mm$length)/sum(nonEmpty_mm$length), 2)
+                             })),
              Ess.genes.total = length(ess.genes),
              Ess.genes.unique = length(unique(ess.genes))
   )
