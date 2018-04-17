@@ -1,5 +1,215 @@
----
-title: "Introduction to mmgenome2"
----
+--- 
+title: "Introduction to mmgenome2" 
+--- 
 
-coming up...
+```{r, warning=FALSE,message=FALSE,echo=FALSE,error=FALSE}
+library(mmgenome2)
+library(tidyverse)
+options(scipen = 6)
+#setwd("vignettes/")
+knitr::opts_chunk$set(cache = TRUE)
+```
+
+This is a brief guide explaining the basics of how to use `mmgenome2` for genome binning and extraction from metagenomes. It is meant to only demonstrate fundamental principles and operations. For more detailed documentation of all mmgenome2 functions, their arguments, as well as example code, please refer to the [Functions](reference/index.html) page. First, install `mmgenome2` as described on the frontpage, and then download the example data from [figshare](https://doi.org/10.6084/m9.figshare.6115655) and unzip the contained files into a folder of choice. Preloaded data is also available with `data("mmgenome2")`.
+
+## Loading data
+`mmgenome2` requires at minimum two types of data; the assembly and at minimum one coverage profile. Any number of coverage profiles can be loaded at once. Other than the assembly and coverage profiles, optional data includes essential genes, taxonomy, small subunit taxonomic classification, and anything else that could be relevant. The only requirement is that the data is in a row-by-column format, so that the first column contains scaffold names matching those in the assembly, and then any number of columns containing relevant information for the binning process. Metagenome data often consists of numerous files that first have to be loaded into R. The various files are loaded with the `mmload` function, which checks, adjusts, and combines the data into a single data frame, here called `mm`, which will be used in all other `mmgenome2` functions:
+
+```{r, warning = FALSE, message = FALSE, error = FALSE}
+library(mmgenome2)
+mm <- mmload(
+    assembly = "data/assembly.fa",
+    coverage = "data/",
+    essential_genes = "data/essential.csv",
+    taxonomy = "data/tax.csv",
+    additional = read.csv("data/phylopythias.csv"),
+    verbose = TRUE,
+    kmer_pca = FALSE,
+    kmer_BH_tSNE = FALSE
+  )
+```
+
+This loads all the files into a single data frame object called `mm`. By giving a folder path to `coverage`, `mmload` expects all files in the folder that end with `"_cov"` to be coverage profiles, and will automatically load them all and name them by filename. By default the scaffold lengths as well as the GC content of each scaffold are calculated. Notice that it is also possible to perform Principal Components Analysis and t-SNE on tetra-nucleotide frequencies by setting `kmer_pca = TRUE` and `kmer_BH_tSNE = TRUE`, which will then also be available in the output data frame `mm` to aid the binning process. Any additional data can be provided with `additional`. 
+
+By simply typing the name of the object in the console we get a brief overview of the data frame: 
+```{r}
+mm
+```
+
+The `mmstats` function can also calculate some basic statistics about the data:
+```{r}
+mmstats(mm)
+```
+
+## Initial scaffold extraction
+In `mmgenome2` there are currently 4 different plotting functions; `mmplot`, `mmplot_pairs`, `mmplot_cov_profiles`, and `mmnetwork`. `mmplot` can for example be used to generate a differential coverage plot with any *two* coverage profiles from the `mm` data frame, for example `cov_C13.11.25` and `cov_C14.01.09`. It is often a good idea to apply a log10 scale to the axes, or to adjust the axis limits to get a symmetrical plot or to zoom in at selected regions. By default the axes are automatically scaled. In the following plot the scaffolds are colored by taxonomy, but we could also color by GC content or any other variable in `mm`:
+```{r, warning = FALSE, fig.width=9, fig.height=8}
+mmplot(mm,
+       x = "cov_C13.11.25",
+       y = "cov_C14.01.09",
+       color_by = "phylum",
+       x_limits = c(1,NA), #uncomment to show only coverage above 1 on x-axis
+       y_limits = c(1,NA), #uncomment to show only coverage above 1 on y-axis
+       x_scale = "log10",
+       y_scale = "log10")
+```
+
+In both `mmplot` and `mmnetwork` there is incorporated a locator feature, which makes it possible to interactively click in the plot and capture the exact positions of the mouse clicks on the axes plotted. This is enabled by setting `locator = TRUE` and is used to extract scaffolds within a region of interest, reproducibly. The selection of points can then be highlighted as a polygon by the `selection` argument:
+
+```{r, warning = FALSE, fig.width=8, fig.height=8}
+selection <- data.frame(cov_C13.11.25 = c(7.2, 16.2, 25.2, 23.3, 10.1),
+                        cov_C14.01.09 = c(47, 77, 52.8, 29.5, 22.1))
+mmplot(mm,
+       x = "cov_C13.11.25",
+       y = "cov_C14.01.09",
+       min_length = 3000,
+       color_by = "phylum",
+       x_scale = "log10",
+       x_limits = c(1, 100),
+       y_scale = "log10",
+       y_limits = c(1, 100),
+       #locator = TRUE, #uncomment to use the locator and return a selection
+       selection = selection)
+```
+
+To extract all scaffolds within the selection polygon (including those not shown in the plot if a `min_length` has been set) from `mm` use `mmextract` and provide the selection in the same way as with `mmplot(mm, ..., selection = selection)`, and then save in a new object `mm_subset1`:
+```{r, warning = FALSE}
+mm_subset1 <- mmextract(mm, selection = selection)
+```
+
+Then the extracted set of scaffolds can be plotted separately to get a closer look (no log10 scaled axes or min_length set this time):
+```{r, warning = FALSE}
+mmplot(mm_subset1,
+       x = "cov_C13.11.25",
+       y = "cov_C14.01.09",
+       color_by = "phylum")
+```
+
+To look for any eventual contaminants or to have a look at the scaffolds at different coverage profiles we can use the `mmplot_pairs` function to plot more than two coverage profiles at the same time as well as any other variables. To see which variables that are available to plot simply type the name of the object in the console again (it is recommended to only plot continuous/numerical variables). Note that this time no log10 scale is applied to the axes and the points are not scaled by scaffold size, but is set to a fixed size `3` instead:
+```{r, warning = FALSE, fig.width=8, fig.height=8}
+colnames(mm_subset1)
+mmplot_pairs(mm_subset1,
+             variables = c("cov_C13.11.14",
+                           "cov_C13.11.25",
+                           "cov_C13.12.03",
+                           "cov_C14.01.09",
+                           "gc"),
+             color_by = "pps_phylum",
+             x_scale = "log10",
+             y_scale = "log10",
+             alpha = 0.4,
+             fixed_size = 3,
+             textsize = 4) 
+```
+
+#Second extraction from the initial extraction
+Using different coverage profiles than in the initial extraction, for example `cov_C13.11.14` and `cov_C13.12.03`, it may be easier to spot and remove contaminants. Note that we now override the previous `selection` with different coordinates on different axes:
+```{r, warning = FALSE}
+selection <- data.frame(cov_C13.12.03 = c(3.48, 4.95, 6.97, 13.6, 15.7, 9.68, 4.48),
+                        cov_C13.11.14 = c(0.407, 1.72, 2.92, 1.45, 0.264, 0.17, 0.163))
+mmplot(mm_subset1,
+       x = "cov_C13.12.03",
+       y = "cov_C13.11.14",
+       x_scale = "log10",
+       y_scale = "log10",
+       color_by = "pps_phylum", 
+       selection = selection)
+```
+
+Now we can extract the scaffolds into a second subset of scaffolds, let's save it as `mm_subset2`:
+```{r, warning = FALSE}
+mm_subset2 <- mmextract(mm_subset1, selection = selection)
+```
+
+## Paired end connections to remove contaminants
+Until now we have only extracted scaffolds based on coverage profiles. Using paired-end reads we can look for scaffolds that may have had a different coverage (fx due to repeats) than the current set of scaffolds, even though they may be related. This is visualised by the `mmnetwork` function, which creates a network plot (generated by [igraph](http://igraph.org/r/)) of connected scaffolds. First we need to load the paired-end data:
+```{r, eval = FALSE}
+paired_ends <- read.csv("data/paired_ends.csv")
+```
+
+```{r, warning = FALSE}
+mmnetwork(mm_subset2, 
+          network = paired_ends,
+          color_by = "phylum",
+          min_connections = 1)
+```
+
+The thickness of the lines between the scaffolds is then scaled by the number of connections between the scaffolds according to the paired-end reads. Only the scaffolds in `mm_subset2` are plotted, and these may have connections to other scaffolds that are not in the current subset. To find additional connected scaffolds in the full dataset `mm` we use the `mmexpand_network` function. Here we set the minimum connections to 1 and only direct connections are extracted (meaning no connections of connections)
+
+```{r}
+mm_subset2_exp <- mmexpand_network(mm = mm, 
+                                   scaffolds = mm_subset2,
+                                   network = paired_ends,
+                                   min_connections = 1,
+                                   include_connections = "direct")
+```
+
+As the message states, there were 36 additional connections to the 45 scaffolds in `mm_subset2`. This resulted in additional repeats being included, but also 3 groups of scaffolds that do not seem to be related to the genome bin, as seen below. To further refine the genome bin we can now plot the expanded subset again to identify these contaminants and again use the locator feature to remove them:
+
+```{r}
+selection <- data.frame(x = c(0.521, -0.43, 3.028, 7.376, 10.709, 13.462, 14.622, 14.216, 10.94, 3.238),
+                        y = c(3.443, 10.425, 14.678, 13.155, 9.664, 6.934, 6.649, 4.586, 0.936, 0.945))
+p <- mmnetwork(mm_subset2_exp,
+               network = paired_ends,
+               color_by = "pps_phylum",
+               #locator = TRUE, #uncomment to mark a selection to highlight and extract
+               min_connections = 1,
+               selection = selection)
+p
+mm_subset3 <- p$data_in_selection #there is no separate mmextract() function for network plots
+```
+
+Beware that with `mmnetwork` there is no separate extract function like `mmextract` is for `mmplot`. This is because the axes in a network plot are synthetic and are not directly contained within the data like for example coverage profiles are. Therefore, to extract all scaffolds in the selected subspace in the network plot it is instead available in the returned plot object. If for example the network plot is assigned to the object `p`, then the subset data in the selection is available with `p$data_in_selection`. The above selection then removed 20 scaffolds and there is now 61 scaffolds remaining:
+
+```{r}
+mm_subset3
+```
+
+
+```{r, warning = FALSE, message = FALSE, eval = FALSE, echo = FALSE}
+selection = data.frame(cov_C14.01.09  =  c(19, 15.5, 69.1, 103, 106, 54.9),
+                              cov_C13.11.25  =  c(7.28, 17.2, 163, 165, 21.4, 7.76))
+mmplot(mm_subset3,
+       x = "cov_C14.01.09", 
+       y = "cov_C13.11.25",
+       x_scale = "log10",
+       y_scale = "log10",
+       #locator = TRUE,
+       color_by = "pps_phylum",
+       fixed_size = 5,
+       selection = selection)
+```
+
+#Final overview
+It may be useful to have a look at the basic stats of the genome bin data using `mmstats` again:
+```{r}
+mmstats(mm_subset3)
+```
+
+As seen in the network plot, there are two scaffolds (181 and 6603) that may not be related to the other scaffolds in the genome bin even though they have several paired-end connections to several other scaffolds. To keep an eye on them they can be identified by setting `scaffold_labels = TRUE`:
+```{r}
+mmnetwork(mm_subset3,
+          network = paired_ends,
+          min_connections = 1,
+          color_by = "pps_phylum",
+          scaffold_labels = TRUE)
+```
+
+By highligting the genome bin (`highlight_scaffolds = mm_subset3`) in a differential coverage plot of the complete metagenome, we can clearly see that binning based on coverage profiles alone is insufficient as several of the scaffolds in the bin have a significantly different coverage, yet they are connected by paired-end reads. Furthermore, the two scaffolds assigned to the phylum Proteobacteria are labeled:
+```{r, warning = FALSE, message = FALSE}
+mmplot(mm,
+       x = "cov_C14.01.09",
+       y = "cov_C13.11.25",
+       x_scale = "log10",
+       y_scale = "log10",
+       highlight_scaffolds = mm_subset3,
+       label_scaffolds = c("181", "6603"))
+```
+
+#Export the scaffolds in the genome bin from the assembly
+Now that we are happy with the genome bin we can export the sequences of the scaffolds from the assembly to a separate FASTA file using `mmexport` and repeat the analysis to make another bin:
+```{r, eval = FALSE}
+mmexport(mm_subset3,
+         assembly = assembly,
+         file = "bins/bin1.fa")
+```
