@@ -38,6 +38,8 @@ Imports:
     stringr,
     remotes,
     shiny
+biocViews:
+    Biostrings
 Remotes: 
     github::RGLab/Rtsne.multicore
 RoxygenNote: 6.0.1
