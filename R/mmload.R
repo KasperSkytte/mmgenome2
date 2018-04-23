@@ -3,7 +3,7 @@
 #' @description Loads, validates and combines multiple aspects of metagenome data into one dataframe for use with all mmgenome2 functions, including scaffold assembly sequences, scaffold coverage, essential genes, taxonomy, and more.
 #'
 #' @param assembly (\emph{required}) A character string with the path to the assembly FASTA file, or the assembly as already loaded with \code{\link{readDNAStringSet}}.
-#' @param coverage (\emph{required}) A path to a folder to scan for coverage files, or otherwise a \code{vector}, \code{data.frame}, or a \code{list} hereof containing coverage of each scaffold. The prefix \code{"cov_"} will be appended to all coverage column names in the output so that \code{\link{mmstats}} knows which columns are coverage columns.
+#' @param coverage (\emph{required}) A path to a folder to scan for coverage files, or otherwise a named \code{vector}, \code{data.frame}, or a \code{list} hereof containing coverage of each scaffold. The prefix \code{"cov_"} will be appended to all coverage column names in the output so that \code{\link{mmstats}} and \code{\link{mmplot_cov_profiles}} know which columns are coverage columns.
 #' \describe{
 #'   \item{\code{vector}}{If provided as a vector, the elements of the vector must be named by the scaffold names exactly matching those of the assembly.}
 #'   \item{\code{data.frame}}{If provided as a dataframe, the first column must contain the scaffold names exactly matching those of the assembly, and any additional column(s) contain coverage of each scaffold.}
@@ -226,7 +226,11 @@ mmload <- function(assembly,
                   type = "additional")
   }
   
-  ##### Return #####
+  ##### Fix colnames and return #####
+  newColnames <- stringr::str_replace_all(colnames(mm), "[^[:alnum:]_.]", "") #only alpha-numerics, dots and underscores are allowed
+  if(any(duplicated(newColnames)))
+    stop("Only alpha-numeric characters, dots and underscores are allowed in column names", call. = FALSE)
+  colnames(mm) <- newColnames
   if(isTRUE(verbose))
     message("Done!")
   return(mm)
