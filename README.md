@@ -7,17 +7,13 @@
 First, install [R (3.4.3 or later)](https://mirrors.dotsrc.org/cran/) and [RStudio](https://www.rstudio.com/products/rstudio/download/#download). Windows users should also install [RTools](https://mirrors.dotsrc.org/cran/bin/windows/Rtools/). Then open RStudio as administrator (!) and run the following commands (just copy/paste) to install `mmgenome2` from the console:
 
 ```r
-#check for bioconductor installer
-if(!require(BiocInstaller)) 
-  source("https://bioconductor.org/biocLite.R")
+#check for remotes
+if(!require(remotes))
+  install.packages("remotes")
   
-#check for devtools
-if(!require(devtools))
-  install.packages("devtools")
-  
-#install mmgenome2
-BiocInstaller::biocLite("kasperskytte/mmgenome2")
+#install mmgenome2 using remotes
+remotes::install_github("kasperskytte/mmgenome2")
 ```
 
 ## Get started
-For a brief guide about the basics of mmgenome2 go to the [Get Started](https://kasperskytte.github.io/mmgenome2/articles/ampvis2.html) page. 
+For a brief guide about the basics of mmgenome2 go to the [Get Started](https://kasperskytte.github.io/mmgenome2/articles/mmgenome2.html) page. 
