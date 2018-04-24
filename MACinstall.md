@@ -1,4 +1,4 @@
-#Installing mmgenome2 on MAC
+# Installing mmgenome2 on MAC
 One of the dependencies (Rtsne) that `mmgenome2` uses requires the following to be able to compile and install correctly on MAC.
 
  - Open a terminal (cmd+space and type "terminal")
