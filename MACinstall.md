@@ -1,0 +1,27 @@
+#Installing mmgenome2 on MAC
+One of the dependencies (Rtsne) that `mmgenome2` uses requires the following to be able to compile and install correctly on MAC.
+
+ - Open a terminal (cmd+space and type "terminal")
+ - Install [homebrew](https://brew.sh/) (a software manager for OSX) as described on the website [https://brew.sh/](https://brew.sh/) 
+ - run `brew uninstall gcc`
+ - run `brew install gcc --without-multilib`
+ - create a `.R` folder in your home directory by `mkdir ~/.R` 
+ - create a `Makevars` file in the folder by `nano ~/.R/Makevars` and paste the following, save the file afterwards by ctrl+x followed by "y":
+
+```r
+CC=/usr/local/bin/gcc-7
+CXX=/usr/local/bin/g++-7
+CXX1X=/usr/local/bin/g++-7
+CXX11=/usr/local/bin/g++-7
+SHLIB_CXXLD=/usr/local/bin/g++-7
+FC=/usr/local/bin/gfortran-7
+F77=/usr/local/bin/gfortran-7
+MAKE=make -j8
+
+SHLIB_OPENMP_CFLAGS=-fopenmp
+SHLIB_OPENMP_CXXFLAGS=-fopenmp
+SHLIB_OPENMP_FCFLAGS=-fopenmp
+SHLIB_OPENMP_FFLAGS=-fopenmp
+```
+
+Now `mmgenome2` can be installed normally as described at the [mmgenome2 webpage](https://kasperskytte.github.io/mmgenome2/). If you have RStudio open then you must restart the current R-session (ctrl+shift+F10) before installing `mmgenome2`.
