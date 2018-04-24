@@ -14,9 +14,9 @@
 #' @param taxonomy A dataframe containing taxonomy assigned to the scaffolds. The first column must contain the scaffold names. (\emph{Default: } \code{NULL})
 #' @param additional A dataframe containing any additional data. The first column must contain the scaffold names. (\emph{Default: } \code{NULL})
 #' @param kmer_pca (\emph{Logical}) Perform Principal Components Analysis of tetranucleotide frequencies of each scaffold and merge the scores of the 3 most significant axes. (\emph{Default: } \code{FALSE}) 
-#' @param kmer_BH_tSNE (\emph{Logical}) Calculate Barnes-Hut t-Distributed Stochastic Neighbor Embedding (B-H t-SNE) representations of tetranucleotide frequencies using \code{\link[Rtsne.multicore]{Rtsne.multicore}} and merge the result. Additional arguments may be required for success, refer to the documentation of \code{\link[Rtsne.multicore]{Rtsne.multicore}}. (\emph{Default: } \code{FALSE}) 
+#' @param kmer_BH_tSNE (\emph{Logical}) Calculate Barnes-Hut t-Distributed Stochastic Neighbor Embedding (B-H t-SNE) representations of tetranucleotide frequencies using \code{\link[Rtsne]{Rtsne}} and merge the result. Additional arguments may be required for success, refer to the documentation of \code{\link[Rtsne]{Rtsne}}. This is done in parallel, thus setting the \code{num_threads} to the number of available cores may greatly increase the calculation time of large data. (\emph{Default: } \code{FALSE}) 
 #' @param verbose (\emph{Logical}) Whether to print status messages during the loading process. (\emph{Default: } \code{TRUE}) 
-#' @param ... Additional arguments are passed on to \code{\link[Rtsne.multicore]{Rtsne.multicore}}. 
+#' @param ... Additional arguments are passed on to \code{\link[Rtsne]{Rtsne}}. 
 #'
 #' @export
 #' 
@@ -31,7 +31,7 @@
 #' @importFrom vegan rda scores
 #' @importFrom data.table fread
 #' @importFrom tools file_path_sans_ext
-#' @import Rtsne.multicore
+#' @import Rtsne
 #' 
 #' @examples 
 #' \dontrun{
@@ -177,7 +177,7 @@ mmload <- function(assembly,
     if(isTRUE(verbose))
       message("Calculating Barnes-Hut t-Distributed Stochastic Neighbor Embedding representations of tetranucleotide frequencies...")
     set.seed(42) # Sets seed for reproducibility
-    tSNE_res <- Rtsne.multicore::Rtsne.multicore(kmer, verbose = verbose, check_duplicates = F, ...)[["Y"]] %>%
+    tSNE_res <- Rtsne::Rtsne(kmer, verbose = verbose, check_duplicates = F, ...)[["Y"]] %>%
       tibble::as.tibble()
     mm <- tibble::add_column(mm,
                              tSNE1 = tSNE_res[[1]],

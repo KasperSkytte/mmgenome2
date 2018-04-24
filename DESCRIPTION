@@ -28,7 +28,7 @@ Imports:
     dplyr,
     vegan,
     Biostrings,
-    Rtsne.multicore,
+    Rtsne,
     digest,
     clipr,
     igraph,
@@ -40,6 +40,6 @@ Imports:
     shiny
 biocViews:
     Biostrings
-Remotes: 
-    github::RGLab/Rtsne.multicore
+remotes:
+    github::jkrijthe/Rtsne@openmp
 RoxygenNote: 6.0.1
