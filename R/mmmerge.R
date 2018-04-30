@@ -20,7 +20,7 @@ mmmerge <- function(x, y, type) {
       y <- list(y)
     #merge mm with each element in the provided list
     for(i in 1:length(y)) {
-      string <- ifelse(length(y) == 1, paste0("'", type, "'"), paste0("'", type,"'", " element ", i))
+      string <- if(length(y) == 1) paste0("'", type, "'") else paste0("'", type,"'", " element ", i)
       if(is.factor(y[[i]]))
         y[[i]] <- as.character(y[[i]])
       #first column must be the sequence names
@@ -33,18 +33,20 @@ mmmerge <- function(x, y, type) {
       
       #column names are preserved from data frames, but not from vectors. Use names of the provided list, or else create a dummy name
       if(is.atomic(y[[i]]) & !is.null(names(y[[i]]))) {
-        y[[i]] <- tibble::enframe(y[[i]], name = "scaffold", value = ifelse((is.null(names(y)) | names(y)[[i]] == ""), paste0(type, i), names(y)[[i]]))
+        y[[i]] <- tibble::enframe(y[[i]], name = "scaffold", value = if((is.null(names(y)[[i]]) || names(y)[[i]] == "")) paste0(type, i) else names(y)[[i]])
       }
       
       #if y[[i]] is a 2 column data frame, name the resulting column in x by the name of the dataframe as provided in the list, if any.
       #Otherwise if the y[[i]] has no name in the list, keep the current column name
-      ifelse(any(class(y[[i]]) %in% c("data.frame", "tbl", "tbl_df")) & length(y[[i]]) == 2 & !(is.null(names(y)[[i]]) || names(y)[[i]] == ""), 
-             colnames(y[[i]])[2] <- names(y)[[i]],
-             colnames(y[[i]])[2] <- colnames(y[[i]])[2])
+      if(any(class(y[[i]]) %in% c("data.frame", "tbl", "tbl_df")) & length(y[[i]]) == 2 & !(is.null(names(y)[[i]]) || names(y)[[i]] == ""))
+        colnames(y[[i]])[2] <- names(y)[[i]] else
+          colnames(y[[i]])[2] <- colnames(y[[i]])[2]
       
       #merge x and y[[i]] by scaffold
       colnames(y[[i]])[1] <- "scaffold" #first columns must have same name
       y[[i]][1] <- lapply(y[[i]][1], as.character) #and must be character
+      if(any(duplicated(y[[i]][1])))
+        stop(paste0("All scaffold names must be unique. Duplicate scaffold names found in ", string, "."), call. = FALSE)
       sharedScaffolds <- dplyr::intersect(x$scaffold, y[[i]][["scaffold"]]) #which scaffolds are shared between x and y[[i]]
       
       #print missing or excess scaffolds between x and y[[i]]
