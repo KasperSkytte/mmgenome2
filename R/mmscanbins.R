@@ -19,7 +19,7 @@
 #' binned_scaffolds
 #' mmplot(mmgenome2,
 #'        min_length = 10000,
-#'        x = "cov_C13.12.03",
+#'        x = "cov_C13.11.25",
 #'        y = "cov_C14.01.09",
 #'        color_by = "taxonomy",
 #'        highlight_scaffolds = binned_scaffolds,

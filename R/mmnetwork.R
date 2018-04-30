@@ -35,14 +35,15 @@
 #' data(mmgenome2)
 #' data(paired_ends)
 #' mmgenome2
-#' selection <- data.frame(cov_C13.12.03 = c(6.935, 7.889, 16.199, 12.766),
-#'                         cov_C14.01.09 = c(34.041, 29.421, 59.631, 68.058))
+#' selection <- data.frame(cov_C13.11.25 = c(7.2, 16.2, 25.2, 23.3, 10.1),
+#'                         cov_C14.01.09 = c(47, 77, 52.8, 29.5, 22.1))
 #' mmgenome2_extraction <- mmextract(mmgenome2, selection = selection)
 #' mmgenome2_extraction
 #' p <- mmnetwork(mmgenome2_extraction, 
 #'                network = paired_ends, 
 #'                min_connections = 1,
 #'                color_by = "taxonomy")
+#' p
 #' 
 #' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
 #' @author Soren M. Karst \email{smk@@bio.aau.dk}
@@ -160,7 +161,7 @@ mmnetwork <- function(mm,
   
   ##### Locator and selection #####
   if(isTRUE(locator)) {
-    points <- mmgenome2:::mmlocator(p)
+    points <- mmlocator(p, network = TRUE)
   }
   if(isTRUE(locator) | !is.null(selection)) {
     if(!isTRUE(locator) & !is.null(selection)) {
