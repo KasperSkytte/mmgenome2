@@ -161,7 +161,7 @@ mmnetwork <- function(mm,
   
   ##### Locator and selection #####
   if(isTRUE(locator)) {
-    points <- mmlocator(p, network = TRUE)
+    points <- mmlocator(p)
   }
   if(isTRUE(locator) | !is.null(selection)) {
     if(!isTRUE(locator) & !is.null(selection)) {
