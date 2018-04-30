@@ -19,4 +19,4 @@ remotes::install_github("kasperskytte/mmgenome2")
 To install `mmgenome2` on MAC please see [this](articles/MACinstall.html) before running the above commands.
 
 ## Get started
-For a brief guide about the basics of mmgenome2 go to the [Get Started](https://kasperskytte.github.io/mmgenome2/articles/mmgenome2.html) page. 
+For a brief guide about the basics of mmgenome2 go to the [Get Started](articles/mmgenome2.html) page. 
