@@ -16,7 +16,7 @@
 #' @author Rasmus Hansen Kirkegaard \email{rhk@@bio.aau.dk}
 #' @author Soren M. Karst \email{smk@@bio.aau.dk}
 #' @author Mads Albertsen \email{MadsAlbertsen85@@gmail.com}
-mmlocator <- function(plot, x_scale = NULL, y_scale = NULL, network = FALSE) {
+mmlocator <- function(plot, x_scale = NULL, y_scale = NULL) {
   app <- shinyApp(
     ui = fillPage(padding = c(5,5,50),
                   div(style="display: inline-block;",
@@ -120,8 +120,7 @@ mmlocator <- function(plot, x_scale = NULL, y_scale = NULL, network = FALSE) {
            quiet = TRUE,
            launch.browser = rstudioapi::viewer))
   df <- get(".current_selection", df, envir = globalenv())
-  if(!isTRUE(network))
-    colnames(df) <- c(plot[["mapping"]][["x"]], plot[["mapping"]][["y"]])
+  colnames(df) <- str_replace(c(plot[["mapping"]][["x"]], plot[["mapping"]][["y"]]), "~", "")
   assign(".current_selection", df, envir = globalenv())
   if(nrow(df) > 0) {
     selection <- paste0("data.frame(", 
