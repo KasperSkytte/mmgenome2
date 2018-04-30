@@ -20,6 +20,7 @@
 #' @param label_scaffolds_by The variable in mm by which to label the scaffolds defined by \code{label_scaffolds}. (\emph{Default: } \code{"scaffold"})
 #' @param fixed_size A fixed size for all scaffolds if set. If \code{NULL} then the scaffolds are scaled by length. (\emph{Default: } \code{NULL})
 #' @param size_scale A factor to scale the sizes of the scaffolds plotted. Only applies when \code{fixed_size} is set to \code{NULL} and the scaffolds are scaled by length. (\emph{Default: } \code{1})
+#' @param factor_shape When \code{color_by} is a categorical variable (factor or character) then set the shape of the scaffolds to either \code{"solid"} or \code{"outline"}. (\emph{Default: } \code{"outline"})
 #' @param shared_genes (\emph{Logical}) If \code{TRUE}, lines will be drawn between scaffolds with any shared gene(s). (\emph{Default: } \code{FALSE})
 #' @param network Paired-end or mate-pair connections between scaffolds in long format. The first and second columns must contain all connected scaffold pairs and the third column the number of connections. 
 #' @param color_vector The colors from which to generate a color gradient when \code{color_by} is set and the variable is continuous. Any number of colors can be used. (\emph{Default: } \code{c("blue", "green", "red")}) 
@@ -41,8 +42,8 @@
 #' data(mmgenome2)
 #' mmgenome2
 #' mmplot(mmgenome2,
-#'        min_length = 10000,
-#'        x = "cov_C13.12.03",
+#'        min_length = 3000,
+#'        x = "cov_C13.11.25",
 #'        y = "cov_C14.01.09",
 #'        color_by = "taxonomy",
 #'        #locator = TRUE,
@@ -50,11 +51,11 @@
 #'        y_scale = "log10")
 #' #Set "locator = TRUE" to interactively capture the coordinates of 
 #' #mouse clicks in an mmplot, or provide coordinates with "selection":
-#' selection <- data.frame(cov_C13.12.03 = c(7.676, 5.165, 6.386, 10.933), 
-#'                         cov_C14.01.09 = c(24.852, 32.545, 53.062, 38.52))
+#' selection <- data.frame(cov_C13.11.25 = c(7.2, 16.2, 25.2, 23.3, 10.1),
+#'                         cov_C14.01.09 = c(47, 77, 52.8, 29.5, 22.1))
 #' mmplot(mmgenome2,
 #'        min_length = 10000,
-#'        x = "cov_C13.12.03",
+#'        x = "cov_C13.11.25",
 #'        y = "cov_C14.01.09",
 #'        color_by = "taxonomy",
 #'        x_scale = "log10",
@@ -86,6 +87,7 @@ mmplot <- function(mm,
                    alpha = 0.1,
                    fixed_size = NULL,
                    size_scale = 1,
+                   factor_shape = "outline",
                    color_vector = c("blue", "green", "red"),
                    color_scale_log10 = FALSE) {
   #Checks and error messages before anything else
@@ -135,7 +137,7 @@ mmplot <- function(mm,
     #if color_by is set and is factor or character
     if(ifelse(!is.null(color_by), is.factor(mm[[color_by]]) | is.character(mm[[color_by]]), FALSE)) {
       p <- p +
-        geom_point(data = subset(mm, mm[[color_by]] != "NA"), shape = 1, alpha = 0.7, na.rm = TRUE) + 
+        geom_point(data = subset(mm, mm[[color_by]] != "NA"), shape = if(tolower(factor_shape) == "solid") 16 else 1, alpha = 0.7, na.rm = TRUE) + 
         guides(colour = guide_legend(override.aes = list(alpha = 1, size = 5, shape = 19)))
     }
   } else if(!is.null(fixed_size)) {
@@ -158,7 +160,7 @@ mmplot <- function(mm,
     #if color_by is set and is factor or character
     if(ifelse(!is.null(color_by), is.factor(mm[[color_by]]) | is.character(mm[[color_by]]), FALSE)) {
       p <- p +
-        geom_point(data = subset(mm, mm[[color_by]] != "NA"), shape = 1, alpha = 0.7, size = fixed_size, na.rm = TRUE) + 
+        geom_point(data = subset(mm, mm[[color_by]] != "NA"), shape = if(tolower(factor_shape) == "solid") 16 else 1, alpha = 0.7, size = fixed_size, na.rm = TRUE) + 
         guides(colour = guide_legend(override.aes = list(alpha = 1, size = 5, shape = 19)))
     }
   }
@@ -271,7 +273,7 @@ mmplot <- function(mm,
   
   ##### Locator and selection #####
   if(isTRUE(locator)) {
-    points <- mmlocator(p, x_scale, y_scale)
+    points <- mmlocator(p, x_scale, y_scale, network = FALSE)
   }
   if(isTRUE(locator) | !is.null(selection)) {
     if(!isTRUE(locator) & !is.null(selection)) {
