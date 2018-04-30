@@ -77,6 +77,7 @@ mmplot_pairs <- function(mm,
         p <- mmplot(mm, 
                     x = variables[j], 
                     y = variables[i], 
+                    print_plot = FALSE,
                     ...) + 
           theme(plot.margin = margin(3,3,0,0, unit = "pt"), 
                 legend.position = "none",
@@ -111,5 +112,5 @@ mmplot_pairs <- function(mm,
               axis.ticks = element_line())
     }
   }
-  do.call(cowplot::plot_grid, c(temp, ncol = ncol, align = "hv"))
+  suppressWarnings(do.call(cowplot::plot_grid, c(temp, ncol = ncol, align = "hv")))
 }

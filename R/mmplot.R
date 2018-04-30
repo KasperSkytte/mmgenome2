@@ -25,6 +25,7 @@
 #' @param network Paired-end or mate-pair connections between scaffolds in long format. The first and second columns must contain all connected scaffold pairs and the third column the number of connections. 
 #' @param color_vector The colors from which to generate a color gradient when \code{color_by} is set and the variable is continuous. Any number of colors can be used. (\emph{Default: } \code{c("blue", "green", "red")}) 
 #' @param color_scale_log10 (\emph{Logical}) Log10-scale the color gradient when \code{color_by} is set and the variable is continuous. (\emph{Default: } \code{FALSE})
+#' @param print_plot (\emph{Logical}) Whether to call print on the generated ggplot object (\code{TRUE}) instead of just returning the ggplot object itself (\code{FALSE}). (\emph{Default: } \code{TRUE})
 
 #' @export
 #' 
@@ -89,7 +90,8 @@ mmplot <- function(mm,
                    size_scale = 1,
                    factor_shape = "outline",
                    color_vector = c("blue", "green", "red"),
-                   color_scale_log10 = FALSE) {
+                   color_scale_log10 = FALSE,
+                   print_plot = TRUE) {
   #Checks and error messages before anything else
   if(isTRUE(locator) & !is.null(selection))
     stop("Using the locator and highlighting a selection at the same time is not supported.", call. = FALSE)
@@ -273,7 +275,7 @@ mmplot <- function(mm,
   
   ##### Locator and selection #####
   if(isTRUE(locator)) {
-    points <- mmlocator(p, x_scale, y_scale, network = FALSE)
+    points <- mmlocator(p, x_scale, y_scale)
   }
   if(isTRUE(locator) | !is.null(selection)) {
     if(!isTRUE(locator) & !is.null(selection)) {
@@ -298,5 +300,8 @@ mmplot <- function(mm,
                    inherit.aes = FALSE, 
                    na.rm = TRUE)
   }
-  return(p)
+  if(isTRUE(print_plot))
+    return(suppressWarnings(print(p)))
+  if(!isTRUE(print_plot))
+    return(p)
 }
