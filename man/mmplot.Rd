@@ -9,8 +9,9 @@ mmplot(mm, x, y, min_length = 0, color_by = NULL, locator = FALSE,
   label_scaffolds = FALSE, label_scaffolds_by = "scaffold",
   highlight_scaffolds = NULL, highlight_color = "darkred", x_scale = NULL,
   x_limits = NULL, y_scale = NULL, y_limits = NULL, alpha = 0.1,
-  fixed_size = NULL, size_scale = 1, color_vector = c("blue", "green",
-  "red"), color_scale_log10 = FALSE)
+  fixed_size = NULL, size_scale = 1, factor_shape = "outline",
+  color_vector = c("blue", "green", "red"), color_scale_log10 = FALSE,
+  print_plot = TRUE)
 }
 \arguments{
 \item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}
@@ -53,9 +54,13 @@ mmplot(mm, x, y, min_length = 0, color_by = NULL, locator = FALSE,
 
 \item{size_scale}{A factor to scale the sizes of the scaffolds plotted. Only applies when \code{fixed_size} is set to \code{NULL} and the scaffolds are scaled by length. (\emph{Default: } \code{1})}
 
+\item{factor_shape}{When \code{color_by} is a categorical variable (factor or character) then set the shape of the scaffolds to either \code{"solid"} or \code{"outline"}. (\emph{Default: } \code{"outline"})}
+
 \item{color_vector}{The colors from which to generate a color gradient when \code{color_by} is set and the variable is continuous. Any number of colors can be used. (\emph{Default: } \code{c("blue", "green", "red")})}
 
 \item{color_scale_log10}{(\emph{Logical}) Log10-scale the color gradient when \code{color_by} is set and the variable is continuous. (\emph{Default: } \code{FALSE})}
+
+\item{print_plot}{(\emph{Logical}) Whether to call print on the generated ggplot object (\code{TRUE}) instead of just returning the ggplot object itself (\code{FALSE}). (\emph{Default: } \code{TRUE})}
 }
 \value{
 A ggplot2 object.
@@ -68,8 +73,8 @@ library(mmgenome2)
 data(mmgenome2)
 mmgenome2
 mmplot(mmgenome2,
-       min_length = 10000,
-       x = "cov_C13.12.03",
+       min_length = 3000,
+       x = "cov_C13.11.25",
        y = "cov_C14.01.09",
        color_by = "taxonomy",
        #locator = TRUE,
@@ -77,11 +82,11 @@ mmplot(mmgenome2,
        y_scale = "log10")
 #Set "locator = TRUE" to interactively capture the coordinates of 
 #mouse clicks in an mmplot, or provide coordinates with "selection":
-selection <- data.frame(cov_C13.12.03 = c(7.676, 5.165, 6.386, 10.933), 
-                        cov_C14.01.09 = c(24.852, 32.545, 53.062, 38.52))
+selection <- data.frame(cov_C13.11.25 = c(7.2, 16.2, 25.2, 23.3, 10.1),
+                        cov_C14.01.09 = c(47, 77, 52.8, 29.5, 22.1))
 mmplot(mmgenome2,
        min_length = 10000,
-       x = "cov_C13.12.03",
+       x = "cov_C13.11.25",
        y = "cov_C14.01.09",
        color_by = "taxonomy",
        x_scale = "log10",

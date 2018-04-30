@@ -25,12 +25,15 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Load and combine data for use with other mmgenome2 functions — mmload" />
 
 <meta property="og:description" content="Loads, validates and combines multiple aspects of metagenome data into one dataframe for use with all mmgenome2 functions, including scaffold assembly sequences, scaffold coverage, essential genes, taxonomy, and more." />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">mmgenome2</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">mmgenome2</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.2</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -76,6 +83,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -83,21 +91,25 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Load and combine data for use with other mmgenome2 functions</h1>
+    
+    <div class="hidden name"><code>mmload.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Loads, validates and combines multiple aspects of metagenome data into one dataframe for use with all mmgenome2 functions, including scaffold assembly sequences, scaffold coverage, essential genes, taxonomy, and more.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>mmload</span>(<span class='no'>assembly</span>, <span class='no'>coverage</span>, <span class='kw'>essential_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>taxonomy</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>additional</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>kmer_pca</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>kmer_BH_tSNE</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -106,7 +118,7 @@
     </tr>
     <tr>
       <th>coverage</th>
-      <td><p>(<em>required</em>) A path to a folder to scan for coverage files, or otherwise a <code>vector</code>, <code>data.frame</code>, or a <code>list</code> hereof containing coverage of each scaffold. The prefix <code>"cov_"</code> will be appended to all coverage column names in the output so that <code><a href='mmstats.html'>mmstats</a></code> knows which columns are coverage columns.</p><dl class='dl-horizontal'>
+      <td><p>(<em>required</em>) A path to a folder to scan for coverage files, or otherwise a named <code>vector</code>, <code>data.frame</code>, or a <code>list</code> hereof containing coverage of each scaffold. The prefix <code>"cov_"</code> will be appended to all coverage column names in the output so that <code><a href='mmstats.html'>mmstats</a></code> and <code><a href='mmplot_cov_profiles.html'>mmplot_cov_profiles</a></code> know which columns are coverage columns.</p><dl class='dl-horizontal'>
   <dt><code>vector</code></dt><dd><p>If provided as a vector, the elements of the vector must be named by the scaffold names exactly matching those of the assembly.</p></dd>
   <dt><code>data.frame</code></dt><dd><p>If provided as a dataframe, the first column must contain the scaffold names exactly matching those of the assembly, and any additional column(s) contain coverage of each scaffold.</p></dd>
   <dt><code>list</code></dt><dd><p>If provided as a list, it must contain any number of <code>vector</code>'s or <code>data.frame</code>'s as described above. If names are assigned to the objects in the list, then they will be used as column names in the output (does not apply to any dataframes that may have more than 2 columns, however).</p></dd>
@@ -131,7 +143,7 @@
     </tr>
     <tr>
       <th>kmer_BH_tSNE</th>
-      <td><p>(<em>Logical</em>) Calculate Barnes-Hut t-Distributed Stochastic Neighbor Embedding (B-H t-SNE) representations of tetranucleotide frequencies using <code><a href='http://www.rdocumentation.org/packages/Rtsne.multicore/topics/Rtsne.multicore'>Rtsne.multicore</a></code> and merge the result. Additional arguments may be required for success, refer to the documentation of <code><a href='http://www.rdocumentation.org/packages/Rtsne.multicore/topics/Rtsne.multicore'>Rtsne.multicore</a></code>. (<em>Default: </em> <code>FALSE</code>)</p></td>
+      <td><p>(<em>Logical</em>) Calculate Barnes-Hut t-Distributed Stochastic Neighbor Embedding (B-H t-SNE) representations of tetranucleotide frequencies using <code><a href='http://www.rdocumentation.org/packages/Rtsne/topics/Rtsne'>Rtsne</a></code> and merge the result. Additional arguments may be required for success, refer to the documentation of <code><a href='http://www.rdocumentation.org/packages/Rtsne/topics/Rtsne'>Rtsne</a></code>. This is done in parallel, thus setting the <code>num_threads</code> to the number of available cores may greatly increase the calculation time of large data. (<em>Default: </em> <code>FALSE</code>)</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -139,7 +151,7 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional arguments are passed on to <code><a href='http://www.rdocumentation.org/packages/Rtsne.multicore/topics/Rtsne.multicore'>Rtsne.multicore</a></code>.</p></td>
+      <td><p>Additional arguments are passed on to <code><a href='http://www.rdocumentation.org/packages/Rtsne/topics/Rtsne'>Rtsne</a></code>.</p></td>
     </tr>
     </table>
     
@@ -181,7 +193,7 @@ Kasper Skytte Andersen <a href='mailto:ksa@bio.aau.dk'>ksa@bio.aau.dk</a>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Mads Albertsen, Kasper Skytte Andersen, Rasmus Hansen Kirkegaard, Søren Mikael Karst.</p>
+  <p>Developed by Mads Albertsen, Kasper Skytte Andersen, Rasmus Hansen Kirkegaard, Søren Michael Karst.</p>
 </div>
 
 <div class="pkgdown">
@@ -190,6 +202,8 @@ Kasper Skytte Andersen <a href='mailto:ksa@bio.aau.dk'>ksa@bio.aau.dk</a>
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

@@ -25,9 +25,12 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Function reference" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -50,8 +53,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">mmgenome2</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">mmgenome2</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.2</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -73,6 +80,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -80,104 +88,99 @@
       
       </header>
 
-      <div class="row">
-  <div class="col-md-9">
+<div class="row">
+  <div class="contents col-md-9">
     <div class="page-header">
-      <h1>
-        Reference
-        <small>version&nbsp;2.0</small>
-      </h1>
+      <h1>Reference</h1>
     </div>
 
-    <div class="contents">
-      <table class="ref-index">
+    <table class="ref-index">
 
-      <colgroup>
-        <col class="alias" />
-        <col class="title" />
-      </colgroup>
+    <colgroup>
+      <col class="alias" />
+      <col class="title" />
+    </colgroup>
 
-      <tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-loading-and-exporting-data" class="hasAnchor"><a href="#section-loading-and-exporting-data" class="anchor"></a>Loading and exporting data</h2>
-            <p class="section-desc"><p>Use <code>mmload</code> to load and merge metagenomic data, <code>mmstats</code> to show basic stats of the data, and <code>mmexport</code> to export the DNA sequences of binned scaffolds.</p></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="mmload.html">mmload</a></code> </p>
-          </td>
-          <td><p>Load and combine data for use with other mmgenome2 functions</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="mmstats.html">mmstats</a></code> </p>
-          </td>
-          <td><p>Print basic statistics of metagenome data</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="mmexport.html">mmexport</a></code> </p>
-          </td>
-          <td><p>Export DNA sequences of selected scaffolds</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-metagenome-plotting-and-exploration" class="hasAnchor"><a href="#section-metagenome-plotting-and-exploration" class="anchor"></a>Metagenome plotting and exploration</h2>
-            <p class="section-desc"><p>Functions for plotting metagenomes and identifying individual genomes.</p></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="mmplot.html">mmplot</a></code> </p>
-          </td>
-          <td><p>Visualise metagenomes in various ways</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="mmplot_pairs.html">mmplot_pairs</a></code> </p>
-          </td>
-          <td><p>Plot multiple combinations of variables in a pairs plot</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="mmplot_cov_profiles.html">mmplot_cov_profiles</a></code> </p>
-          </td>
-          <td><p>Compare coverage profiles</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="mmnetwork.html">mmnetwork</a></code> </p>
-          </td>
-          <td><p>Network plot of mate-pair or paired-end connected scaffold reads</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-extracting-scaffolds-from-metagenomes" class="hasAnchor"><a href="#section-extracting-scaffolds-from-metagenomes" class="anchor"></a>Extracting scaffolds from metagenomes</h2>
-            <p class="section-desc"><p>Functions for extracting individual genomes from metagenomes for further exploration or exportation with <code>mmexport</code>.</p></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="mmextract.html">mmextract</a></code> </p>
-          </td>
-          <td><p>Extract all scaffolds within a selection polygon</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="mmexpand_network.html">mmexpand_network</a></code> </p>
-          </td>
-          <td><p>Find connections of a subset of scaffolds in a larger set of scaffolds</p></td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
+    <tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-loading-and-exporting-data" class="hasAnchor"><a href="#section-loading-and-exporting-data" class="anchor"></a>Loading and exporting data</h2>
+          <p class="section-desc"><p>Use <code>mmload</code> to load and merge metagenomic data, <code>mmstats</code> to show basic stats of the data, and <code>mmexport</code> to export the DNA sequences of binned scaffolds.</p></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="mmload.html">mmload()</a></code> </p>
+        </td>
+        <td><p>Load and combine data for use with other mmgenome2 functions</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="mmstats.html">mmstats()</a></code> </p>
+        </td>
+        <td><p>Print basic statistics of metagenome data</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="mmexport.html">mmexport()</a></code> </p>
+        </td>
+        <td><p>Export DNA sequences of selected scaffolds</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-metagenome-plotting-and-exploration" class="hasAnchor"><a href="#section-metagenome-plotting-and-exploration" class="anchor"></a>Metagenome plotting and exploration</h2>
+          <p class="section-desc"><p>Functions for plotting metagenomes and identifying individual genomes.</p></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="mmplot.html">mmplot()</a></code> </p>
+        </td>
+        <td><p>Visualise metagenomes in various ways</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="mmplot_pairs.html">mmplot_pairs()</a></code> </p>
+        </td>
+        <td><p>Plot multiple combinations of variables in a pairs plot</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="mmplot_cov_profiles.html">mmplot_cov_profiles()</a></code> </p>
+        </td>
+        <td><p>Compare coverage profiles</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="mmnetwork.html">mmnetwork()</a></code> </p>
+        </td>
+        <td><p>Network plot of mate-pair or paired-end connected scaffold reads</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-extracting-scaffolds-from-metagenomes" class="hasAnchor"><a href="#section-extracting-scaffolds-from-metagenomes" class="anchor"></a>Extracting scaffolds from metagenomes</h2>
+          <p class="section-desc"><p>Functions for extracting individual genomes from metagenomes for further exploration or exportation with <code>mmexport</code>.</p></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="mmextract.html">mmextract()</a></code> </p>
+        </td>
+        <td><p>Extract all scaffolds within a selection polygon</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="mmexpand_network.html">mmexpand_network()</a></code> </p>
+        </td>
+        <td><p>Find connections of a subset of scaffolds in a larger set of scaffolds</p></td>
+      </tr>
+    </tbody>
+    </table>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -192,7 +195,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Mads Albertsen, Kasper Skytte Andersen, Rasmus Hansen Kirkegaard, Søren Mikael Karst.</p>
+  <p>Developed by Mads Albertsen, Kasper Skytte Andersen, Rasmus Hansen Kirkegaard, Søren Michael Karst.</p>
 </div>
 
 <div class="pkgdown">
@@ -201,6 +204,8 @@
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

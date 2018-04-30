@@ -25,12 +25,15 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Print basic statistics of metagenome data — mmstats" />
 
 <meta property="og:description" content="Calculates some basic statistics like the N50 length, minimum-, mean-, and maximum scaffold lengths, mean GC content, information about essential genes, and more..." />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">mmgenome2</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">mmgenome2</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.2</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -76,6 +83,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -83,19 +91,23 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Print basic statistics of metagenome data</h1>
+    
+    <div class="hidden name"><code>mmstats.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Calculates some basic statistics like the N50 length, minimum-, mean-, and maximum scaffold lengths, mean GC content, information about essential genes, and more...</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>mmstats</span>(<span class='no'>mm</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -130,16 +142,16 @@
 <span class='no'>mmgenome2</span></div><div class='output co'>#&gt; # A tibble: 97,285 x 10
 #&gt;    scaffold length    gc cov_C13.11.14 cov_C13.11.25 cov_C13.12.03
 #&gt;    &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
-#&gt;  1 1         8264.  57.8       1.44             53.6         0.   
-#&gt;  2 2         1027.  57.0       0.625            24.2         0.   
-#&gt;  3 3         1665.  55.9      13.5             434.          0.166
-#&gt;  4 4         9056.  35.9       0.0100           23.4         0.   
-#&gt;  5 5         3343.  64.0       3.20             16.4         0.   
-#&gt;  6 6        98207.  39.1       0.00966          24.5         3.29 
-#&gt;  7 7         6480.  63.0       2.61             19.2         1.46 
-#&gt;  8 8        15790.  61.7       2.78             21.2         1.62 
-#&gt;  9 9         1403.  70.4      85.1             192.          0.   
-#&gt; 10 10        2018.  70.2      50.3             101.          0.   
+#&gt;  1 1          8264  57.8       1.44             53.6         0    
+#&gt;  2 2          1027  57.0       0.625            24.2         0    
+#&gt;  3 3          1665  55.9      13.5             434.          0.166
+#&gt;  4 4          9056  35.9       0.01             23.4         0    
+#&gt;  5 5          3343  64.0       3.20             16.4         0    
+#&gt;  6 6         98207  39.1       0.00966          24.5         3.29 
+#&gt;  7 7          6480  63.0       2.61             19.2         1.46 
+#&gt;  8 8         15790  61.7       2.78             21.2         1.62 
+#&gt;  9 9          1403  70.4      85.1             192.          0    
+#&gt; 10 10         2018  70.2      50.3             101.          0    
 #&gt; # ... with 97,275 more rows, and 4 more variables: cov_C14.01.09 &lt;dbl&gt;,
 #&gt; #   geneID &lt;chr&gt;, taxonomy &lt;fct&gt;, rRNA16S &lt;fct&gt;</div><div class='input'><span class='fu'>mmstats</span>(<span class='no'>mmgenome2</span>)</div><div class='output co'>#&gt;                  General stats
 #&gt; Scaffolds                97285
@@ -182,7 +194,7 @@ Mads Albertsen <a href='mailto:MadsAlbertsen85@gmail.com'>MadsAlbertsen85@gmail.
 
       <footer>
       <div class="copyright">
-  <p>Developed by Mads Albertsen, Kasper Skytte Andersen, Rasmus Hansen Kirkegaard, Søren Mikael Karst.</p>
+  <p>Developed by Mads Albertsen, Kasper Skytte Andersen, Rasmus Hansen Kirkegaard, Søren Michael Karst.</p>
 </div>
 
 <div class="pkgdown">
@@ -191,6 +203,8 @@ Mads Albertsen <a href='mailto:MadsAlbertsen85@gmail.com'>MadsAlbertsen85@gmail.
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

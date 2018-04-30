@@ -25,12 +25,15 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Retrieve scaffold names from all genome bins in a folder — mmscanbins" />
 
 <meta property="og:description" content="Reads all FASTA files (genome bins) in a folder and returns all unique scaffold names. This is useful to get an overview of which scaffolds are already extracted from the metagenome by for example highlighting them in plots." />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">mmgenome2</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">mmgenome2</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.2</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -76,6 +83,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -83,19 +91,23 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Retrieve scaffold names from all genome bins in a folder</h1>
+    
+    <div class="hidden name"><code>mmscanbins.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Reads all FASTA files (genome bins) in a folder and returns all unique scaffold names. This is useful to get an overview of which scaffolds are already extracted from the metagenome by for example highlighting them in plots.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>mmscanbins</span>(<span class='no'>binfolder</span>, <span class='kw'>namesOnly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -124,7 +136,7 @@
 <span class='no'>binned_scaffolds</span>
 <span class='fu'><a href='mmplot.html'>mmplot</a></span>(<span class='no'>mmgenome2</span>,
        <span class='kw'>min_length</span> <span class='kw'>=</span> <span class='fl'>10000</span>,
-       <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"cov_C13.12.03"</span>,
+       <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"cov_C13.11.25"</span>,
        <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"cov_C14.01.09"</span>,
        <span class='kw'>color_by</span> <span class='kw'>=</span> <span class='st'>"taxonomy"</span>,
        <span class='kw'>highlight_scaffolds</span> <span class='kw'>=</span> <span class='no'>binned_scaffolds</span>,
@@ -148,7 +160,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Mads Albertsen, Kasper Skytte Andersen, Rasmus Hansen Kirkegaard, Søren Mikael Karst.</p>
+  <p>Developed by Mads Albertsen, Kasper Skytte Andersen, Rasmus Hansen Kirkegaard, Søren Michael Karst.</p>
 </div>
 
 <div class="pkgdown">
@@ -157,6 +169,8 @@
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

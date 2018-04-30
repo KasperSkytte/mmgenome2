@@ -28,8 +28,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">mmgenome2</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="index.html">mmgenome2</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.2</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
@@ -70,53 +74,65 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>First, install <a href="https://mirrors.dotsrc.org/cran/">R (3.4.3 or later)</a> and <a href="https://www.rstudio.com/products/rstudio/download/#download">RStudio</a>. Windows users should also install <a href="https://mirrors.dotsrc.org/cran/bin/windows/Rtools/">RTools</a>. Then open RStudio as administrator (!) and run the following commands (just copy/paste) to install <code>mmgenome2</code> from the console:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#check for bioconductor installer</span>
-<span class="cf">if</span>(<span class="op">!</span><span class="kw">require</span>(BiocInstaller)) 
-  <span class="kw">source</span>(<span class="st">"https://bioconductor.org/biocLite.R"</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#check for remotes</span>
+<span class="cf">if</span>(<span class="op">!</span><span class="kw">require</span>(remotes))
+  <span class="kw">install.packages</span>(<span class="st">"remotes"</span>)
   
-<span class="co">#check for devtools</span>
-<span class="cf">if</span>(<span class="op">!</span><span class="kw">require</span>(devtools))
-  <span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
-  
-<span class="co">#install mmgenome2</span>
-BiocInstaller<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/BiocInstaller/topics/biocLite">biocLite</a></span>(<span class="st">"kasperskytte/mmgenome2"</span>)</code></pre></div>
+<span class="co">#install mmgenome2 using remotes</span>
+remotes<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"kasperskytte/mmgenome2"</span>)</code></pre></div>
+<div id="installation-on-mac" class="section level3">
+<h3 class="hasAnchor">
+<a href="#installation-on-mac" class="anchor"></a>Installation on MAC</h3>
+<p>To install <code>mmgenome2</code> on MAC please see <a href="articles/MACinstall.html">this</a> before running the above commands.</p>
+</div>
 </div>
 <div id="get-started" class="section level2">
 <h2 class="hasAnchor">
 <a href="#get-started" class="anchor"></a>Get started</h2>
-<p>For a brief guide about the basics of mmgenome2 go to the <a href="https://kasperskytte.github.io/mmgenome2/articles/ampvis2.html">Get Started</a> page.</p>
+<p>For a brief guide about the basics of mmgenome2 go to the <a href="articles/mmgenome2.html">Get Started</a> page.</p>
 </div>
 </div>
 
   </div>
 
   <div class="col-md-3" id="sidebar">
-    <h2>Links</h2>
+    <div class="links">
+<h2>Links</h2>
 <ul class="list-unstyled">
 <li>Report a bug at <br><a href="https://github.com/kasperskytte/mmgenome2/issues">https://​github.com/​kasperskytte/​mmgenome2/​issues</a>
 </li>
 <li>Latest stable release at <br><a href="https://github.com/kasperskytte/mmgenome2/releases/latest/">https://​github.com/​kasperskytte/​mmgenome2/​releases/​latest/​</a>
 </li>
 </ul>
+</div>
+<div class="license">
 <h2>License</h2>
-<p><a href="https://www.r-project.org/Licenses/AGPL-3">AGPL-3</a></p>
+<ul class="list-unstyled">
+<li><a href="https://www.r-project.org/Licenses/AGPL-3">AGPL-3</a></li>
+</ul>
+</div>
+<div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>Mads Albertsen <br><small class="roles"> Author, maintainer </small>  </li>
 <li>Kasper Skytte Andersen <br><small class="roles"> Author </small>  </li>
 <li>Rasmus Hansen Kirkegaard <br><small class="roles"> Author </small>  </li>
-<li>Søren Mikael Karst <br><small class="roles"> Author </small>  </li>
+<li>Søren Michael Karst <br><small class="roles"> Author </small>  </li>
 </ul>
+</div>
+
+  <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://travis-ci.org/KasperSkytte/mmgenome2"><img src="https://travis-ci.org/KasperSkytte/mmgenome2.svg?branch=master" alt="Travis Build Status"></a></li>
 </ul>
 </div>
 </div>
+</div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Mads Albertsen, Kasper Skytte Andersen, Rasmus Hansen Kirkegaard, Søren Mikael Karst.</p>
+  <p>Developed by Mads Albertsen, Kasper Skytte Andersen, Rasmus Hansen Kirkegaard, Søren Michael Karst.</p>
 </div>
 
 <div class="pkgdown">
@@ -125,6 +141,8 @@ BiocInstaller<span class="op">::</span><span class="kw"><a href="http://www.rdoc
 
       </footer>
 </div>
+
+  
 
   </body>
 </html>

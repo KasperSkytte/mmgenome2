@@ -11,7 +11,7 @@ mmload(assembly, coverage, essential_genes = NULL, taxonomy = NULL,
 \arguments{
 \item{assembly}{(\emph{required}) A character string with the path to the assembly FASTA file, or the assembly as already loaded with \code{\link{readDNAStringSet}}.}
 
-\item{coverage}{(\emph{required}) A path to a folder to scan for coverage files, or otherwise a \code{vector}, \code{data.frame}, or a \code{list} hereof containing coverage of each scaffold. The prefix \code{"cov_"} will be appended to all coverage column names in the output so that \code{\link{mmstats}} knows which columns are coverage columns.
+\item{coverage}{(\emph{required}) A path to a folder to scan for coverage files, or otherwise a named \code{vector}, \code{data.frame}, or a \code{list} hereof containing coverage of each scaffold. The prefix \code{"cov_"} will be appended to all coverage column names in the output so that \code{\link{mmstats}} and \code{\link{mmplot_cov_profiles}} know which columns are coverage columns.
 \describe{
   \item{\code{vector}}{If provided as a vector, the elements of the vector must be named by the scaffold names exactly matching those of the assembly.}
   \item{\code{data.frame}}{If provided as a dataframe, the first column must contain the scaffold names exactly matching those of the assembly, and any additional column(s) contain coverage of each scaffold.}
@@ -27,11 +27,11 @@ mmload(assembly, coverage, essential_genes = NULL, taxonomy = NULL,
 
 \item{kmer_pca}{(\emph{Logical}) Perform Principal Components Analysis of tetranucleotide frequencies of each scaffold and merge the scores of the 3 most significant axes. (\emph{Default: } \code{FALSE})}
 
-\item{kmer_BH_tSNE}{(\emph{Logical}) Calculate Barnes-Hut t-Distributed Stochastic Neighbor Embedding (B-H t-SNE) representations of tetranucleotide frequencies using \code{\link[Rtsne.multicore]{Rtsne.multicore}} and merge the result. Additional arguments may be required for success, refer to the documentation of \code{\link[Rtsne.multicore]{Rtsne.multicore}}. (\emph{Default: } \code{FALSE})}
+\item{kmer_BH_tSNE}{(\emph{Logical}) Calculate Barnes-Hut t-Distributed Stochastic Neighbor Embedding (B-H t-SNE) representations of tetranucleotide frequencies using \code{\link[Rtsne]{Rtsne}} and merge the result. Additional arguments may be required for success, refer to the documentation of \code{\link[Rtsne]{Rtsne}}. This is done in parallel, thus setting the \code{num_threads} to the number of available cores may greatly increase the calculation time of large data. (\emph{Default: } \code{FALSE})}
 
 \item{verbose}{(\emph{Logical}) Whether to print status messages during the loading process. (\emph{Default: } \code{TRUE})}
 
-\item{...}{Additional arguments are passed on to \code{\link[Rtsne.multicore]{Rtsne.multicore}}.}
+\item{...}{Additional arguments are passed on to \code{\link[Rtsne]{Rtsne}}.}
 }
 \value{
 A dataframe (tibble) compatible with other mmgenome2 functions.

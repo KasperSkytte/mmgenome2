@@ -1,18 +1,8 @@
 pandoc: 1.19.2.1
-pkgdown: 0.1.0.9000
-pkgdown_sha: 17f683717d0a1547f13a08a259b34c58927452d6
+pkgdown: 1.0.0
+pkgdown_sha: d43ca38c74827d1d6babc3a80d48cd3a8e8fad8c
 articles:
-  16S.csv: data/16S.csv
-  C13.11.14_cov.csv: data/C13.11.14_cov.csv
-  C13.11.25_cov.csv: data/C13.11.25_cov.csv
-  C13.12.03_cov.csv: data/C13.12.03_cov.csv
-  C14.01.09_cov.csv: data/C14.01.09_cov.csv
-  assembly.fa: data/assembly.fa
-  essential.csv: data/essential.csv
-  mmgenome2.zip: data/mmgenome2.zip
-  paired_ends.csv: data/paired_ends.csv
-  phylopythias.csv: data/phylopythias.csv
-  tax.csv: data/tax.csv
+  MACinstall: MACinstall.html
   mmgenome2: mmgenome2.html
 urls:
   reference: https://github.com/kasperskytte/mmgenome2/reference

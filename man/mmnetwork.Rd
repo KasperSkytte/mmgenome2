@@ -4,7 +4,7 @@
 \alias{mmnetwork}
 \title{Network plot of mate-pair or paired-end connected scaffold reads}
 \usage{
-mmnetwork(mm, network, min_connections = 2, color_by = NULL,
+mmnetwork(mm, network, min_connections = 1, color_by = NULL,
   color_scale_log10 = FALSE, locator = FALSE, selection = NULL,
   highlight_labels = NULL, highlight_color = "darkred", links_scale = 1,
   scaffold_labels = FALSE, print_nolinks = FALSE, seed = 0)
@@ -52,15 +52,15 @@ library(mmgenome2)
 data(mmgenome2)
 data(paired_ends)
 mmgenome2
-selection <- data.frame(cov_C14.01.09 = c(24.852, 32.545, 53.062, 38.52),
-                        cov_C13.12.03 = c(7.676, 5.165, 6.386, 10.933))
+selection <- data.frame(cov_C13.11.25 = c(7.2, 16.2, 25.2, 23.3, 10.1),
+                        cov_C14.01.09 = c(47, 77, 52.8, 29.5, 22.1))
 mmgenome2_extraction <- mmextract(mmgenome2, selection = selection)
 mmgenome2_extraction
-mmnetwork(mmgenome2_extraction, 
-          network = paired_ends, 
-          min_connections = 10,
-          color_by = "taxonomy",
-          locator = FALSE)
+p <- mmnetwork(mmgenome2_extraction, 
+               network = paired_ends, 
+               min_connections = 1,
+               color_by = "taxonomy")
+p
 
 }
 \author{

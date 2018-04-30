@@ -33,8 +33,8 @@ library(mmgenome2)
 data(mmgenome2)
 data(paired_ends)
 mmgenome2
-selection <- data.frame(cov_C14.01.09 = c(24.852, 32.545, 53.062, 38.52),
-                        cov_C13.12.03 = c(7.676, 5.165, 6.386, 10.933))
+selection <- data.frame(cov_C13.11.25 = c(7.2, 16.2, 25.2, 23.3, 10.1),
+                        cov_C14.01.09 = c(47, 77, 52.8, 29.5, 22.1))
 mmgenome2_extraction <- mmextract(mmgenome2, 
                                   min_length = 3000,
                                   selection = selection,

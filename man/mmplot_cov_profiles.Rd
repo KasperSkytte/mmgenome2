@@ -6,7 +6,7 @@
 \usage{
 mmplot_cov_profiles(mm, normalise = TRUE, alpha = 0.6, color_by = NULL,
   color_vector = c("blue", "green", "red"), color_scale_log10 = FALSE,
-  y_scale_log10 = FALSE, plot_lines = TRUE)
+  y_scale_log10 = FALSE, plot_lines = TRUE, print_plot = TRUE)
 }
 \arguments{
 \item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}
@@ -24,6 +24,8 @@ mmplot_cov_profiles(mm, normalise = TRUE, alpha = 0.6, color_by = NULL,
 \item{y_scale_log10}{(\emph{Logical}) Log10-scale the y axis. (\emph{Default: } \code{FALSE})}
 
 \item{plot_lines}{(\emph{Logical}) Connect scaffolds with lines. (\emph{Default: } \code{TRUE})}
+
+\item{print_plot}{(\emph{Logical}) Whether to call print on the generated ggplot object (\code{TRUE}) instead of just returning the ggplot object itself (\code{FALSE}). (\emph{Default: } \code{TRUE})}
 }
 \value{
 A ggplot2 object.
@@ -35,12 +37,13 @@ Plots all coverage profiles in the data for comparison. This is useful for ident
 library(mmgenome2)
 data(mmgenome2)
 mmgenome2
-selection <- data.frame(cov_C13.12.03 = c(7.676, 5.165, 6.386, 10.933), 
-                        cov_C14.01.09 = c(24.852, 32.545, 53.062, 38.52))
+selection <- data.frame(cov_C13.11.25 = c(7.2, 16.2, 25.2, 23.3, 10.1),
+                        cov_C14.01.09 = c(47, 77, 52.8, 29.5, 22.1))
 mmgenome2_extraction <- mmextract(mmgenome2, 
                                   min_length = 3000,
                                   selection = selection,
                                   inverse = FALSE)
 mmplot_cov_profiles(mmgenome2_extraction,
-                    color_by = "taxonomy")
+                    color_by = "taxonomy",
+                    normalise = FALSE)
 }
