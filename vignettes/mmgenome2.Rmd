@@ -94,7 +94,7 @@ mmplot_pairs(mm_subset1,
                            "cov_C13.12.03",
                            "cov_C14.01.09",
                            "gc"),
-             color_by = "pps_phylum",
+             color_by = "phylum",
              x_scale = "log10",
              y_scale = "log10",
              alpha = 0.4,
@@ -112,7 +112,7 @@ mmplot(mm_subset1,
        y = "cov_C13.11.14",
        x_scale = "log10",
        y_scale = "log10",
-       color_by = "pps_phylum", 
+       color_by = "phylum", 
        selection = selection)
 ```
 
@@ -151,7 +151,7 @@ selection <- data.frame(x = c(0.521, -0.43, 3.028, 7.376, 10.709, 13.462, 14.622
                         y = c(3.443, 10.425, 14.678, 13.155, 9.664, 6.934, 6.649, 4.586, 0.936, 0.945))
 p <- mmnetwork(mm_subset2_exp,
                network = paired_ends,
-               color_by = "pps_phylum",
+               color_by = "phylum",
                #locator = TRUE, #uncomment to mark a selection to highlight and extract
                min_connections = 1,
                selection = selection)
@@ -179,7 +179,7 @@ mmplot(mm_subset3,
        x_limits = c(1, 200),
        y_limits = c(1, 200),
        #locator = TRUE,
-       color_by = "pps_phylum",
+       color_by = "phylum",
        fixed_size = 5,
        selection = selection)
 ```
