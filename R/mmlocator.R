@@ -11,6 +11,7 @@
 #' @import ggplot2
 #' @importFrom shiny actionButton div fillPage icon observeEvent p plotOutput reactiveValues renderPlot runApp shinyApp stopApp
 #' @importFrom clipr write_clip
+#' @importFrom stringr str_replace
 #' 
 #' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
 #' @author Rasmus Hansen Kirkegaard \email{rhk@@bio.aau.dk}
@@ -120,7 +121,7 @@ mmlocator <- function(plot, x_scale = NULL, y_scale = NULL) {
            quiet = TRUE,
            launch.browser = rstudioapi::viewer))
   df <- get(".current_selection", df, envir = globalenv())
-  colnames(df) <- str_replace(c(plot[["mapping"]][["x"]], plot[["mapping"]][["y"]]), "~", "")
+  colnames(df) <- stringr::str_replace(c(plot[["mapping"]][["x"]], plot[["mapping"]][["y"]]), "~", "")
   assign(".current_selection", df, envir = globalenv())
   if(nrow(df) > 0) {
     selection <- paste0("data.frame(", 
