@@ -1,4 +1,4 @@
-url: https://github.com/kasperskytte/mmgenome2
+url: https://kasperskytte.github.io/mmgenome2/
 
 home:
   links:
@@ -8,6 +8,9 @@ home:
 template:
   params:
     bootswatch: yeti
+    docsearch:
+      api_key: 71d76a1c4adc57e7823b1c5a1e39065e
+      index_name: mmgenome2
 
 reference:
   - title: Loading and exporting data

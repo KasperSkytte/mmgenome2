@@ -5,6 +5,6 @@ articles:
   MACinstall: MACinstall.html
   mmgenome2: mmgenome2.html
 urls:
-  reference: https://github.com/kasperskytte/mmgenome2/reference
-  article: https://github.com/kasperskytte/mmgenome2/articles
+  reference: https://kasperskytte.github.io/mmgenome2//reference
+  article: https://kasperskytte.github.io/mmgenome2//articles
 
