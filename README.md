@@ -15,8 +15,6 @@ if(!require(remotes))
 remotes::install_github("kasperskytte/mmgenome2")
 ```
 
-Note: currently the newest R-version (3.5.0) causes the installation to fail for windows users due to a package `data.table`. To fix it, either install `data.table` manually by running `install.packages("data.table", repos="https://Rdatatable.github.io/data.table")` before installing `mmgenome2`, or use R version 3.4.4 instead of 3.5.0.
-
 ### Installation on MAC
 To install `mmgenome2` on MAC please see [this](articles/MACinstall.html) before running the above commands.
 
