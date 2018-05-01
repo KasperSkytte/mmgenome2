@@ -41,6 +41,6 @@ Imports:
 biocViews:
     Biostrings
 remotes:
-    github::jkrijthe/Rtsne@openmp
+    github::jkrijthe/Rtsne@openmp,
     github::Rdatatable/data.table
 RoxygenNote: 6.0.1
