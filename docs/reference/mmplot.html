@@ -186,7 +186,7 @@
     </tr>
     <tr>
       <th>x_limits</th>
-      <td><p>Axis limits of the x axis. (<em>Default: </em> <code>NULL</code>)</p></td>
+      <td><p>Axis limits of the x axis. Must be a vector of length 2 where the first number is the lower limit and the second number is the upper limit. Use <code>NA</code> to automatically detect the lowest and highest values, respectively. (<em>Default: </em> <code>NULL</code>)</p></td>
     </tr>
     <tr>
       <th>y_scale</th>
@@ -194,7 +194,7 @@
     </tr>
     <tr>
       <th>y_limits</th>
-      <td><p>Axis limits of the y axis. (<em>Default: </em> <code>NULL</code>)</p></td>
+      <td><p>Axis limits of the y axis. Must be a vector of length 2 where the first number is the lower limit and the second number is the upper limit. Use <code>NA</code> to automatically detect the lowest and highest values, respectively. (<em>Default: </em> <code>NULL</code>)</p></td>
     </tr>
     <tr>
       <th>alpha</th>
@@ -234,7 +234,7 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>mmgenome2</span>)
 <span class='fu'>data</span>(<span class='no'>mmgenome2</span>)
-<span class='no'>mmgenome2</span></div><div class='output co'>#&gt; # A tibble: 97,285 x 10
+<span class='no'>mmgenome2</span></div><div class='output co'>#&gt; # A tibble: 97,285 x 13
 #&gt;    scaffold length    gc cov_C13.11.14 cov_C13.11.25 cov_C13.12.03
 #&gt;    &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
 #&gt;  1 1          8264  57.8       1.44             53.6         0    
@@ -247,8 +247,9 @@
 #&gt;  8 8         15790  61.7       2.78             21.2         1.62 
 #&gt;  9 9          1403  70.4      85.1             192.          0    
 #&gt; 10 10         2018  70.2      50.3             101.          0    
-#&gt; # ... with 97,275 more rows, and 4 more variables: cov_C14.01.09 &lt;dbl&gt;,
-#&gt; #   geneID &lt;chr&gt;, taxonomy &lt;fct&gt;, rRNA16S &lt;fct&gt;</div><div class='input'><span class='fu'>mmplot</span>(<span class='no'>mmgenome2</span>,
+#&gt; # ... with 97,275 more rows, and 7 more variables: cov_C14.01.09 &lt;dbl&gt;,
+#&gt; #   PC1 &lt;dbl&gt;, PC2 &lt;dbl&gt;, PC3 &lt;dbl&gt;, geneID &lt;chr&gt;, taxonomy &lt;fct&gt;,
+#&gt; #   rRNA16S &lt;fct&gt;</div><div class='input'><span class='fu'>mmplot</span>(<span class='no'>mmgenome2</span>,
        <span class='kw'>min_length</span> <span class='kw'>=</span> <span class='fl'>3000</span>,
        <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"cov_C13.11.25"</span>,
        <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"cov_C14.01.09"</span>,

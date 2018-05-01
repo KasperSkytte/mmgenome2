@@ -42,11 +42,11 @@ mmplot(mm, x, y, min_length = 0, color_by = NULL, locator = FALSE,
 
 \item{x_scale}{Log10-scale (\code{"log10"}) or square-root scale \code{"sqrt"} the x axis. (\emph{Default: } \code{NULL})}
 
-\item{x_limits}{Axis limits of the x axis. (\emph{Default: } \code{NULL})}
+\item{x_limits}{Axis limits of the x axis. Must be a vector of length 2 where the first number is the lower limit and the second number is the upper limit. Use \code{NA} to automatically detect the lowest and highest values, respectively. (\emph{Default: } \code{NULL})}
 
 \item{y_scale}{Log10-scale (\code{"log10"}) or square-root scale \code{"sqrt"} the y axis. (\emph{Default: } \code{NULL})}
 
-\item{y_limits}{Axis limits of the y axis. (\emph{Default: } \code{NULL})}
+\item{y_limits}{Axis limits of the y axis. Must be a vector of length 2 where the first number is the lower limit and the second number is the upper limit. Use \code{NA} to automatically detect the lowest and highest values, respectively. (\emph{Default: } \code{NULL})}
 
 \item{alpha}{The transparancy of the scaffold points, where 0 is invisible and 1 is opaque. (\emph{Default: } \code{0.1})}
 
