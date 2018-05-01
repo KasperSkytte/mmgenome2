@@ -81,13 +81,14 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>First, install <a href="https://mirrors.dotsrc.org/cran/">R (3.4.3 or later)</a> and <a href="https://www.rstudio.com/products/rstudio/download/#download">RStudio</a>. Windows users should also install <a href="https://mirrors.dotsrc.org/cran/bin/windows/Rtools/">RTools</a>. Then open RStudio as administrator (!) and run the following commands (just copy/paste) to install <code>mmgenome2</code> from the console:</p>
+<p>First, install <a href="https://mirrors.dotsrc.org/cran/">R (3.4.3 or later)</a> and <a href="https://www.rstudio.com/products/rstudio/download/#download">RStudio</a>. Windows users should also install <a href="https://mirrors.dotsrc.org/cran/bin/windows/Rtools/">RTools</a>, make sure the PATH checkbox is checked during installation. Then open RStudio as administrator (!) and run the following commands (just copy/paste) to install <code>mmgenome2</code> from the console:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#check for remotes</span>
 <span class="cf">if</span>(<span class="op">!</span><span class="kw">require</span>(remotes))
   <span class="kw">install.packages</span>(<span class="st">"remotes"</span>)
   
 <span class="co">#install mmgenome2 using remotes</span>
 remotes<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"kasperskytte/mmgenome2"</span>)</code></pre></div>
+<p>Note: currently the newest R-version (3.5.0) causes the installation to fail for windows users due to a package <code>data.table</code>. To fix it, either install <code>data.table</code> manually by running <code>install.packages("data.table", repos="https://Rdatatable.github.io/data.table")</code> before installing <code>mmgenome2</code>, or use R version 3.4.4 instead of 3.5.0.</p>
 <div id="installation-on-mac" class="section level3">
 <h3 class="hasAnchor">
 <a href="#installation-on-mac" class="anchor"></a>Installation on MAC</h3>
