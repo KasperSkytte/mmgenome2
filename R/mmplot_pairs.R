@@ -47,7 +47,7 @@ mmplot_pairs <- function(mm,
       stop("mmplot_pairs cannot highlight a \"selection\", use mmplot instead", call. = FALSE)
   }
   if(is.null(variables)) {
-    variables <- names(dplyr::select(mm, dplyr::starts_with("cov_")))
+    variables <- names(dplyr::select(mm, dplyr::starts_with("cov_"), "gc"))
   }
   if(length(variables) == 2)
     stop("Plotting only two variables is better done with mmplot", call. = FALSE)

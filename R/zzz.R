@@ -1,11 +1,11 @@
 .onAttach <- function(lib, pkg)  {
+  options(scipen = 6)
   #Check for new github release version. (Not master branch version, release version!)
   if (!interactive()) {
     return()
   } else {
     local_version <- utils::packageVersion("mmgenome2")
     packageStartupMessage("This is ", pkg, " version ", local_version, ". Great documentation is available at the mmgenome2 website: https://kasperskytte.github.io/mmgenome2/", appendLF = TRUE)
-    options(scipen = 6)
     if(requireNamespace("remotes", quietly = TRUE)) {
       tryCatch({
         github_ref <- remotes:::github_resolve_ref(
