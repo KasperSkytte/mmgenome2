@@ -10,8 +10,7 @@ mmplot(mm, x, y, min_length = 0, color_by = NULL, locator = FALSE,
   highlight_scaffolds = NULL, highlight_color = "darkred", x_scale = NULL,
   x_limits = NULL, y_scale = NULL, y_limits = NULL, alpha = 0.1,
   fixed_size = NULL, size_scale = 1, factor_shape = "outline",
-  color_vector = c("blue", "green", "red"), color_scale_log10 = FALSE,
-  print_plot = TRUE)
+  color_vector = c("blue", "green", "red"), color_scale_log10 = FALSE)
 }
 \arguments{
 \item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}
@@ -59,11 +58,9 @@ mmplot(mm, x, y, min_length = 0, color_by = NULL, locator = FALSE,
 \item{color_vector}{The colors from which to generate a color gradient when \code{color_by} is set and the variable is continuous. Any number of colors can be used. (\emph{Default: } \code{c("blue", "green", "red")})}
 
 \item{color_scale_log10}{(\emph{Logical}) Log10-scale the color gradient when \code{color_by} is set and the variable is continuous. (\emph{Default: } \code{FALSE})}
-
-\item{print_plot}{(\emph{Logical}) Whether to call print on the generated ggplot object (\code{TRUE}) instead of just returning the ggplot object itself (\code{FALSE}). (\emph{Default: } \code{TRUE})}
 }
 \value{
-A ggplot2 object.
+A ggplot object. Note that mmgenome2 hides all warnings produced by ggplot objects.
 }
 \description{
 Plots any information about the scaffolds contained in the given mm object as a scatterplot, for example different coverage variables, scaffold length, GC content, or anything else that were loaded with \code{\link{mmload}}. Scaffolds can then be highlighted and extracted using the locator and selection features.

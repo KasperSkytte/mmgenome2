@@ -6,7 +6,7 @@
 \usage{
 mmplot_cov_profiles(mm, normalise = TRUE, alpha = 0.6, color_by = NULL,
   color_vector = c("blue", "green", "red"), color_scale_log10 = FALSE,
-  y_scale_log10 = FALSE, plot_lines = TRUE, print_plot = TRUE)
+  y_scale_log10 = FALSE, plot_lines = TRUE)
 }
 \arguments{
 \item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}
@@ -24,11 +24,9 @@ mmplot_cov_profiles(mm, normalise = TRUE, alpha = 0.6, color_by = NULL,
 \item{y_scale_log10}{(\emph{Logical}) Log10-scale the y axis. (\emph{Default: } \code{FALSE})}
 
 \item{plot_lines}{(\emph{Logical}) Connect scaffolds with lines. (\emph{Default: } \code{TRUE})}
-
-\item{print_plot}{(\emph{Logical}) Whether to call print on the generated ggplot object (\code{TRUE}) instead of just returning the ggplot object itself (\code{FALSE}). (\emph{Default: } \code{TRUE})}
 }
 \value{
-A ggplot2 object.
+A ggplot object. Note that mmgenome2 hides all warnings produced by ggplot objects.
 }
 \description{
 Plots all coverage profiles in the data for comparison. This is useful for identifying scaffold patterns across multiple coverage profiles and spot potential contaminants.
