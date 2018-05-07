@@ -6,7 +6,7 @@
 #' @param variables A vector of 3 or more variable names in \code{mm} to plot on each axis. If NULL, the default, then all coverage variables will be plotted as well as GC content. (\emph{Default: } \code{NULL})
 #' @param textsize The text size of the axis titles. (\emph{Default: } \code{5})
 #' @param axis_ticks Hide or show axis ticks on both axes. (\emph{Default: } \code{TRUE})
-#' @param ... Arguments passed on to \code{\link{mmplot}}, eg. \code{color_by}, \code{min_length}, axis scales and more, see help("mmplot").
+#' @param ... Arguments passed on to \code{\link{mmplot}}, eg. \code{color_by}, \code{min_length}, axis scales and more, see \code{help("mmplot")}.
 #'
 #' @export
 #' 

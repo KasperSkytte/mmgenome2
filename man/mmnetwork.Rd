@@ -37,7 +37,7 @@ mmnetwork(mm, network, min_connections = 1, color_by = NULL,
 \item{seed}{Network plots are based on Random Number Generation, and this is used to set a specific random seed (with \code{set.seed}) allowing for reproducible network plots. Set to NULL to generate a unique network plot with each run of \code{mmnetwork}. (\emph{Default: } \code{0})}
 }
 \value{
-A ggplot2 object.
+A ggplot object. Note that mmgenome2 hides all warnings produced by ggplot objects.
 }
 \description{
 Plots all connected scaffolds in a network plot. Scaffolds can then be highlighted and extracted using the locator and selection features.

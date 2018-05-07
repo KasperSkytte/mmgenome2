@@ -15,7 +15,7 @@ mmplot_pairs(mm, variables = NULL, textsize = 5, axis_ticks = TRUE, ...)
 
 \item{axis_ticks}{Hide or show axis ticks on both axes. (\emph{Default: } \code{TRUE})}
 
-\item{...}{Arguments passed on to \code{\link{mmplot}}, eg. \code{color_by}, \code{min_length}, axis scales and more, see help("mmplot").}
+\item{...}{Arguments passed on to \code{\link{mmplot}}, eg. \code{color_by}, \code{min_length}, axis scales and more, see \code{help("mmplot")}.}
 }
 \value{
 A ggplot object. Note that mmgenome2 hides all warnings produced by ggplot objects.
