@@ -14,7 +14,7 @@
         github_version <- package_version(gsub("v", "", github_ref))
         if(local_version < github_version) {
           packageStartupMessage(
-            "\nNew release of ", pkg, " (", github_version, ") is available! Install the latest release with: \nremotes::install_github(\"kasperskytte/mmgenome2@*release\")\n\nRead the release notes at: https://github.com/kasperskytte/mmgenome2/releases/tag/", github_version)
+            "\nNew release of ", pkg, " (", github_version, ") is available! Install the latest release with (copy/paste): \nremotes::install_github(\"kasperskytte/mmgenome2@*release\")\n\nRead the release notes at: https://github.com/kasperskytte/mmgenome2/releases/tag/", github_version)
         }
       }, error=function(e) {
         packageStartupMessage("\nCan't reach GitHub to check for new releases just now. Trying again next time.")
