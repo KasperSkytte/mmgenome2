@@ -3,13 +3,14 @@
 #' @description Plots multiple variables from the given mm object in a grid plot with all pairs of variables using \code{\link{mmplot}}. 
 #'
 #' @param mm (\emph{required}) A dataframe loaded with \code{\link{mmload}}.
-#' @param variables A vector of 3 or more variable names in \code{mm} to plot on each axis. If NULL, the default, then all coverage variables will be plotted. (\emph{Default: } \code{NULL})
-#' @param textsize The text size of the axis titles.
+#' @param variables A vector of 3 or more variable names in \code{mm} to plot on each axis. If NULL, the default, then all coverage variables will be plotted as well as GC content. (\emph{Default: } \code{NULL})
+#' @param textsize The text size of the axis titles. (\emph{Default: } \code{5})
+#' @param axis_ticks Hide or show axis ticks on both axes. (\emph{Default: } \code{TRUE})
 #' @param ... Arguments passed on to \code{\link{mmplot}}, eg. \code{color_by}, \code{min_length}, axis scales and more, see help("mmplot").
 #'
 #' @export
 #' 
-#' @return A ggplot2 object.
+#' @return A ggplot object. Note that mmgenome2 hides all warnings produced by ggplot objects.
 #' 
 #' @importFrom magrittr %>%
 #' @importFrom cowplot plot_grid
@@ -77,7 +78,6 @@ mmplot_pairs <- function(mm,
         p <- mmplot(mm, 
                     x = variables[j], 
                     y = variables[i], 
-                    print_plot = FALSE,
                     ...) + 
           theme(plot.margin = margin(3,3,0,0, unit = "pt"), 
                 legend.position = "none",

@@ -9,14 +9,16 @@ mmplot_pairs(mm, variables = NULL, textsize = 5, axis_ticks = TRUE, ...)
 \arguments{
 \item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}
 
-\item{variables}{A vector of 3 or more variable names in \code{mm} to plot on each axis. If NULL, the default, then all coverage variables will be plotted. (\emph{Default: } \code{NULL})}
+\item{variables}{A vector of 3 or more variable names in \code{mm} to plot on each axis. If NULL, the default, then all coverage variables will be plotted as well as GC content. (\emph{Default: } \code{NULL})}
 
-\item{textsize}{The text size of the axis titles.}
+\item{textsize}{The text size of the axis titles. (\emph{Default: } \code{5})}
+
+\item{axis_ticks}{Hide or show axis ticks on both axes. (\emph{Default: } \code{TRUE})}
 
 \item{...}{Arguments passed on to \code{\link{mmplot}}, eg. \code{color_by}, \code{min_length}, axis scales and more, see help("mmplot").}
 }
 \value{
-A ggplot2 object.
+A ggplot object. Note that mmgenome2 hides all warnings produced by ggplot objects.
 }
 \description{
 Plots multiple variables from the given mm object in a grid plot with all pairs of variables using \code{\link{mmplot}}.
