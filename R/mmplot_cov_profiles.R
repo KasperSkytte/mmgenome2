@@ -10,9 +10,8 @@
 #' @param color_scale_log10 (\emph{Logical}) Log10-scale the color gradient when \code{color_by} is set and the variable is continuous. (\emph{Default: } \code{FALSE})
 #' @param y_scale_log10 (\emph{Logical}) Log10-scale the y axis. (\emph{Default: } \code{FALSE})
 #' @param plot_lines (\emph{Logical}) Connect scaffolds with lines. (\emph{Default: } \code{TRUE})
-#' @param print_plot (\emph{Logical}) Whether to call print on the generated ggplot object (\code{TRUE}) instead of just returning the ggplot object itself (\code{FALSE}). (\emph{Default: } \code{TRUE})
 #'
-#' @return A ggplot2 object.
+#' @return A ggplot object. Note that mmgenome2 hides all warnings produced by ggplot objects.
 #' 
 #' @export
 #' @import ggplot2
@@ -40,8 +39,7 @@ mmplot_cov_profiles <- function(mm,
                                 color_vector = c("blue", "green", "red"),
                                 color_scale_log10 = FALSE,
                                 y_scale_log10 = FALSE,
-                                plot_lines = TRUE,
-                                print_plot = TRUE) {
+                                plot_lines = TRUE) {
   #can currently only color by 1 variable
   if(length(color_by) > 1)
     stop("color_by must be of length 1", call. = FALSE)
@@ -101,8 +99,5 @@ mmplot_cov_profiles <- function(mm,
           legend.key = element_blank()
     ) +
     xlab("")
-  if(isTRUE(print_plot))
-    return(suppressWarnings(print(p)))
-  if(!isTRUE(print_plot))
-    return(p)
+  return(p)
 }
