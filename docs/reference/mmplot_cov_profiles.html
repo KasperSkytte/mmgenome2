@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mmgenome2</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.5</span>
       </span>
     </div>
 
@@ -118,7 +118,7 @@
 
     <pre class="usage"><span class='fu'>mmplot_cov_profiles</span>(<span class='no'>mm</span>, <span class='kw'>normalise</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.6</span>, <span class='kw'>color_by</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>color_vector</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"blue"</span>, <span class='st'>"green"</span>, <span class='st'>"red"</span>), <span class='kw'>color_scale_log10</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>y_scale_log10</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>plot_lines</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>print_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>y_scale_log10</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>plot_lines</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -155,15 +155,11 @@
       <th>plot_lines</th>
       <td><p>(<em>Logical</em>) Connect scaffolds with lines. (<em>Default: </em> <code>TRUE</code>)</p></td>
     </tr>
-    <tr>
-      <th>print_plot</th>
-      <td><p>(<em>Logical</em>) Whether to call print on the generated ggplot object (<code>TRUE</code>) instead of just returning the ggplot object itself (<code>FALSE</code>). (<em>Default: </em> <code>TRUE</code>)</p></td>
-    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A ggplot2 object.</p>
+    <p>A ggplot object. Note that mmgenome2 hides all warnings produced by ggplot objects.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

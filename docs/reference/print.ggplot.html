@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Print basic statistics of metagenome data — mmstats • mmgenome2</title>
+<title>Custom ggplot object print to suppress warnings — print.ggplot • mmgenome2</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -33,9 +33,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Print basic statistics of metagenome data — mmstats" />
+<meta property="og:title" content="Custom ggplot object print to suppress warnings — print.ggplot" />
 
-<meta property="og:description" content="Calculates some basic statistics like the N50 length, minimum-, mean-, and maximum scaffold lengths, mean GC content, information about essential genes, and more..." />
+<meta property="og:description" content="Simply wraps ggplot2:::print.ggplot() in suppressWarnings(). The main reason for this is to hide warnings produced by log10-transformation in mmplot." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -105,101 +105,36 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Print basic statistics of metagenome data</h1>
+    <h1>Custom ggplot object print to suppress warnings</h1>
     
-    <div class="hidden name"><code>mmstats.Rd</code></div>
+    <div class="hidden name"><code>print.ggplot.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Calculates some basic statistics like the N50 length, minimum-, mean-, and maximum scaffold lengths, mean GC content, information about essential genes, and more...</p>
+    <p>Simply wraps <code>ggplot2:::print.ggplot()</code> in <code>suppressWarnings()</code>. The main reason for this is to hide warnings produced by log10-transformation in <code>mmplot</code>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>mmstats</span>(<span class='no'>mm</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for ggplot</span>
+<span class='fu'>print</span>(<span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>mm</th>
-      <td><p>(<em>required</em>) A dataframe loaded with <code><a href='mmload.html'>mmload</a></code>.</p></td>
+      <th>...</th>
+      <td><p>All arguments are directly passed to <code>ggplot2:::print.ggplot()</code></p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A dataframe with the calculated stats.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>The returned stats are calculated as follows:</p><ul>
-<li><p>Scaffolds: The number of different scaffolds in the assembly.</p></li>
-<li><p>N50: The shortest sequence length at 50<!-- % of the assembly. --></p></li>
-<li><p>Length.total: The total size of the assembly.</p></li>
-<li><p>Length.max: The size of the largest scaffold in the assembly.</p></li>
-<li><p>Length.mean: The average scaffold size in the assembly.</p></li>
-<li><p>Length.min: The size of the smallest scaffold in the assembly.</p></li>
-<li><p>weighted_GC_mean: The average GC content in the assembly, weighted by scaffold sizes.</p></li>
-<li><p>cov_*: The average coverage of each coverage variable in mm, weighted by scaffold sizes. (Only columns starting with "cov_" will be shown)</p></li>
-<li><p>Ess.genes.total: The total number of essential genes, if any have been loaded.</p></li>
-<li><p>Ess.genes.unique: The number of unique essential genes, if any have been loaded.</p></li>
-</ul>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>mmgenome2</span>)
-<span class='fu'>data</span>(<span class='no'>mmgenome2</span>)
-<span class='no'>mmgenome2</span></div><div class='output co'>#&gt; # A tibble: 97,285 x 13
-#&gt;    scaffold length    gc cov_C13.11.14 cov_C13.11.25 cov_C13.12.03
-#&gt;    &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
-#&gt;  1 1          8264  57.8       1.44             53.6         0    
-#&gt;  2 2          1027  57.0       0.625            24.2         0    
-#&gt;  3 3          1665  55.9      13.5             434.          0.166
-#&gt;  4 4          9056  35.9       0.01             23.4         0    
-#&gt;  5 5          3343  64.0       3.20             16.4         0    
-#&gt;  6 6         98207  39.1       0.00966          24.5         3.29 
-#&gt;  7 7          6480  63.0       2.61             19.2         1.46 
-#&gt;  8 8         15790  61.7       2.78             21.2         1.62 
-#&gt;  9 9          1403  70.4      85.1             192.          0    
-#&gt; 10 10         2018  70.2      50.3             101.          0    
-#&gt; # ... with 97,275 more rows, and 7 more variables: cov_C14.01.09 &lt;dbl&gt;,
-#&gt; #   PC1 &lt;dbl&gt;, PC2 &lt;dbl&gt;, PC3 &lt;dbl&gt;, geneID &lt;chr&gt;, taxonomy &lt;fct&gt;,
-#&gt; #   rRNA16S &lt;fct&gt;</div><div class='input'><span class='fu'>mmstats</span>(<span class='no'>mmgenome2</span>)</div><div class='output co'>#&gt;                  General stats
-#&gt; Scaffolds                97285
-#&gt; N50                       5291
-#&gt; Length.total         331908376
-#&gt; Length.max             1446979
-#&gt; Length.mean            3411.71
-#&gt; Length.min                1000
-#&gt; weighted_GC_mean         52.22
-#&gt; cov_C13.11.14             2.62
-#&gt; cov_C13.11.25            16.06
-#&gt; cov_C13.12.03             2.91
-#&gt; cov_C14.01.09            11.58
-#&gt; Ess.genes.total           7138
-#&gt; Ess.genes.unique           109</div><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    
-Kasper Skytte Andersen <a href='mailto:ksa@bio.aau.dk'>ksa@bio.aau.dk</a>
-
-Soren M. Karst <a href='mailto:smk@bio.aau.dk'>smk@bio.aau.dk</a>
-
-Mads Albertsen <a href='mailto:MadsAlbertsen85@gmail.com'>MadsAlbertsen85@gmail.com</a>
+                </ul>
 
   </div>
 </div>

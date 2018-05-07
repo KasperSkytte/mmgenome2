@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mmgenome2</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.5</span>
       </span>
     </div>
 
@@ -122,8 +122,7 @@
   <span class='kw'>highlight_scaffolds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>highlight_color</span> <span class='kw'>=</span> <span class='st'>"darkred"</span>, <span class='kw'>x_scale</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>x_limits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y_scale</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y_limits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
   <span class='kw'>fixed_size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>size_scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>factor_shape</span> <span class='kw'>=</span> <span class='st'>"outline"</span>,
-  <span class='kw'>color_vector</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"blue"</span>, <span class='st'>"green"</span>, <span class='st'>"red"</span>), <span class='kw'>color_scale_log10</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>print_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>color_vector</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"blue"</span>, <span class='st'>"green"</span>, <span class='st'>"red"</span>), <span class='kw'>color_scale_log10</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -220,15 +219,11 @@
       <th>color_scale_log10</th>
       <td><p>(<em>Logical</em>) Log10-scale the color gradient when <code>color_by</code> is set and the variable is continuous. (<em>Default: </em> <code>FALSE</code>)</p></td>
     </tr>
-    <tr>
-      <th>print_plot</th>
-      <td><p>(<em>Logical</em>) Whether to call print on the generated ggplot object (<code>TRUE</code>) instead of just returning the ggplot object itself (<code>FALSE</code>). (<em>Default: </em> <code>TRUE</code>)</p></td>
-    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A ggplot2 object.</p>
+    <p>A ggplot object. Note that mmgenome2 hides all warnings produced by ggplot objects.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
