@@ -34,7 +34,7 @@ mmscanbins <- function(binfolder, namesOnly = TRUE) {
   if(length(binfolder) > 1)
     stop("binfolder must only contain 1 folder path", call. = FALSE)
   if(!dir.exists(binfolder))
-    stop("The folder \"", binfolder, "\" was not found", call. = FALSE)
+    stop("The folder \"", binfolder, "\" does not exist", call. = FALSE)
   #get paths to all files in the folder
   filepaths <- list.files(path = binfolder, 
                           full.names = TRUE,
