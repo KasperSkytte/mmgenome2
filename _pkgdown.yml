@@ -11,6 +11,7 @@ template:
     docsearch:
       api_key: 71d76a1c4adc57e7823b1c5a1e39065e
       index_name: mmgenome2
+    ganalytics: UA-93913019-3
 
 reference:
   - title: Loading and exporting data
