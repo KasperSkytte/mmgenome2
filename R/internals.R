@@ -236,8 +236,7 @@ mmlocator <- function(plot, x_scale = NULL, y_scale = NULL) {
 
 #This function is sourced from the DescTools CRAN package 
 #version 0.99.24 for pretty printing numbers
-StrAlign <- function (x, sep = "\\r")
-{
+StrAlign <- function (x, sep = "\\r") {
   id.na <- is.na(x)
   if (length(grep("\\", sep, fixed = TRUE)) == 0) {
     idx <- !grepl(x = x, pattern = sep, fixed = TRUE)
@@ -266,8 +265,7 @@ StrAlign <- function (x, sep = "\\r")
 
 #This function is sourced from the DescTools CRAN package 
 #version 0.99.24 for pretty printing numbers
-StrPad <- function (x, width = NULL, pad = " ", adj = "left") 
-{
+StrPad <- function (x, width = NULL, pad = " ", adj = "left") {
   .pad <- function(x, width, pad = " ", adj = "left") {
     if (is.na(x)) 
       return(NA)
@@ -294,8 +292,7 @@ StrPad <- function (x, width = NULL, pad = " ", adj = "left")
 
 #This function is sourced from the DescTools CRAN package 
 #version 0.99.24 for pretty printing numbers
-StrPos <- function (x, pattern, pos = 1, ...) 
-{
+StrPos <- function (x, pattern, pos = 1, ...) {
   pos <- rep(pos, length.out = length(x))
   x <- substr(x, start = pos, stop = nchar(x))
   i <- as.vector(regexpr(pattern = pattern, text = x, ...))
@@ -305,8 +302,7 @@ StrPos <- function (x, pattern, pos = 1, ...)
 
 #This function is sourced from the DescTools CRAN package 
 #version 0.99.24 for pretty printing numbers
-StrTrim <- function (x, pattern = " \t\n", method = "both") 
-{
+StrTrim <- function (x, pattern = " \t\n", method = "both") {
   switch(match.arg(arg = method, choices = c("both", "left", 
                                              "right")), both = {
                                                gsub(pattern = gettextf("^[%s]+|[%s]+$", pattern, pattern), 
