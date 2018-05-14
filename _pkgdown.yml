@@ -20,6 +20,8 @@ reference:
     - mmload
     - mmstats
     - mmexport
+    - mmscanbins
+    - mmmerge_linkfiles
   - title: Metagenome plotting and exploration
     desc: Functions for plotting metagenomes and identifying individual genomes. 
     contents: 

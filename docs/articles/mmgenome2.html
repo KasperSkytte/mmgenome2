@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mmgenome2</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.5</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.6</span>
       </span>
     </div>
 
@@ -126,20 +126,20 @@ mm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mmload.h
 ## #   pps_class &lt;fct&gt;, pps_order &lt;fct&gt;, pps_family &lt;fct&gt;, pps_genus &lt;fct&gt;</code></pre>
 <p>The <code>mmstats</code> function can also calculate some basic statistics about the data:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/mmstats.html">mmstats</a></span>(mm)</code></pre></div>
-<pre><code>##                  General stats
-## Scaffolds                97285
-## N50                       5291
-## Length.total         331908376
-## Length.max             1446979
-## Length.mean            3411.71
-## Length.min                1000
-## weighted_GC_mean         52.22
-## cov_C13.11.14             2.62
-## cov_C13.11.25            16.06
-## cov_C13.12.03             2.91
-## cov_C14.01.09            11.58
-## Ess.genes.total           7138
-## Ess.genes.unique           109</code></pre>
+<pre><code>##                   General stats
+## Scaffolds             97 285   
+## N50                    5 291   
+## Length.total     331 908 376   
+## Length.max         1 446 979   
+## Length.mean            3 411.71
+## Length.min             1 000   
+## weighted_GC_mean          52.22
+## cov_C13.11.14              2.62
+## cov_C13.11.25             16.06
+## cov_C13.12.03              2.91
+## cov_C14.01.09             11.58
+## Ess.genes.total        7 138   
+## Ess.genes.unique         109</code></pre>
 </div>
 <div id="initial-scaffold-extraction" class="section level2">
 <h2 class="hasAnchor">
@@ -304,19 +304,19 @@ p</code></pre></div>
 <p>To evaluate genome completeness and to get an overview of the basic information about <code>bin1</code> it may be useful to have a look at the output of <code>mmstats</code> of the bin:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/mmstats.html">mmstats</a></span>(bin1)</code></pre></div>
 <pre><code>##                  General stats
-## Scaffolds                   44
-## N50                     199460
-## Length.total           4386010
-## Length.max              454223
-## Length.mean           99682.05
-## Length.min                1241
+## Scaffolds                44   
+## N50                 199 460   
+## Length.total      4 386 010   
+## Length.max          454 223   
+## Length.mean          99 682.05
+## Length.min            1 241   
 ## weighted_GC_mean         71.11
 ## cov_C13.11.14             0.56
 ## cov_C13.11.25            13.36
 ## cov_C13.12.03             6.94
-## cov_C14.01.09             38.8
-## Ess.genes.total            108
-## Ess.genes.unique           105</code></pre>
+## cov_C14.01.09            38.8 
+## Ess.genes.total         108   
+## Ess.genes.unique        105</code></pre>
 <p>We can then highlight the final genome bin in a differential coverage plot of the complete metagenome by setting <code>highlight_scaffolds = bin1</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/mmplot.html">mmplot</a></span>(mm,
        <span class="dt">x =</span> <span class="st">"cov_C14.01.09"</span>,

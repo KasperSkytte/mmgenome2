@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Retrieve scaffold names from all genome bins in a folder — mmscanbins • mmgenome2</title>
+<title>Load and merge files with mate-pair or paired-end connection information — mmmerge_linkfiles • mmgenome2</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -33,9 +33,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Retrieve scaffold names from all genome bins in a folder — mmscanbins" />
+<meta property="og:title" content="Load and merge files with mate-pair or paired-end connection information — mmmerge_linkfiles" />
 
-<meta property="og:description" content="Reads all FASTA files (genome bins) in a folder and returns all unique scaffold names. This is useful to get an overview of which scaffolds are already extracted from the metagenome by for example highlighting them in plots." />
+<meta property="og:description" content="Searches a folder for all files with a filename ending with "_link", and then all the files found are loaded and merged into one data frame. This is done by searching the files for all unique scaffold pairs and summing the number of connections per pair. The files must contain 3 columns called "scaffold1", "scaffold2", and "connections"." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -115,55 +115,40 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Retrieve scaffold names from all genome bins in a folder</h1>
+    <h1>Load and merge files with mate-pair or paired-end connection information</h1>
     
-    <div class="hidden name"><code>mmscanbins.Rd</code></div>
+    <div class="hidden name"><code>mmmerge_linkfiles.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Reads all FASTA files (genome bins) in a folder and returns all unique scaffold names. This is useful to get an overview of which scaffolds are already extracted from the metagenome by for example highlighting them in plots.</p>
+    <p>Searches a folder for all files with a filename ending with <code>"_link"</code>, and then all the files found are loaded and merged into one data frame. This is done by searching the files for all unique scaffold pairs and summing the number of connections per pair. The files must contain 3 columns called <code>"scaffold1"</code>, <code>"scaffold2"</code>, and <code>"connections"</code>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>mmscanbins</span>(<span class='no'>binfolder</span>, <span class='kw'>namesOnly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>mmmerge_linkfiles</span>(<span class='no'>path</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>binfolder</th>
-      <td><p>(<em>required</em>) Path to the folder to scan.</p></td>
+      <th>path</th>
+      <td><p>(<em>required</em>) Path to a folder.</p></td>
     </tr>
     <tr>
-      <th>namesOnly</th>
-      <td><p>Return only the scaffold names (<code>TRUE</code>) or a complete list with the DNA sequences of the scaffolds in each file (<code>FALSE</code>). (<em>Default: </em> <code>TRUE</code>)</p></td>
+      <th>verbose</th>
+      <td><p>(<em>Logical</em>) Whether to print status messages of the process. (<em>Default: </em> <code>TRUE</code>)</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A character vector (if <code>namesOnly = TRUE</code>) or a list (if <code>namesOnly = FALSE</code>).</p>
+    <p>A tibble</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'>#Use mmextract and mmexport to extract scaffolds from the assembly and </span>
-<span class='co'>#write their sequences to a FASTA file per bin. Then the mmscanbins() function </span>
-<span class='co'>#can be used to retrieve the names of all scaffolds already extracted, and </span>
-<span class='co'>#then for example highlight them in a plot:</span>
-
-<span class='no'>binned_scaffolds</span> <span class='kw'>&lt;-</span> <span class='fu'>mmscanbins</span>(<span class='st'>"path/to/folder"</span>, <span class='kw'>namesOnly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>binned_scaffolds</span>
-<span class='fu'><a href='mmplot.html'>mmplot</a></span>(<span class='no'>mmgenome2</span>,
-       <span class='kw'>min_length</span> <span class='kw'>=</span> <span class='fl'>10000</span>,
-       <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"cov_C13.11.25"</span>,
-       <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"cov_C14.01.09"</span>,
-       <span class='kw'>color_by</span> <span class='kw'>=</span> <span class='st'>"taxonomy"</span>,
-       <span class='kw'>highlight_scaffolds</span> <span class='kw'>=</span> <span class='no'>binned_scaffolds</span>,
-       <span class='kw'>highlight_color</span> <span class='kw'>=</span> <span class='st'>"darkred"</span>,
-       <span class='kw'>x_scale</span> <span class='kw'>=</span> <span class='st'>"log10"</span>,
-       <span class='kw'>y_scale</span> <span class='kw'>=</span> <span class='st'>"log10"</span>)
+  <span class='no'>links</span> <span class='kw'>&lt;-</span> <span class='fu'>mmmerge_linkfiles</span>(<span class='st'>"path/to/folder"</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -1,6 +1,6 @@
-#' @title Merge link files
+#' @title Load and merge files with mate-pair or paired-end connection information
 #' 
-#' @description Searches a folder for all files with a filename ending with _link, and then all the files found are loaded and merged into one data frame. This is done by searching the files for all unique scaffold pairs and summing the number of connections per pair. The files must contain 3 columns called \code{"scaffold1"}, \code{"scaffold2"}, and \code{"connections"}.
+#' @description Searches a folder for all files with a filename ending with \code{"_link"}, and then all the files found are loaded and merged into one data frame. This is done by searching the files for all unique scaffold pairs and summing the number of connections per pair. The files must contain 3 columns called \code{"scaffold1"}, \code{"scaffold2"}, and \code{"connections"}.
 #'
 #' @param path (\emph{required}) Path to a folder.
 #' @param verbose (\emph{Logical}) Whether to print status messages of the process. (\emph{Default: } \code{TRUE}) 
