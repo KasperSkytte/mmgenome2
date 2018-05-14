@@ -24,6 +24,7 @@
 #'
 #' @importFrom dplyr select starts_with
 #' @importFrom tidyr separate_rows
+#' @importFrom magrittr %<>% %>%
 #' 
 #' @examples 
 #' library(mmgenome2)
@@ -66,7 +67,14 @@ mmstats <- function(mm) {
   )
   df <- data.frame(stats)
   colnames(df)[1] <- "General stats"
-  df[,1] <- as.character(df[,1])
+  df[,1] %<>% 
+    as.character() %>%
+    prettyNum(big.mark = " ", 
+              big.interval = 3, 
+              drop0trailing = T,
+              nsmall = 2) %>%
+    trimws() %>%
+    StrAlign(sep = ".")
   print.data.frame(df, 
                    quote = FALSE,
                    right = TRUE,
