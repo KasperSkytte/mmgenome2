@@ -95,11 +95,12 @@ mmload <- function(assembly,
     message("Loading coverage data...")
   if(is.character(coverage)) {
     filepaths <- list.files(path = coverage, 
-                            pattern = "*._cov",
                             full.names = TRUE,
                             all.files = FALSE, 
                             recursive = FALSE,
                             ignore.case = TRUE)
+    filepaths <- filepaths[grepl("*._cov$", tools::file_path_sans_ext(filepaths))]
+    path = coverage
     if(length(filepaths) > 0) {
       filenames <- basename(filepaths)
       coverage <- list()
@@ -109,6 +110,8 @@ mmload <- function(assembly,
     } else
       stop("No files with a filename ending with \"_cov\" were found in the folder \"", coverage, "\"", call. = FALSE)
   }
+  if(isTRUE(verbose))
+    message(paste0("  Found the following ", length(filenames), " coverage files in the folder \"", path, "\":\n    ", paste0(filenames, collapse = "\n    ")))
   beforeMerge <- ncol(mm)
   mm <- mmmerge(x = mm,
                 y = coverage,
