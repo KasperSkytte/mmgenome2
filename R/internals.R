@@ -284,7 +284,7 @@ StrPad <- function (x, width = NULL, pad = " ", adj = "left") {
   }
   if (is.null(width)) 
     width <- max(nchar(x), na.rm = TRUE)
-  lgp <- DescTools::Recycle(x = x, width = width, pad = pad, 
+  lgp <- Recycle(x = x, width = width, pad = pad, 
                             adj = adj)
   sapply(1:attr(lgp, "maxdim"), function(i) .pad(lgp$x[i], 
                                                  lgp$width[i], lgp$pad[i], lgp$adj[i]))
@@ -314,4 +314,16 @@ StrTrim <- function (x, pattern = " \t\n", method = "both") {
                                                gsub(pattern = gettextf("[%s]+$", pattern), replacement = "", 
                                                     x = x)
                                              })
+}
+
+#This function is sourced from the DescTools CRAN package 
+#version 0.99.24 for pretty printing numbers
+Recycle <- function(...){
+  lst <- list(...)
+  maxdim <- max(unlist(lapply(lst, length)))
+  # recycle all params to maxdim
+  res <- lapply(lst, rep_len, length.out=maxdim)
+  attr(res, "maxdim") <- maxdim
+  
+  return(res)
 }
