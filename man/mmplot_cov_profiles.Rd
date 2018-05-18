@@ -4,7 +4,7 @@
 \alias{mmplot_cov_profiles}
 \title{Compare coverage profiles}
 \usage{
-mmplot_cov_profiles(mm, normalise = TRUE, alpha = 0.6, color_by = NULL,
+mmplot_cov_profiles(mm, normalise = FALSE, alpha = 0.6, color_by = NULL,
   color_vector = c("blue", "green", "red"), color_scale_log10 = FALSE,
   y_scale_log10 = FALSE, plot_lines = TRUE)
 }

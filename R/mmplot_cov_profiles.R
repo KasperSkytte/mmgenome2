@@ -33,7 +33,7 @@
 #'                     color_by = "taxonomy",
 #'                     normalise = FALSE)
 mmplot_cov_profiles <- function(mm,
-                                normalise = TRUE,
+                                normalise = FALSE,
                                 alpha = 0.6,
                                 color_by = NULL,
                                 color_vector = c("blue", "green", "red"),
