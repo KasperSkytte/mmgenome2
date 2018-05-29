@@ -4,10 +4,12 @@
 \alias{mmstats}
 \title{Print basic statistics of metagenome data}
 \usage{
-mmstats(mm)
+mmstats(mm, original_data = NULL)
 }
 \arguments{
 \item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}
+
+\item{original_data}{If \code{mm} is a subset/extraction of another dataframe loaded with \code{\link{mmload}}, then provide here the original dataframe from which the extraction originates to compare the extraction to the original data, see examples. (\emph{Default: } \code{NULL})}
 }
 \value{
 A dataframe with the calculated stats.
@@ -33,8 +35,15 @@ The returned stats are calculated as follows:
 \examples{
 library(mmgenome2)
 data(mmgenome2)
-mmgenome2
 mmstats(mmgenome2)
+
+#Compare an extraction with the original data from which the extraction originates:
+selection <- data.frame(cov_C13.11.25 = c(7.2, 16.2, 25.2, 23.3, 10.1),
+                        cov_C14.01.09 = c(47, 77, 52.8, 29.5, 22.1))
+mmgenome2_extraction <- mmextract(mmgenome2, 
+                                  selection = selection)
+                                  
+mmstats(mmgenome2_extraction, original_data = mmgenome2)
 
 }
 \author{
