@@ -107,11 +107,11 @@ mmload <- function(assembly,
       for (i in 1:length(filenames)) {
         coverage[[stringr::str_remove(tools::file_path_sans_ext(filenames)[i], "_cov$")]] <- data.table::fread(filepaths[i], data.table = FALSE)[,1:2]
       }
+      if(isTRUE(verbose))
+        message(paste0("  Found the following ", length(filenames), " coverage files in the folder \"", path, "\":\n    ", paste0(filenames, collapse = "\n    ")))
     } else
       stop("No files with a filename ending with \"_cov\" were found in the folder \"", coverage, "\"", call. = FALSE)
   }
-  if(isTRUE(verbose))
-    message(paste0("  Found the following ", length(filenames), " coverage files in the folder \"", path, "\":\n    ", paste0(filenames, collapse = "\n    ")))
   beforeMerge <- ncol(mm)
   mm <- mmmerge(x = mm,
                 y = coverage,
