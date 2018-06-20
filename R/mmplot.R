@@ -226,13 +226,16 @@ mmplot <- function(mm,
   }
   
   ##### label scaffolds #####
-  if(isTRUE(label_scaffolds)) {
-    p <- p + geom_text(label = mm[[1]], size = 4, color = "black")
-  } else if(is.vector(label_scaffolds) | is.data.frame(label_scaffolds)) {
+  if(!identical(FALSE, label_scaffolds)) {
+    #if label_scaffolds is a data frame, use the first column and expect them to be scaffolds names
     if(is.data.frame(label_scaffolds)) {
       label_scaffolds <- as.character(label_scaffolds[[1]])
     }
-    labels_data <- subset(mm, mm[[1]] %in% as.character(label_scaffolds))
+    #if label_scaffolds is TRUE label all
+    if(isTRUE(label_scaffolds))
+      label_scaffolds <- as.character(mm[[1]])
+    #label the provided scaffolds by label_scaffolds_by
+    labels_data <- subset(mm, mm[[1]] %in% label_scaffolds)
     p <- p + ggrepel::geom_text_repel(data = labels_data, 
                                       aes_(x = labels_data[[x]], 
                                            y = labels_data[[y]],
@@ -240,6 +243,7 @@ mmplot <- function(mm,
                                       size = 4, 
                                       color = "black",
                                       inherit.aes = FALSE)
+    
   }
   
   ##### Plot duplicates #####
