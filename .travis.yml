@@ -3,9 +3,6 @@
 language: R
 #cache: packages
 sudo: false
-r: 
-  - bioc-devel
-  - bioc_release
 bioc_required: true
 bioc_use_devel: true
 warnings_are_errors: false
