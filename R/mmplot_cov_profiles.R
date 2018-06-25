@@ -55,7 +55,7 @@ mmplot_cov_profiles <- function(mm,
                          id.vars = 1,
                          measure.vars = cov_variables,
                          value.name = "Coverage") %>%
-    dplyr::left_join(mm[,c(1, which(colnames(mm) %in% color_by))], by = "scaffold")
+    dplyr::left_join(mm[,c(1, which(colnames(mm) %in% color_by)), drop = FALSE], by = "scaffold")
   #color_by
   if(!is.null(color_by)) {
     p <- ggplot(gg, 
