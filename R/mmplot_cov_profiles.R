@@ -10,14 +10,18 @@
 #' @param color_scale_log10 (\emph{Logical}) Log10-scale the color gradient when \code{color_by} is set and the variable is continuous. (\emph{Default: } \code{FALSE})
 #' @param y_scale_log10 (\emph{Logical}) Log10-scale the y axis. (\emph{Default: } \code{FALSE})
 #' @param plot_lines (\emph{Logical}) Connect scaffolds with lines. (\emph{Default: } \code{TRUE})
+#' @param interactive_plot (\emph{Logical}) Return an interactive \code{plotly} plot or not. (\emph{Default: } \code{FALSE})
 #'
-#' @return A ggplot object. Note that mmgenome2 hides all warnings produced by ggplot objects.
+#' @return A ggplot or plotly object. Note that mmgenome2 hides all warnings produced by ggplot objects.
 #' 
 #' @export
 #' @import ggplot2
 #' @importFrom dplyr left_join
 #' @importFrom data.table melt
 #' @importFrom magrittr %>% %<>%
+#' @importFrom purrr imap
+#' @importFrom tidyr unite
+#' @importFrom plotly ggplotly
 #'
 #' @examples
 #' library(mmgenome2)
@@ -39,29 +43,35 @@ mmplot_cov_profiles <- function(mm,
                                 color_vector = c("blue", "green", "red"),
                                 color_scale_log10 = FALSE,
                                 y_scale_log10 = FALSE,
-                                plot_lines = TRUE) {
+                                plot_lines = TRUE,
+                                interactive_plot = FALSE) {
   #can currently only color by 1 variable
   if(length(color_by) > 1)
     stop("color_by must be of length 1", call. = FALSE)
+  
   #find which columns are coverage profiles
   cov_variables <- which(substring(tolower(colnames(mm)), 1, 4) == "cov_")
+  
   #normalise to the highest value in each coverage profile
   if(isTRUE(normalise)) {
     mm[,cov_variables] %<>% lapply(function(x) {x/max(x)*100})
   }
   colnames(mm)[1] <- "scaffold"
+  
   #make a data frame suited for ggplot2 and merge with the color_by variable if supplied
   gg <- data.table::melt(mm,
                          id.vars = 1,
                          measure.vars = cov_variables,
                          value.name = "Coverage") %>%
-    dplyr::left_join(mm[,c(1, which(colnames(mm) %in% color_by)), drop = FALSE], by = "scaffold")
+    dplyr::left_join(mm[,c(1, 2, which(colnames(mm) %in% color_by)), drop = FALSE], by = "scaffold")
+  
   #color_by
   if(!is.null(color_by)) {
     p <- ggplot(gg, 
                 aes_string(x = "variable",
                            y = "Coverage",
                            color = color_by))
+    
     #if numeric set custom colorscale and breaks if colored by GC
     if(is.numeric(mm[[color_by]])) {
       p <- p + 
@@ -74,18 +84,6 @@ mmplot_cov_profiles <- function(mm,
                 aes_string(x = "variable",
                            y = "Coverage"))
   }
-  #log10 scale y axis
-  if(isTRUE(y_scale_log10))
-    p <- p + scale_y_log10()
-  #plot lines
-  if(isTRUE(plot_lines))
-    p <- p + geom_line(aes_string(group = "scaffold"), alpha = alpha)
-  #adjust y axis label when normalise = TRUE
-  if(isTRUE(normalise))
-    p <- p + ylab("Coverage (normalised to 100)")
-  #set point and line transparancy
-  p <- p + 
-    geom_point(alpha = alpha)
   
   #theme adjustments
   p <- p +
@@ -99,5 +97,35 @@ mmplot_cov_profiles <- function(mm,
           legend.key = element_blank()
     ) +
     xlab("")
-  return(p)
+  
+  #log10 scale y axis
+  if(isTRUE(y_scale_log10))
+    p <- p + scale_y_log10()
+  
+  #plot lines
+  if(isTRUE(plot_lines))
+    p <- p + geom_line(aes_string(group = "scaffold"), alpha = alpha)
+  
+  #adjust y axis label when normalise = TRUE
+  if(isTRUE(normalise))
+    p <- p + ylab("Coverage (normalised to 100)")
+  
+  #add points to plot and generate plotly hover labels if interactive, return plot
+  if(isTRUE(interactive_plot)) {
+    data_plotly <- gg %>%
+      purrr::imap(~paste(.y, .x, sep = ": ")) %>%
+      as.data.frame() %>%
+      tidyr::unite("test", sep = "<br>") %>%
+      unlist(use.names = FALSE) %>%
+      unique()
+    p <- p + 
+      geom_point(alpha = alpha,
+                 aes(text = data_plotly))
+    plotly <- plotly::ggplotly(p, tooltip = "text")
+    return(plotly)
+  } else {
+    p <- p + 
+      geom_point(alpha = alpha)
+    return(p)
+  }
 }
