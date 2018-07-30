@@ -121,10 +121,14 @@ mmplot_cov_profiles <- function(mm,
     p <- p + 
       geom_point(alpha = alpha,
                  aes(text = data_plotly))
-    plotly <- plotly::ggplotly(p, tooltip = "text")
+    plotly <- plotly::ggplotly(p, tooltip = "text") %>%
+      layout(margin = list(l = 50,
+                           r = 0,
+                           b = 150,
+                           t = 20))
     return(plotly)
   } else {
-    p <- p + 
+    p <- p +
       geom_point(alpha = alpha)
     return(p)
   }
