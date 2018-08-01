@@ -121,10 +121,19 @@ mmplot <- function(mm,
         geom_point(alpha = alpha, na.rm = TRUE)
       if(isTRUE(color_scale_log10)) {
         p <- p +
-          scale_colour_gradientn(colours = color_vector, trans = "log10", breaks = c(20,40,60,80))
+          scale_colour_gradientn(colours = color_vector, 
+                                 trans = "log10", 
+                                 breaks = if(color_by == "gc") 
+                                   c(20,40,60,80)
+                                 else 
+                                   waiver())
       } else {
         p <- p +
-          scale_colour_gradientn(colours = color_vector, breaks = c(20,40,60,80))
+          scale_colour_gradientn(colours = color_vector, 
+                                 breaks = if(color_by == "gc") 
+                                   c(20,40,60,80)
+                                 else 
+                                   waiver())
       }
       
     } else {
@@ -136,8 +145,16 @@ mmplot <- function(mm,
     #if color_by is set and is factor or character
     if(ifelse(!is.null(color_by), is.factor(mm[[color_by]]) | is.character(mm[[color_by]]), FALSE)) {
       p <- p +
-        geom_point(data = subset(mm, mm[[color_by]] != "NA"), shape = if(tolower(factor_shape) == "solid") 16 else 1, alpha = 0.7, na.rm = TRUE) + 
-        guides(colour = guide_legend(override.aes = list(alpha = 1, size = 5, shape = 19)))
+        geom_point(data = subset(mm, mm[[color_by]] != "NA"),
+                   shape = if(tolower(factor_shape) == "solid") 
+                     16 
+                   else 
+                     1,
+                   alpha = 0.7, 
+                   na.rm = TRUE) + 
+        guides(colour = guide_legend(override.aes = list(alpha = 1, 
+                                                         size = 5,
+                                                         shape = 19)))
     }
   } else if(!is.null(fixed_size)) {
     #geom_point when fixed_size is NOT set
@@ -147,20 +164,41 @@ mmplot <- function(mm,
         geom_point(alpha = alpha, size = fixed_size, na.rm = TRUE) 
       if(isTRUE(color_scale_log10)) {
         p <- p +
-          scale_colour_gradientn(colours = color_vector, trans = "log10", breaks = c(20,40,60,80))
+          scale_colour_gradientn(colours = color_vector, 
+                                 trans = "log10",
+                                 breaks = if(color_by == "gc")
+                                   c(20,40,60,80)
+                                 else 
+                                   waiver())
       } else {
         p <- p +
-          scale_colour_gradientn(colours = color_vector, breaks = c(20,40,60,80))
+          scale_colour_gradientn(colours = color_vector,
+                                 breaks = if(color_by == "gc") 
+                                   c(20,40,60,80) 
+                                 else
+                                   waiver())
       }
     } else {
       p <- p + 
-        geom_point(alpha = alpha, color = "black", size = fixed_size, na.rm = TRUE) #all other variables than numerics are "black"
+        geom_point(alpha = alpha,
+                   color = "black",
+                   size = fixed_size,
+                   na.rm = TRUE) #all other variables than numerics are "black"
     }
     #if color_by is set and is factor or character
     if(ifelse(!is.null(color_by), is.factor(mm[[color_by]]) | is.character(mm[[color_by]]), FALSE)) {
       p <- p +
-        geom_point(data = subset(mm, mm[[color_by]] != "NA"), shape = if(tolower(factor_shape) == "solid") 16 else 1, alpha = 0.7, size = fixed_size, na.rm = TRUE) + 
-        guides(colour = guide_legend(override.aes = list(alpha = 1, size = 5, shape = 19)))
+        geom_point(data = subset(mm, mm[[color_by]] != "NA"), 
+                   shape = if(tolower(factor_shape) == "solid") 
+                     16
+                   else
+                     1,
+                   alpha = 0.7,
+                   size = fixed_size, 
+                   na.rm = TRUE) + 
+        guides(colour = guide_legend(override.aes = list(alpha = 1, 
+                                                         size = 5, 
+                                                         shape = 19)))
     }
   }
   
@@ -209,9 +247,19 @@ mmplot <- function(mm,
     colnames(links)[(ncol(links)-1):ncol(links)] <- c("xend", "yend")
     
     p <- p +  
-      geom_segment(data = links, aes(x = x, y = y, xend = xend, yend = yend), color = "darkgrey", size = 1, alpha = 0.5) +
-      geom_point(data = links, aes(x = x, y = y), size = 2, color = "darkgrey") +
-      geom_point(data = links, aes(x = xend, y = yend), size = 2, color = "darkgrey")
+      geom_segment(data = links, aes(x = x,
+                                     y = y, 
+                                     xend = xend, 
+                                     yend = yend),
+                   color = "darkgrey", 
+                   size = 1, 
+                   alpha = 0.5) +
+      geom_point(data = links, aes(x = x, y = y), 
+                 size = 2, 
+                 color = "darkgrey") +
+      geom_point(data = links, aes(x = xend, y = yend),
+                 size = 2, 
+                 color = "darkgrey")
   }
   
   ##### Highlight selected scaffolds #####
@@ -264,14 +312,35 @@ mmplot <- function(mm,
       tibble::as_tibble()
     colnames(shared_genes) <- c("scaffold1", "scaffold2")
     
-    segment_coords <- merge(shared_genes, mm[,c("scaffold", x, y)], by.x = "scaffold1", by.y = "scaffold") 
-    segment_coords <- merge(segment_coords, mm[,c("scaffold", x, y)], by.x = "scaffold2", by.y = "scaffold") 
+    segment_coords <- merge(shared_genes,
+                            mm[,c("scaffold", x, y)],
+                            by.x = "scaffold1",
+                            by.y = "scaffold") 
+    segment_coords <- merge(segment_coords,
+                            mm[,c("scaffold", x, y)],
+                            by.x = "scaffold2",
+                            by.y = "scaffold") 
     colnames(segment_coords)[3:6] <- c("x","y","xend","yend") 
     
     p <- p +
-      geom_segment(data = segment_coords, aes(x = x, y = y, xend = xend, yend = yend), color = "darkred", size = 1) +
-      geom_point(data = segment_coords, aes(x = x, y = y), size = 2, color = "darkred", na.rm = TRUE) +
-      geom_point(data = segment_coords, aes(x = xend, y = yend), size = 2, color = "darkred", na.rm = TRUE)
+      geom_segment(data = segment_coords, 
+                   aes(x = x, 
+                       y = y,
+                       xend = xend,
+                       yend = yend), 
+                   color = "darkred",
+                   size = 1) +
+      geom_point(data = segment_coords,
+                 aes(x = x, y = y), 
+                 size = 2,
+                 color = "darkred", 
+                 na.rm = TRUE) +
+      geom_point(data = segment_coords, 
+                 aes(x = xend, 
+                     y = yend),
+                 size = 2, 
+                 color = "darkred",
+                 na.rm = TRUE)
   }
   
   ##### Locator and selection #####
