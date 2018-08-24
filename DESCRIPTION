@@ -49,13 +49,7 @@ Imports:
     IRanges
 remotes:
     github::jkrijthe/Rtsne@openmp,
-    github::Rdatatable/data.table,
-    bioc::3.7/S4Vectors,
-    bioc::3.7/BiocGenerics,
-    bioc::3.7/Biostrings,
-    bioc::3.7/DECIPHER,
-    bioc::3.7/circlize,
-    bioc::3.7/IRanges
+    github::Rdatatable/data.table
 suggests:
     BiocManager,
     devtools
