@@ -7,10 +7,11 @@
 mmplot(mm, x, y, min_length = 0, color_by = NULL, locator = FALSE,
   selection = NULL, network = NULL, shared_genes = FALSE,
   label_scaffolds = FALSE, label_scaffolds_by = "scaffold",
-  highlight_scaffolds = NULL, highlight_color = "darkred", x_scale = NULL,
-  x_limits = NULL, y_scale = NULL, y_limits = NULL, alpha = 0.1,
-  fixed_size = NULL, size_scale = 1, factor_shape = "outline",
-  color_vector = c("blue", "green", "red"), color_scale_log10 = FALSE)
+  highlight_scaffolds = NULL, highlight_color = "darkred",
+  x_scale = NULL, x_limits = NULL, y_scale = NULL, y_limits = NULL,
+  alpha = 0.1, fixed_size = NULL, size_scale = 1,
+  factor_shape = "outline", color_vector = c("blue", "green", "red"),
+  color_scale_log10 = FALSE)
 }
 \arguments{
 \item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}

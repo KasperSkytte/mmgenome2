@@ -4,9 +4,10 @@
 \alias{mmplot_cov_profiles}
 \title{Compare coverage profiles}
 \usage{
-mmplot_cov_profiles(mm, normalise = FALSE, alpha = 0.6, color_by = NULL,
-  color_vector = c("blue", "green", "red"), color_scale_log10 = FALSE,
-  y_scale_log10 = FALSE, plot_lines = TRUE, interactive_plot = FALSE)
+mmplot_cov_profiles(mm, normalise = FALSE, alpha = 0.6,
+  color_by = NULL, color_vector = c("blue", "green", "red"),
+  color_scale_log10 = FALSE, y_scale_log10 = FALSE,
+  plot_lines = TRUE, interactive_plot = FALSE)
 }
 \arguments{
 \item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}
