@@ -4,8 +4,9 @@
 \alias{mmplot_circos}
 \title{Title}
 \usage{
-mmplot_circos(assembly, coverage = NULL, profile = NULL,
-  links = NULL, assembly_col = NULL, gc = TRUE, line_width = 0.5,
+mmplot_circos(assembly = get("assembly", envir = globalenv()),
+  coverage = NULL, profile = NULL, links = NULL,
+  assembly_col = NULL, gc = TRUE, line_width = 0.5,
   window_size = 5000, print_pdf = NULL)
 }
 \arguments{

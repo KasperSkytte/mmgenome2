@@ -55,8 +55,7 @@ mmload <- function(assembly,
                    kmer_pca = FALSE,
                    kmer_BH_tSNE = FALSE,
                    verbose = TRUE,
-                   ...
-) {
+                   ...) {
   ##### Assembly #####
   #Load assembly sequences from the provided file path or object
   if(isTRUE(verbose))
@@ -94,21 +93,36 @@ mmload <- function(assembly,
   if(isTRUE(verbose))
     message("Loading coverage data...")
   if(is.character(coverage)) {
+    #scaffold lengths with names for use when coverage files is in windowed format
+    al <- setNames(IRanges::width(assembly), names(assembly))[sort(names(assembly))]
+    #find all coverage files (files ending with _cov) in the folder and load them into a list
     filepaths <- list.files(path = coverage, 
                             full.names = TRUE,
                             all.files = FALSE, 
                             recursive = FALSE,
                             ignore.case = TRUE)
     filepaths <- filepaths[grepl("*._cov$", tools::file_path_sans_ext(filepaths))]
-    path = coverage
     if(length(filepaths) > 0) {
       filenames <- basename(filepaths)
+      if(isTRUE(verbose))
+        message(paste0("  Found the following ", length(filenames), " coverage files in the folder \"", coverage, "\":\n    ", paste0(filenames, collapse = "\n    ")))
       coverage <- list()
       for (i in 1:length(filenames)) {
-        coverage[[stringr::str_remove(tools::file_path_sans_ext(filenames)[i], "_cov$")]] <- data.table::fread(filepaths[i], data.table = FALSE)[,1:2]
+        #read each file as data frame and name the element the same as the filename without _cov.csv in the end
+        coverage[[stringr::str_remove(tools::file_path_sans_ext(filenames)[i], "_cov$")]] <- data.table::fread(filepaths[i])
+        #check if the format of the coverage data frame is in windows or not
+        if(identical(colnames(coverage[[i]]), c("scaffold", "position", "coverage"))) {
+          #calculate mean coverage per window
+          coverage[[i]] <- coverage[[i]] %>%
+            dplyr::arrange(scaffold, position) %>%
+            dplyr::group_by(scaffold) %>%
+            dplyr::mutate(length = c(position[-1], al[unique(scaffold)]) - position) %>%
+            dplyr::summarise(coverage = sum(coverage * length)/sum(length)) %>%
+            dplyr::ungroup()
+        } else
+          #if not windowed format use only the "scaffold" and "coverage" columns
+          coverage[i] <- coverage[,1:2]
       }
-      if(isTRUE(verbose))
-        message(paste0("  Found the following ", length(filenames), " coverage files in the folder \"", path, "\":\n    ", paste0(filenames, collapse = "\n    ")))
     } else
       stop("No files with a filename ending with \"_cov\" were found in the folder \"", coverage, "\"", call. = FALSE)
   }
