@@ -1,9 +1,13 @@
-#' Title
+#' @title test
+#' @description test
 #'
 #' @param bin1 
 #' @param bin2 
-#'
+#' 
+#' @return
+#' 
 #' @export
+#' @examples 
 #' 
 #' @importFrom RSQLite dbConnect SQLite dbDisconnect
 #' @importFrom DECIPHER FindSynteny Seqs2DB
@@ -25,12 +29,16 @@ mmsynteny <- function(bin1, bin2) {
 }
 
 #' Title
-#'
+#' @description 
+#' 
 #' @param synteny 
 #' @param min_score 
 #' @param min_length 
 #'
 #' @export
+#' 
+#' @examples 
+#' @return 
 #' 
 #' @importFrom IRanges IRanges findOverlaps reduce
 #' @importFrom S4Vectors subjectHits
@@ -70,21 +78,21 @@ mmsynteny_filter <- function(synteny, min_score, min_length = 1000) {
   
   synteny_merge <- synteny_filter2 %>%
     # Merges similar or overlapping alignments
-    tidyr::mutate(con_type = paste(index1, index2, sep = "_")) %>%
+    dplyr::mutate(con_type = paste(index1, index2, sep = "_")) %>%
     split(.$con_type) %>%
     lapply(.,
            function(rgn){
              pos1 <- IRanges::IRanges(rgn$start1, rgn$end1)
              pos2 <- IRanges::IRanges(rgn$start2, rgn$end2)
              rgng <- rgn %>%
-               tidyr::mutate(grp1 = S4Vectors::subjectHits(IRanges::findOverlaps(pos1, IRanges::reduce(pos1))),
+               dplyr::mutate(grp1 = S4Vectors::subjectHits(IRanges::findOverlaps(pos1, IRanges::reduce(pos1))),
                              grp2 = S4Vectors::subjectHits(IRanges::findOverlaps(pos2, IRanges::reduce(pos2))),
                              grp = paste(grp1, grp2, sep = "_"))
              rgn_merge <- rgng %>%
                split(.$grp) %>%
                lapply(., function(mergelist){
                  merged <- mergelist[1,] %>%
-                   tidyr::mutate(start1 = min(mergelist$start1),
+                   dplyr::mutate(start1 = min(mergelist$start1),
                                  start2 = min(mergelist$start2),
                                  end1 = max(mergelist$end1),
                                  end2 = max(mergelist$end2))
@@ -242,20 +250,20 @@ mmsynteny_align <- function(bin1,
 #' @param window_size 
 #' @param min_link 
 #' @param min_cov 
-#' @param cov_fp 
+#' @param cov_fprate 
 #' @param end_length 
 #' @param remove_regions 
 #'
 #' @export
 #' @importFrom dplyr mutate group_by summarise ungroup left_join filter select
 #' @importFrom BiocGenerics Map
-mmlink_filter <- function(links,
+mmlinks_filter <- function(links,
                           cov_sample,
                           out_type,
                           window_size = 2000,
                           min_link = 3,
                           min_cov = 5,
-                          cov_fp = 1/50,
+                          cov_fprate = 1/50,
                           end_length = NULL,
                           remove_regions = NULL) {
   # Calculate average coverage for window size
@@ -280,7 +288,7 @@ mmlink_filter <- function(links,
                      suffix = c("1", "2")) %>%
     dplyr::filter(connections >= min_link) %>%
     dplyr::filter(coverage1 > min_cov & coverage2 > min_cov) %>%
-    dplyr::filter(connections/coverage1 > cov_fp & connections/coverage2 > cov_fp) %>%
+    dplyr::filter(connections/coverage1 > cov_fprate & connections/coverage2 > cov_fprate) %>%
     dplyr::select(-coverage1, -coverage2)
   
   #Filter links based on end connections
@@ -315,7 +323,6 @@ mmlink_filter <- function(links,
       dplyr::filter(remove_fun(scaffold1, scaffold2, position1, position2, remove_regions))
   }
   
-  
   # Prepare output based on type
   if (out_type == "network_links"){
     out <- lfff %>%
@@ -349,7 +356,7 @@ mmlink_filter <- function(links,
 #' @importFrom data.table fread
 #' @import circlize
 mmplot_circos <- function(assembly = get("assembly", envir = globalenv()),
-                          coverage = NULL,
+                          coverage,
                           profile = NULL,
                           links = NULL,
                           assembly_col = NULL,
@@ -357,21 +364,25 @@ mmplot_circos <- function(assembly = get("assembly", envir = globalenv()),
                           line_width = 0.5,
                           window_size = 5000,
                           print_pdf = NULL) {
+  circlize::circos.clear()
   if(length(assembly) > 350L)
     stop("Too many scaffolds to plot (>350). Make a subset and try again", call. = FALSE)
   # Convert input to lists
   profile <- if(!is.null(profile)) list(profile)
   links <- if(!is.null(links)) list(links)
   
-  # load coverage files
-  if(!is.null(coverage)) {
+  # load coverage files into a list
+  if(!is.null(coverage) &&
+     !is.list(coverage) && 
+     !is.data.frame(coverage) && 
+     is.character(coverage)) {
     filepaths <- coverage
-    coverage <- list()
-    #read files and name elements in the list based on the filename
-    for (i in 1:length(filepaths)) {
-      coverage[[tools::file_path_sans_ext(basename(filepaths[i]))]] <- data.table::fread(filepaths[i])
-    }
-  }
+    coverage <- lapply(filepaths, function(x) {
+      data.table::fread(x, colClasses = c("character", "character", "integer", "integer", "integer"))
+    })
+    names(coverage) <- tools::file_path_sans_ext(basename(filepaths))
+  } else if(!is.null(coverage) && !is.list(coverage) && !is.character(coverage))
+    stop("Coverage must be provided as a single data frame, a list of 1 or more data frames, or as a character vector with file paths to the coverage files to be loaded", call. = FALSE)
   
   # Status messages with how many tracks will be plotted
   message("Generating circos plot...")
@@ -427,14 +438,49 @@ mmplot_circos <- function(assembly = get("assembly", envir = globalenv()),
   # Assembly labels
   circlize::circos.track(ylim = c(0,05),
                          panel.fun = function(x, y) {
-                           circlize::circos.text(CELL_META$xcenter,
-                                                 CELL_META$ycenter,
-                                                 CELL_META$sector.index, 
+                           circlize::circos.text(circlize::get.cell.meta.data("xcenter"),
+                                                 circlize::get.cell.meta.data("ycenter"),
+                                                 circlize::get.cell.meta.data("sector.index"), 
                                                  facing = "clockwise",
                                                  niceFacing = T,
                                                  cex = 0.5)},
                          track.height = 0.05,
                          bg.border = NA)
+  
+  
+  
+  # Prepare coverage data
+  if (!is.null(coverage) ) {
+    if(is.data.frame(coverage))
+      coverage <- list(coverage)
+    cd <- lapply(coverage, function(x){
+      as.data.frame(x) %>%
+        dplyr::mutate(scaffold = as.character(scaffold)) %>%
+        # Subset to assembly
+        dplyr::filter(scaffold %in% names(asmb)) %>%
+        # Calculate window coverage
+        dplyr::group_by(scaffold) %>%
+        dplyr::transmute(start = (1 + floor(position/window_size)) * 5000 - 2500,
+                  start = dplyr::if_else(start > max(position), max(position), start),
+                  end = start,
+                  coverage) %>%
+        dplyr::group_by(scaffold, start, end) %>%
+        dplyr::summarise(coverage = mean(coverage)) %>%
+        as.data.frame()
+    })
+    lapply(cd, function(x){
+      circlize::circos.genomicTrack(x, ylim = c(min(x$coverage), max(x$coverage)),
+                                    panel.fun = function(region, value, ...) {
+                                      xlim = circlize::get.cell.meta.data("xlim")
+                                      circlize::circos.genomicLines(region,
+                                                                    value,
+                                                                    col = "lightgrey",
+                                                                    lwd = 0.01,
+                                                                    area = T)},
+                                    track.height = 0.05,
+                                    bg.border = NA)
+    }) %>% invisible()
+  }
   
   # Prepare GC data
   if (isTRUE(gc)) {
@@ -461,7 +507,7 @@ mmplot_circos <- function(assembly = get("assembly", envir = globalenv()),
     gc_track <- circlize::get.current.track.index()
     circlize::circos.genomicTrack(gcd, ylim = c(min(gcd$gc), max(gcd$gc)), track.index = gc_track,
                                   panel.fun = function(region, value, ...) {
-                                    xlim = CELL_META$xlim
+                                    xlim = circlize::get.cell.meta.data("xlim")
                                     circlize::circos.genomicLines(region,
                                                                   value,
                                                                   col = rgb(0.46, 0.77, 0.47),
@@ -475,8 +521,8 @@ mmplot_circos <- function(assembly = get("assembly", envir = globalenv()),
   circlize::circos.track(ylim = c(0, 1),
                          cell.padding = c(0.02, 1.00, 0.005, 1.00),
                          panel.fun = function(x, y) {
-                           index = CELL_META$sector.numeric.index
-                           xlim = CELL_META$xlim
+                           index = circlize::get.cell.meta.data("sector.numeric.index")
+                           xlim = circlize::get.cell.meta.data("xlim")
                            circlize::circos.rect(xlim[1],0, xlim[2], 1,
                                                  col = ad$color[index],
                                                  lwd = 0.01)
@@ -490,39 +536,10 @@ mmplot_circos <- function(assembly = get("assembly", envir = globalenv()),
                          track.height = 0.05,
                          bg.border = NA)
   
-  # Prepare coverage data
-  if (!is.null(coverage) ) {
-    cd <- lapply(coverage, function(x){
-      as.data.frame(x) %>%
-        dplyr::mutate(scaffold = as.character(scaffold)) %>%
-        # Subset to assembly
-        dplyr::filter(scaffold %in% names(asmb)) %>%
-        # Calculate window coverage
-        dplyr::group_by(scaffold) %>%
-        dplyr::transmute(start = (1 + floor(position/window_size)) * 5000 - 2500,
-                  start = dplyr::if_else(start > max(position), max(position), start),
-                  end = start,
-                  coverage) %>%
-        dplyr::group_by(scaffold, start, end) %>%
-        dplyr::summarise(coverage = mean(coverage)) %>%
-        as.data.frame()
-    })
-    lapply(cd, function(x){
-      circlize::circos.genomicTrack(x, ylim = c(min(x$coverage), max(x$coverage)),
-                                    panel.fun = function(region, value, ...) {
-                                      xlim = CELL_META$xlim
-                                      circlize::circos.genomicLines(region,
-                                                                    value,
-                                                                    col = "lightgrey",
-                                                                    lwd = 0.01,
-                                                                    area = T)},
-                                    track.height = 0.05,
-                                    bg.border = NA)
-    }) %>% invisible()
-  }
-  
   # Prepare profile data
   if(!is.null(profile)){
+    if(is.data.frame(profile))
+      profile <- list(profile)
     pd <- lapply(profile, function(x){
       dplyr::mutate(x, scaffold = as.character(scaffold)) %>%
         dplyr::filter(scaffold %in% names(asmb)) %>%
@@ -557,7 +574,7 @@ mmplot_circos <- function(assembly = get("assembly", envir = globalenv()),
                                         ylim = c(min(x$value), max(x$value)),
                                         track.index = profile_track,
                                         panel.fun = function(region, value, ...) {
-                                          xlim = CELL_META$xlim
+                                          xlim = circlize::get.cell.meta.data("xlim")
                                           circlize::circos.genomicLines(region,
                                                                         value,
                                                                         col = pf_grp$color[1],
@@ -573,8 +590,10 @@ mmplot_circos <- function(assembly = get("assembly", envir = globalenv()),
   }
   
   # Prepare links data
-  if ( !is.null(links) ){
-    ld <- lapply(links, function(x){
+  if ( !is.null(links) ) {
+    if(is.data.frame(links))
+      links <- list(links)
+    ld <- lapply(links, function(x) {
       as.data.frame(x) %>%
         dplyr::mutate(scaffold1 = as.character(scaffold1),
                       scaffold2 = as.character(scaffold2)) %>%
@@ -616,13 +635,17 @@ mmplot_circos <- function(assembly = get("assembly", envir = globalenv()),
 #' @export
 #' 
 #' @importFrom data.table fread
-mmload_links <- function(data) {
+mmlinks_load <- function(data) {
   link_files <- list.files(path = data, pattern = ".*_link.csv", full.names = T)
   names(link_files) <- basename(link_files) %>%
     gsub(".csv", "", .) %>%
     gsub("-", "_", .)
-  links <- lapply(link_files, function(x){
-    data.table::fread(x)
+  links <- lapply(link_files, function(x) {
+    links <- data.table::fread(x, colClasses = "character")
+    links <- mutate_at(links, vars(3), as.integer)
+    if(ncol(links) == 5L)
+      links <- mutate_at(links, vars(4:5), as.integer)
+    return(links)
   })
   return(links)
 }

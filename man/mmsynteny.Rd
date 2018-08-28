@@ -2,7 +2,7 @@
 % Please edit documentation in R/mmcircos.R
 \name{mmsynteny}
 \alias{mmsynteny}
-\title{Title}
+\title{test}
 \usage{
 mmsynteny(bin1, bin2)
 }
@@ -11,6 +11,12 @@ mmsynteny(bin1, bin2)
 
 \item{bin2}{}
 }
+\value{
+
+}
 \description{
-Title
+test
+}
+\examples{
+
 }

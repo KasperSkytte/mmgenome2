@@ -13,6 +13,9 @@ mmsynteny_filter(synteny, min_score, min_length = 1000)
 
 \item{min_length}{}
 }
+\value{
+
+}
 \description{
-Title
+
 }
