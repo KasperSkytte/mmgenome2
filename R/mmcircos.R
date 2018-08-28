@@ -5,12 +5,13 @@
 #' @param bin2 
 #' @export
 #' 
-#' @section
-#' @details
-#' @return
-#' @examples 
-#' @seealso 
-#' 
+#' @section if needed
+#' @details if needed
+#' @return specify what the function returns
+#' @examples examples
+#' @seealso refer to similar functions or functions to be used in conjunction with this one
+#' @author Soren M. Karst \email{smk@@bio.aau.dk} 
+#'  
 #' @importFrom RSQLite dbConnect SQLite dbDisconnect
 #' @importFrom DECIPHER FindSynteny Seqs2DB
 mmsynteny <- function(bin1, bin2) {
