@@ -3,11 +3,13 @@
 #'
 #' @param bin1 
 #' @param bin2 
-#' 
-#' @return
-#' 
 #' @export
+#' 
+#' @section
+#' @details
+#' @return
 #' @examples 
+#' @seealso 
 #' 
 #' @importFrom RSQLite dbConnect SQLite dbDisconnect
 #' @importFrom DECIPHER FindSynteny Seqs2DB
