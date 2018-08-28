@@ -26,7 +26,7 @@
 #' @importFrom magrittr %>%
 #' @importFrom digest digest
 #' @importFrom Biostrings width readDNAStringSet letterFrequency oligonucleotideFrequency reverseComplement
-#' @importFrom dplyr mutate_all funs group_by left_join summarise_all
+#' @importFrom dplyr mutate_all mutate_at funs group_by left_join summarise_all
 #' @importFrom stringr str_replace_all str_remove
 #' @importFrom vegan rda scores
 #' @importFrom data.table fread
@@ -118,10 +118,16 @@ mmload <- function(assembly,
             dplyr::group_by(scaffold) %>%
             dplyr::mutate(length = c(position[-1], al[unique(scaffold)]) - position) %>%
             dplyr::summarise(coverage = sum(coverage * length)/sum(length)) %>%
-            dplyr::ungroup()
+            dplyr::ungroup() %>%
+            #adjust column classes
+            dplyr::mutate_at(vars(1), as.character) %>%
+            dplyr::mutate_at(vars(2), as.integer) %>%
+            dplyr::mutate_at(vars(3), as.numeric)
         } else
           #if not windowed format use only the "scaffold" and "coverage" columns
-          coverage[i] <- coverage[,1:2]
+          coverage[[i]] <- coverage[[i]][,1:2] %>%
+            dplyr::mutate_at(vars(1), as.character) %>%
+            dplyr::mutate_at(vars(2), as.numeric)
       }
     } else
       stop("No files with a filename ending with \"_cov\" were found in the folder \"", coverage, "\"", call. = FALSE)
@@ -131,7 +137,6 @@ mmload <- function(assembly,
                 y = coverage,
                 type = "coverage")
   colnames(mm)[c((beforeMerge+1):ncol(mm))] <- paste0("cov_", colnames(mm)[c((beforeMerge+1):ncol(mm))])
-  
   
   ##### Essential genes #####
   if(!is.null(essential_genes)) {
