@@ -8,7 +8,11 @@
 #' @section if needed
 #' @details if needed
 #' @return specify what the function returns
-#' @examples examples
+#' @examples 
+#' examples, wrap in \dontrun{...} if it requires large example data that are not 
+#' installed with the package or create a figshare link to download temp data.
+#' Everything here will be run when building the website and displayed on the website unless wrapped in \dontrun{...}
+#' 
 #' @seealso refer to similar functions or functions to be used in conjunction with this one
 #' @author Soren M. Karst \email{smk@@bio.aau.dk} 
 #'  
