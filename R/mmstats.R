@@ -4,6 +4,7 @@
 #'
 #' @param mm (\emph{required}) A dataframe loaded with \code{\link{mmload}}.
 #' @param original_data If \code{mm} is a subset/extraction of another dataframe loaded with \code{\link{mmload}}, then provide here the original dataframe from which the extraction originates to compare the extraction to the original data, see examples. (\emph{Default: } \code{NULL})
+#' @param print (\emph{logical}) Whether to print the calculated stats or not. (\emph{Default: } \code{TRUE})
 #' @export
 #'
 #' @details 
@@ -21,7 +22,7 @@
 #'    \item Ess.genes.unique: The number of unique essential genes, if any have been loaded. 
 #' }
 #' 
-#' @return A dataframe with the calculated stats.
+#' @return A dataframe with the calculated stats is returned invisibly.
 #'
 #' @importFrom dplyr select starts_with
 #' @importFrom tidyr separate_rows
@@ -44,7 +45,8 @@
 #' @author Soren M. Karst \email{smk@@bio.aau.dk}
 #' @author Mads Albertsen \email{MadsAlbertsen85@@gmail.com}
 mmstats <- function(mm, 
-                    original_data = NULL) {
+                    original_data = NULL,
+                    print = TRUE) {
   mm$length <- as.numeric(mm$length)
   lengthTotal <- sum(mm$length)
   
@@ -93,22 +95,23 @@ mmstats <- function(mm,
     `colnames<-`("General stats")
   
   #prettyprint the stats data frame
-  stats[,1] %>% 
-    as.character() %>%
-    prettyNum(big.mark = " ", 
-              big.interval = 3, 
-              drop0trailing = T,
-              nsmall = 2) %>%
-    trimws() %>%
-    StrAlign(sep = ".") %>%
-    as.data.frame() %>%
-    `colnames<-`("General stats") %>%
-    `rownames<-`(rownames(stats)) %>%
-    print.data.frame(
-      quote = FALSE,
-      right = TRUE,
-      row.names = TRUE,
-      max = nrow(.))
+  if(isTRUE(print))
+    stats[,1] %>% 
+      as.character() %>%
+      prettyNum(big.mark = " ", 
+                big.interval = 3, 
+                drop0trailing = T,
+                nsmall = 2) %>%
+      trimws() %>%
+      StrAlign(sep = ".") %>%
+      as.data.frame() %>%
+      `colnames<-`("General stats") %>%
+      `rownames<-`(rownames(stats)) %>%
+      print.data.frame(
+        quote = FALSE,
+        right = TRUE,
+        row.names = TRUE,
+        max = nrow(.))
   
   #return the stats data frame invisibly
   invisible(stats)

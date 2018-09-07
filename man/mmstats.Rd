@@ -4,15 +4,17 @@
 \alias{mmstats}
 \title{Print basic statistics of metagenome data}
 \usage{
-mmstats(mm, original_data = NULL)
+mmstats(mm, original_data = NULL, print = TRUE)
 }
 \arguments{
 \item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}
 
 \item{original_data}{If \code{mm} is a subset/extraction of another dataframe loaded with \code{\link{mmload}}, then provide here the original dataframe from which the extraction originates to compare the extraction to the original data, see examples. (\emph{Default: } \code{NULL})}
+
+\item{print}{(\emph{logical}) Whether to print the calculated stats or not. (\emph{Default: } \code{TRUE})}
 }
 \value{
-A dataframe with the calculated stats.
+A dataframe with the calculated stats is returned invisibly.
 }
 \description{
 Calculates some basic statistics like the N50 length, minimum-, mean-, and maximum scaffold lengths, mean GC content, information about essential genes, and more...
