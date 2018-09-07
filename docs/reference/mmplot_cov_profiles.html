@@ -21,13 +21,16 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
 <!-- docsearch -->
+<script src="../docsearch.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 <link href="../docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
@@ -37,6 +40,7 @@
 
 <meta property="og:description" content="Plots all coverage profiles in the data for comparison. This is useful for identifying scaffold patterns across multiple coverage profiles and spot potential contaminants." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -73,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mmgenome2</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.7</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.10</span>
       </span>
     </div>
 
@@ -126,9 +130,10 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>mmplot_cov_profiles</span>(<span class='no'>mm</span>, <span class='kw'>normalise</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.6</span>, <span class='kw'>color_by</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>color_vector</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"blue"</span>, <span class='st'>"green"</span>, <span class='st'>"red"</span>), <span class='kw'>color_scale_log10</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>y_scale_log10</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>plot_lines</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>mmplot_cov_profiles</span>(<span class='no'>mm</span>, <span class='kw'>normalise</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.6</span>,
+  <span class='kw'>color_by</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>color_vector</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"blue"</span>, <span class='st'>"green"</span>, <span class='st'>"red"</span>),
+  <span class='kw'>color_scale_log10</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>y_scale_log10</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>plot_lines</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>interactive_plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -165,32 +170,35 @@
       <th>plot_lines</th>
       <td><p>(<em>Logical</em>) Connect scaffolds with lines. (<em>Default: </em> <code>TRUE</code>)</p></td>
     </tr>
+    <tr>
+      <th>interactive_plot</th>
+      <td><p>(<em>Logical</em>) Return an interactive <code>plotly</code> plot or not. (<em>Default: </em> <code>FALSE</code>)</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A ggplot object. Note that mmgenome2 hides all warnings produced by ggplot objects.</p>
+    <p>A ggplot or plotly object. Note that mmgenome2 hides all warnings produced by ggplot objects.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>mmgenome2</span>)
 <span class='fu'>data</span>(<span class='no'>mmgenome2</span>)
 <span class='no'>mmgenome2</span></div><div class='output co'>#&gt; # A tibble: 97,285 x 13
-#&gt;    scaffold length    gc cov_C13.11.14 cov_C13.11.25 cov_C13.12.03
-#&gt;    &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
-#&gt;  1 1          8264  57.8       1.44             53.6         0    
-#&gt;  2 2          1027  57.0       0.625            24.2         0    
-#&gt;  3 3          1665  55.9      13.5             434.          0.166
-#&gt;  4 4          9056  35.9       0.01             23.4         0    
-#&gt;  5 5          3343  64.0       3.20             16.4         0    
-#&gt;  6 6         98207  39.1       0.00966          24.5         3.29 
-#&gt;  7 7          6480  63.0       2.61             19.2         1.46 
-#&gt;  8 8         15790  61.7       2.78             21.2         1.62 
-#&gt;  9 9          1403  70.4      85.1             192.          0    
-#&gt; 10 10         2018  70.2      50.3             101.          0    
-#&gt; # ... with 97,275 more rows, and 7 more variables: cov_C14.01.09 &lt;dbl&gt;,
-#&gt; #   PC1 &lt;dbl&gt;, PC2 &lt;dbl&gt;, PC3 &lt;dbl&gt;, geneID &lt;chr&gt;, taxonomy &lt;fct&gt;,
-#&gt; #   rRNA16S &lt;fct&gt;</div><div class='input'><span class='no'>selection</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>cov_C13.11.25</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>7.2</span>, <span class='fl'>16.2</span>, <span class='fl'>25.2</span>, <span class='fl'>23.3</span>, <span class='fl'>10.1</span>),
+#&gt;    scaffold length    gc cov_C13.11.14 cov_C13.11.25 cov_C13.12.03 cov_C14.01.09
+#&gt;    &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+#&gt;  1 1          8264  57.8       1.44             53.6         0             0.066
+#&gt;  2 2          1027  57.0       0.625            24.2         0             0    
+#&gt;  3 3          1665  55.9      13.5             434.          0.166         0.177
+#&gt;  4 4          9056  35.9       0.01             23.4         0             0    
+#&gt;  5 5          3343  64.0       3.20             16.4         0             0    
+#&gt;  6 6         98207  39.1       0.00966          24.5         3.29          9.85 
+#&gt;  7 7          6480  63.0       2.61             19.2         1.46         12.3  
+#&gt;  8 8         15790  61.7       2.78             21.2         1.62         10.3  
+#&gt;  9 9          1403  70.4      85.1             192.          0             0    
+#&gt; 10 10         2018  70.2      50.3             101.          0             0    
+#&gt; # ... with 97,275 more rows, and 6 more variables: PC1 &lt;dbl&gt;, PC2 &lt;dbl&gt;,
+#&gt; #   PC3 &lt;dbl&gt;, geneID &lt;chr&gt;, taxonomy &lt;fct&gt;, rRNA16S &lt;fct&gt;</div><div class='input'><span class='no'>selection</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>cov_C13.11.25</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>7.2</span>, <span class='fl'>16.2</span>, <span class='fl'>25.2</span>, <span class='fl'>23.3</span>, <span class='fl'>10.1</span>),
                         <span class='kw'>cov_C14.01.09</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>47</span>, <span class='fl'>77</span>, <span class='fl'>52.8</span>, <span class='fl'>29.5</span>, <span class='fl'>22.1</span>))
 <span class='no'>mmgenome2_extraction</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mmextract.html'>mmextract</a></span>(<span class='no'>mmgenome2</span>,
                                   <span class='kw'>min_length</span> <span class='kw'>=</span> <span class='fl'>3000</span>,
