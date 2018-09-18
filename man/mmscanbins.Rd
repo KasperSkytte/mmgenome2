@@ -19,21 +19,22 @@ Reads all FASTA files (genome bins) in a folder and returns all unique scaffold 
 }
 \examples{
 \dontrun{
-#Use mmextract and mmexport to extract scaffolds from the assembly and 
-#write their sequences to a FASTA file per bin. Then the mmscanbins() function 
-#can be used to retrieve the names of all scaffolds already extracted, and 
-#then for example highlight them in a plot:
+# Use mmextract and mmexport to extract scaffolds from the assembly and
+# write their sequences to a FASTA file per bin. Then the mmscanbins() function
+# can be used to retrieve the names of all scaffolds already extracted, and
+# then for example highlight them in a plot:
 
 binned_scaffolds <- mmscanbins("path/to/folder", namesOnly = TRUE)
 binned_scaffolds
 mmplot(mmgenome2,
-       min_length = 10000,
-       x = "cov_C13.11.25",
-       y = "cov_C14.01.09",
-       color_by = "taxonomy",
-       highlight_scaffolds = binned_scaffolds,
-       highlight_color = "darkred",
-       x_scale = "log10",
-       y_scale = "log10")
+  min_length = 10000,
+  x = "cov_C13.11.25",
+  y = "cov_C14.01.09",
+  color_by = "taxonomy",
+  highlight_scaffolds = binned_scaffolds,
+  highlight_color = "darkred",
+  x_scale = "log10",
+  y_scale = "log10"
+)
 }
 }

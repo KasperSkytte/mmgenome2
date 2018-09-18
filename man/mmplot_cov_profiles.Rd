@@ -4,9 +4,10 @@
 \alias{mmplot_cov_profiles}
 \title{Compare coverage profiles}
 \usage{
-mmplot_cov_profiles(mm, normalise = FALSE, alpha = 0.6, color_by = NULL,
-  color_vector = c("blue", "green", "red"), color_scale_log10 = FALSE,
-  y_scale_log10 = FALSE, plot_lines = TRUE, interactive_plot = FALSE)
+mmplot_cov_profiles(mm, normalise = FALSE, alpha = 0.6,
+  color_by = NULL, color_vector = c("blue", "green", "red"),
+  color_scale_log10 = FALSE, y_scale_log10 = FALSE,
+  plot_lines = TRUE, interactive_plot = FALSE)
 }
 \arguments{
 \item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}
@@ -37,13 +38,17 @@ Plots all coverage profiles in the data for comparison. This is useful for ident
 library(mmgenome2)
 data(mmgenome2)
 mmgenome2
-selection <- data.frame(cov_C13.11.25 = c(7.2, 16.2, 25.2, 23.3, 10.1),
-                        cov_C14.01.09 = c(47, 77, 52.8, 29.5, 22.1))
-mmgenome2_extraction <- mmextract(mmgenome2, 
-                                  min_length = 3000,
-                                  selection = selection,
-                                  inverse = FALSE)
+selection <- data.frame(
+  cov_C13.11.25 = c(7.2, 16.2, 25.2, 23.3, 10.1),
+  cov_C14.01.09 = c(47, 77, 52.8, 29.5, 22.1)
+)
+mmgenome2_extraction <- mmextract(mmgenome2,
+  min_length = 3000,
+  selection = selection,
+  inverse = FALSE
+)
 mmplot_cov_profiles(mmgenome2_extraction,
-                    color_by = "taxonomy",
-                    normalise = FALSE)
+  color_by = "taxonomy",
+  normalise = FALSE
+)
 }

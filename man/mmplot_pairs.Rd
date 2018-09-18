@@ -4,7 +4,8 @@
 \alias{mmplot_pairs}
 \title{Plot multiple combinations of variables in a pairs plot}
 \usage{
-mmplot_pairs(mm, variables = NULL, textsize = 5, axis_ticks = TRUE, ...)
+mmplot_pairs(mm, variables = NULL, textsize = 5, axis_ticks = TRUE,
+  ...)
 }
 \arguments{
 \item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}
@@ -28,14 +29,14 @@ library(mmgenome2)
 data(mmgenome2)
 mmgenome2
 mmplot_pairs(mmgenome2,
-             variables = c("cov_C13.11.14", "cov_C13.11.25", "cov_C13.12.03", "cov_C14.01.09"),
-             min_length = 10000,
-             color_by = "taxonomy",
-             x_scale = "log10",
-             y_scale = "log10",
-             x_limits = c(1, NA),
-             y_limits = c(1, NA))
-
+  variables = c("cov_C13.11.14", "cov_C13.11.25", "cov_C13.12.03", "cov_C14.01.09"),
+  min_length = 10000,
+  color_by = "taxonomy",
+  x_scale = "log10",
+  y_scale = "log10",
+  x_limits = c(1, NA),
+  y_limits = c(1, NA)
+)
 }
 \author{
 Kasper Skytte Andersen \email{ksa@bio.aau.dk}

@@ -41,15 +41,17 @@ Loads, validates and combines multiple aspects of metagenome data into one dataf
 }
 \examples{
 \dontrun{
-  library(mmgenome2)   
-  mm <- mmload(
-    assembly = "path/to/assembly.fa",
-    coverage = list(nameofcoverage1 = read.csv("path/to/coveragetable1.csv", col.names = TRUE),
-                    nameofcoverage2 = read.csv("path/to/coveragetable2.csv", col.names = TRUE)),
-    essential_genes = "path/to/ess_genes.txt",
-    verbose = TRUE
-  )
-  mm
+library(mmgenome2)
+mm <- mmload(
+  assembly = "path/to/assembly.fa",
+  coverage = list(
+    nameofcoverage1 = read.csv("path/to/coveragetable1.csv", col.names = TRUE),
+    nameofcoverage2 = read.csv("path/to/coveragetable2.csv", col.names = TRUE)
+  ),
+  essential_genes = "path/to/ess_genes.txt",
+  verbose = TRUE
+)
+mm
 }
 
 }

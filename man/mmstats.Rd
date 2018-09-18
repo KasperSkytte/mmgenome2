@@ -30,8 +30,8 @@ The returned stats are calculated as follows:
    \item Length.min: The size of the smallest scaffold in the assembly.
    \item weighted_GC_mean: The average GC content in the assembly, weighted by scaffold sizes.
    \item cov_*: The average coverage of each coverage variable in mm, weighted by scaffold sizes. (Only columns starting with "cov_" will be shown)
-   \item Ess.genes.total: The total number of essential genes, if any have been loaded. 
-   \item Ess.genes.unique: The number of unique essential genes, if any have been loaded. 
+   \item Ess.genes.total: The total number of essential genes, if any have been loaded.
+   \item Ess.genes.unique: The number of unique essential genes, if any have been loaded.
 }
 }
 \examples{
@@ -39,14 +39,16 @@ library(mmgenome2)
 data(mmgenome2)
 mmstats(mmgenome2)
 
-#Compare an extraction with the original data from which the extraction originates:
-selection <- data.frame(cov_C13.11.25 = c(7.2, 16.2, 25.2, 23.3, 10.1),
-                        cov_C14.01.09 = c(47, 77, 52.8, 29.5, 22.1))
-mmgenome2_extraction <- mmextract(mmgenome2, 
-                                  selection = selection)
-                                  
-mmstats(mmgenome2_extraction, original_data = mmgenome2)
+# Compare an extraction with the original data from which the extraction originates:
+selection <- data.frame(
+  cov_C13.11.25 = c(7.2, 16.2, 25.2, 23.3, 10.1),
+  cov_C14.01.09 = c(47, 77, 52.8, 29.5, 22.1)
+)
+mmgenome2_extraction <- mmextract(mmgenome2,
+  selection = selection
+)
 
+mmstats(mmgenome2_extraction, original_data = mmgenome2)
 }
 \author{
 Kasper Skytte Andersen \email{ksa@bio.aau.dk}

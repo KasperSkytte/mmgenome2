@@ -19,6 +19,6 @@ Searches a folder for all files with a filename ending with \code{"_link"}, and 
 }
 \examples{
 \dontrun{
-  links <- mmmerge_linkfiles("path/to/folder")
+links <- mmmerge_linkfiles("path/to/folder")
 }
 }

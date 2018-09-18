@@ -6,8 +6,9 @@
 \usage{
 mmnetwork(mm, network, min_connections = 1, color_by = NULL,
   color_scale_log10 = FALSE, locator = FALSE, selection = NULL,
-  highlight_labels = NULL, highlight_color = "darkred", links_scale = 1,
-  scaffold_labels = FALSE, print_nolinks = FALSE, seed = 0)
+  highlight_labels = NULL, highlight_color = "darkred",
+  links_scale = 1, scaffold_labels = FALSE, print_nolinks = FALSE,
+  seed = 0)
 }
 \arguments{
 \item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}
@@ -52,16 +53,18 @@ library(mmgenome2)
 data(mmgenome2)
 data(paired_ends)
 mmgenome2
-selection <- data.frame(cov_C13.11.25 = c(7.2, 16.2, 25.2, 23.3, 10.1),
-                        cov_C14.01.09 = c(47, 77, 52.8, 29.5, 22.1))
+selection <- data.frame(
+  cov_C13.11.25 = c(7.2, 16.2, 25.2, 23.3, 10.1),
+  cov_C14.01.09 = c(47, 77, 52.8, 29.5, 22.1)
+)
 mmgenome2_extraction <- mmextract(mmgenome2, selection = selection)
 mmgenome2_extraction
-p <- mmnetwork(mmgenome2_extraction, 
-               network = paired_ends, 
-               min_connections = 1,
-               color_by = "taxonomy")
+p <- mmnetwork(mmgenome2_extraction,
+  network = paired_ends,
+  min_connections = 1,
+  color_by = "taxonomy"
+)
 p
-
 }
 \author{
 Kasper Skytte Andersen \email{ksa@bio.aau.dk}

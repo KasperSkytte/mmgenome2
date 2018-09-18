@@ -21,17 +21,21 @@ Writes the DNA sequences of a given set of scaffolds from the assembly to a FAST
 library(mmgenome2)
 data(mmgenome2)
 mmgenome2
-selection <- data.frame(cov_C13.11.25 = c(7.2, 16.2, 25.2, 23.3, 10.1),
-                        cov_C14.01.09 = c(47, 77, 52.8, 29.5, 22.1))
-mmgenome2_extraction <- mmextract(mmgenome2, 
-                                  min_length = 3000,
-                                  selection = selection,
-                                  inverse = FALSE)
+selection <- data.frame(
+  cov_C13.11.25 = c(7.2, 16.2, 25.2, 23.3, 10.1),
+  cov_C14.01.09 = c(47, 77, 52.8, 29.5, 22.1)
+)
+mmgenome2_extraction <- mmextract(mmgenome2,
+  min_length = 3000,
+  selection = selection,
+  inverse = FALSE
+)
 mmgenome2_extraction
 \dontrun{
 mmexport(mmgenome2_extraction,
-         assembly = assembly,
-         file = "bins/exported_assembly.fa")
+  assembly = assembly,
+  file = "bins/exported_assembly.fa"
+)
 }
 
 }

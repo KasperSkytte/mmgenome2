@@ -7,10 +7,11 @@
 mmplot(mm, x, y, min_length = 0, color_by = NULL, locator = FALSE,
   selection = NULL, network = NULL, shared_genes = FALSE,
   label_scaffolds = FALSE, label_scaffolds_by = "scaffold",
-  highlight_scaffolds = NULL, highlight_color = "darkred", x_scale = NULL,
-  x_limits = NULL, y_scale = NULL, y_limits = NULL, alpha = 0.1,
-  fixed_size = NULL, size_scale = 1, factor_shape = "outline",
-  color_vector = c("blue", "green", "red"), color_scale_log10 = FALSE)
+  highlight_scaffolds = NULL, highlight_color = "darkred",
+  x_scale = NULL, x_limits = NULL, y_scale = NULL, y_limits = NULL,
+  alpha = 0.1, fixed_size = NULL, size_scale = 1,
+  factor_shape = "outline", color_vector = c("blue", "green", "red"),
+  color_scale_log10 = FALSE)
 }
 \arguments{
 \item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}
@@ -70,28 +71,31 @@ library(mmgenome2)
 data(mmgenome2)
 mmgenome2
 mmplot(mmgenome2,
-       min_length = 3000,
-       x = "cov_C13.11.25",
-       y = "cov_C14.01.09",
-       color_by = "taxonomy",
-       #locator = TRUE,
-       x_scale = "log10",
-       y_scale = "log10")
-#Set "locator = TRUE" to interactively capture the coordinates of 
-#mouse clicks in an mmplot, or provide coordinates with "selection":
-selection <- data.frame(cov_C13.11.25 = c(7.2, 16.2, 25.2, 23.3, 10.1),
-                        cov_C14.01.09 = c(47, 77, 52.8, 29.5, 22.1))
+  min_length = 3000,
+  x = "cov_C13.11.25",
+  y = "cov_C14.01.09",
+  color_by = "taxonomy",
+  # locator = TRUE,
+  x_scale = "log10",
+  y_scale = "log10"
+)
+# Set "locator = TRUE" to interactively capture the coordinates of
+# mouse clicks in an mmplot, or provide coordinates with "selection":
+selection <- data.frame(
+  cov_C13.11.25 = c(7.2, 16.2, 25.2, 23.3, 10.1),
+  cov_C14.01.09 = c(47, 77, 52.8, 29.5, 22.1)
+)
 mmplot(mmgenome2,
-       min_length = 10000,
-       x = "cov_C13.11.25",
-       y = "cov_C14.01.09",
-       color_by = "taxonomy",
-       x_scale = "log10",
-       y_scale = "log10",
-       x_limits = c(1,NA), #zoom in at minimum 1x coverage
-       y_limits = c(1,NA), #zoom in at minimum 1x coverage
-       selection = selection) #highlight the selection marked with locator
-
+  min_length = 10000,
+  x = "cov_C13.11.25",
+  y = "cov_C14.01.09",
+  color_by = "taxonomy",
+  x_scale = "log10",
+  y_scale = "log10",
+  x_limits = c(1, NA), # zoom in at minimum 1x coverage
+  y_limits = c(1, NA), # zoom in at minimum 1x coverage
+  selection = selection
+) # highlight the selection marked with locator
 }
 \author{
 Kasper Skytte Andersen \email{ksa@bio.aau.dk}
