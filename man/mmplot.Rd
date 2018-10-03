@@ -7,11 +7,11 @@
 mmplot(mm, x, y, min_length = 0, color_by = NULL, locator = FALSE,
   selection = NULL, network = NULL, shared_genes = FALSE,
   label_scaffolds = FALSE, label_scaffolds_by = "scaffold",
-  highlight_scaffolds = NULL, highlight_color = "darkred",
-  x_scale = NULL, x_limits = NULL, y_scale = NULL, y_limits = NULL,
-  alpha = 0.1, fixed_size = NULL, size_scale = 1,
-  factor_shape = "outline", color_vector = c("blue", "green", "red"),
-  color_scale_log10 = FALSE)
+  label_bins = NULL, highlight_scaffolds = NULL,
+  highlight_color = "darkred", x_scale = NULL, x_limits = NULL,
+  y_scale = NULL, y_limits = NULL, alpha = 0.1, fixed_size = NULL,
+  size_scale = 1, factor_shape = "outline", color_vector = c("blue",
+  "green", "red"), color_scale_log10 = FALSE)
 }
 \arguments{
 \item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}
@@ -35,6 +35,8 @@ mmplot(mm, x, y, min_length = 0, color_by = NULL, locator = FALSE,
 \item{label_scaffolds}{Add text labels (with text from the variable in mm defined by \code{label_scaffolds_by}) to a selection of scaffolds by providing either a character vector of scaffold names, or a dataframe with scaffold names in the first column. If set to \code{TRUE} then \emph{all} scaffolds will be labelled. (\emph{Default: } \code{FALSE})}
 
 \item{label_scaffolds_by}{The variable in mm by which to label the scaffolds defined by \code{label_scaffolds}. (\emph{Default: } \code{"scaffold"})}
+
+\item{label_bins}{Add labels at the centroids of bins (groups of scaffolds) defined by a variable in \code{mm}. (\emph{Default: } \code{NULL})}
 
 \item{highlight_scaffolds}{A vector of scaffold names or a dataframe loaded with \code{\link{mmload}} containing scaffolds to highlight in the plot with the color set by \code{highlight_color}. (\emph{Default: } \code{NULL})}
 

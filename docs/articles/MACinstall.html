@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mmgenome2</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.10</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.11</span>
       </span>
     </div>
 
@@ -102,19 +102,19 @@
 </li>
 <li>create a <code>Makevars</code> file in the folder by <code>nano ~/.R/Makevars</code> and paste the following, save the file afterwards by ctrl+x followed by “y”:</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">CC=<span class="er">/</span>usr<span class="op">/</span>local<span class="op">/</span>bin<span class="op">/</span>gcc<span class="dv">-7</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">CXX=<span class="er">/</span>usr<span class="op">/</span>local<span class="op">/</span>bin<span class="op">/</span>g<span class="op">++-</span><span class="dv">7</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">CXX1X=<span class="er">/</span>usr<span class="op">/</span>local<span class="op">/</span>bin<span class="op">/</span>g<span class="op">++-</span><span class="dv">7</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">CXX11=<span class="er">/</span>usr<span class="op">/</span>local<span class="op">/</span>bin<span class="op">/</span>g<span class="op">++-</span><span class="dv">7</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">SHLIB_CXXLD=<span class="er">/</span>usr<span class="op">/</span>local<span class="op">/</span>bin<span class="op">/</span>g<span class="op">++-</span><span class="dv">7</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">FC=<span class="er">/</span>usr<span class="op">/</span>local<span class="op">/</span>bin<span class="op">/</span>gfortran<span class="dv">-7</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">F77=<span class="er">/</span>usr<span class="op">/</span>local<span class="op">/</span>bin<span class="op">/</span>gfortran<span class="dv">-7</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">MAKE=make <span class="op">-</span>j8</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">SHLIB_OPENMP_CFLAGS=<span class="op">-</span>fopenmp</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">SHLIB_OPENMP_CXXFLAGS=<span class="op">-</span>fopenmp</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">SHLIB_OPENMP_FCFLAGS=<span class="op">-</span>fopenmp</a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">SHLIB_OPENMP_FFLAGS=<span class="op">-</span>fopenmp</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">CC=<span class="er">/</span>usr<span class="op">/</span>local<span class="op">/</span>bin<span class="op">/</span>gcc<span class="dv">-7</span>
+CXX=<span class="er">/</span>usr<span class="op">/</span>local<span class="op">/</span>bin<span class="op">/</span>g<span class="op">++-</span><span class="dv">7</span>
+CXX1X=<span class="er">/</span>usr<span class="op">/</span>local<span class="op">/</span>bin<span class="op">/</span>g<span class="op">++-</span><span class="dv">7</span>
+CXX11=<span class="er">/</span>usr<span class="op">/</span>local<span class="op">/</span>bin<span class="op">/</span>g<span class="op">++-</span><span class="dv">7</span>
+SHLIB_CXXLD=<span class="er">/</span>usr<span class="op">/</span>local<span class="op">/</span>bin<span class="op">/</span>g<span class="op">++-</span><span class="dv">7</span>
+FC=<span class="er">/</span>usr<span class="op">/</span>local<span class="op">/</span>bin<span class="op">/</span>gfortran<span class="dv">-7</span>
+F77=<span class="er">/</span>usr<span class="op">/</span>local<span class="op">/</span>bin<span class="op">/</span>gfortran<span class="dv">-7</span>
+MAKE=make <span class="op">-</span>j8
+
+SHLIB_OPENMP_CFLAGS=<span class="op">-</span>fopenmp
+SHLIB_OPENMP_CXXFLAGS=<span class="op">-</span>fopenmp
+SHLIB_OPENMP_FCFLAGS=<span class="op">-</span>fopenmp
+SHLIB_OPENMP_FFLAGS=<span class="op">-</span>fopenmp</code></pre></div>
 <p>Now <code>mmgenome2</code> can be installed normally as described at the <a href="https://kasperskytte.github.io/mmgenome2/">mmgenome2 webpage</a>. If you have RStudio open then you must restart the current R-session (ctrl+shift+F10) before installing <code>mmgenome2</code>.</p>
   </div>
 

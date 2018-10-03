@@ -3,7 +3,7 @@ Type: Package
 Title: Tools for extracting individual genomes from metagenomes
 Description: mmgenome: a toolbox for extracting individual genomes from
     metagenomes.
-Version: 2.0.10
+Version: 2.0.11
 Date: 2018-01-01
 Encoding: UTF-8
 Authors@R: c(person("Mads", "Albertsen", role = c("aut", "cre"), email = "MadsAlbertsen85@gmail.com"), person(c("Kasper", "Skytte"), "Andersen", role = c("aut"), email = "ksa@bio.aau.dk"), person(c("Rasmus", "Hansen"), "Kirkegaard", role = c("aut"), email = "rhk@bio.aau.dk"), person(c("Søren", "Michael"), "Karst", role = c("aut"), email = "smk@bio.aau.dk"))
@@ -39,7 +39,9 @@ Imports:
     remotes,
     shiny,
     plotly,
-    purrr
+    purrr,
+    rlang, 
+    plyr
 biocViews:
     Biostrings
 remotes:

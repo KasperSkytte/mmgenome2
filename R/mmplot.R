@@ -18,6 +18,7 @@
 #' @param highlight_color The color with which to highlight the scaffolds set by \code{highlight}. (\emph{Default: } \code{"darkred"})
 #' @param label_scaffolds Add text labels (with text from the variable in mm defined by \code{label_scaffolds_by}) to a selection of scaffolds by providing either a character vector of scaffold names, or a dataframe with scaffold names in the first column. If set to \code{TRUE} then \emph{all} scaffolds will be labelled. (\emph{Default: } \code{FALSE})
 #' @param label_scaffolds_by The variable in mm by which to label the scaffolds defined by \code{label_scaffolds}. (\emph{Default: } \code{"scaffold"})
+#' @param label_bins Add labels at the centroids of bins (groups of scaffolds) defined by a variable in \code{mm}. (\emph{Default: } \code{NULL})
 #' @param fixed_size A fixed size for all scaffolds if set. If \code{NULL} then the scaffolds are scaled by length. (\emph{Default: } \code{NULL})
 #' @param size_scale A factor to scale the sizes of the scaffolds plotted. Only applies when \code{fixed_size} is set to \code{NULL} and the scaffolds are scaled by length. (\emph{Default: } \code{1})
 #' @param factor_shape When \code{color_by} is a categorical variable (factor or character) then set the shape of the scaffolds to either \code{"solid"} or \code{"outline"}. (\emph{Default: } \code{"outline"})
@@ -32,9 +33,12 @@
 #' @import ggplot2
 #' @importFrom magrittr %>%
 #' @importFrom tidyr separate_rows
-#' @importFrom dplyr filter
+#' @importFrom dplyr filter summarise_at
+#' @importFrom rlang quos sym
+#' @importFrom plyr ldply
 #' @importFrom tibble as_tibble
 #' @importFrom ggrepel geom_text_repel
+#'
 #'
 #' @examples
 #' library(mmgenome2)
@@ -80,6 +84,7 @@ mmplot <- function(mm,
                    shared_genes = FALSE,
                    label_scaffolds = FALSE,
                    label_scaffolds_by = "scaffold",
+                   label_bins = NULL,
                    highlight_scaffolds = NULL,
                    highlight_color = "darkred",
                    x_scale = NULL,
@@ -162,7 +167,7 @@ mmplot <- function(mm,
             16
           } else {
             1
-          } ,
+          },
           alpha = 0.7,
           na.rm = TRUE
         ) +
@@ -218,7 +223,7 @@ mmplot <- function(mm,
             16
           } else {
             1
-          } ,
+          },
           alpha = 0.7,
           size = fixed_size,
           na.rm = TRUE
@@ -278,7 +283,8 @@ mmplot <- function(mm,
 
     p <- p +
       geom_segment(
-        data = links, aes(
+        data = links,
+        aes(
           x = x,
           y = y,
           xend = xend,
@@ -289,12 +295,14 @@ mmplot <- function(mm,
         alpha = 0.5
       ) +
       geom_point(
-        data = links, aes(x = x, y = y),
+        data = links,
+        aes(x = x, y = y),
         size = 2,
         color = "darkgrey"
       ) +
       geom_point(
-        data = links, aes(x = xend, y = yend),
+        data = links,
+        aes(x = xend, y = yend),
         size = 2,
         color = "darkgrey"
       )
@@ -323,17 +331,38 @@ mmplot <- function(mm,
     }
     # label the provided scaffolds by label_scaffolds_by
     labels_data <- subset(mm, mm[[1]] %in% label_scaffolds)
-    p <- p + ggrepel::geom_text_repel(
-      data = labels_data,
-      aes_(
-        x = labels_data[[x]],
-        y = labels_data[[y]],
-        label = labels_data[[label_scaffolds_by]]
-      ),
-      size = 4,
-      color = "black",
-      inherit.aes = FALSE
-    )
+    p <- p +
+      ggrepel::geom_text_repel(
+        data = labels_data,
+        aes_(
+          x = labels_data[[x]],
+          y = labels_data[[y]],
+          label = labels_data[[label_scaffolds_by]]
+        ),
+        size = 4,
+        color = "black",
+        inherit.aes = FALSE
+      )
+  }
+
+  # label the centroid of bins by a variable in mm
+  if (!is.null(label_bins)) {
+    labels_data <- mm[, c(x, y, label_bins)] %>%
+      split(.[, label_bins]) %>%
+      plyr::ldply(function(bin) {
+        dplyr::summarise_at(bin, rlang::quos(x, y), mean)
+      },
+      .id = label_bins
+      )
+    p <- p +
+      ggrepel::geom_label_repel(
+        data = labels_data,
+        aes(!!rlang::sym(x),
+          !!rlang::sym(y),
+          label = !!rlang::sym(label_bins)
+        ),
+        inherit.aes = FALSE
+      )
   }
 
   ##### Plot duplicates #####
