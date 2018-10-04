@@ -13,8 +13,9 @@
 #' @param essential_genes Either a path to a CSV file (comma-delimited ",") containing the essential genes, or a 2-column dataframe with scaffold names in the first column and gene ID's in the second. Can contain duplicates. (\emph{Default: } \code{NULL})
 #' @param taxonomy A dataframe containing taxonomy assigned to the scaffolds. The first column must contain the scaffold names. (\emph{Default: } \code{NULL})
 #' @param additional A dataframe containing any additional data. The first column must contain the scaffold names. (\emph{Default: } \code{NULL})
-#' @param kmer_pca (\emph{Logical}) Perform Principal Components Analysis of tetranucleotide frequencies of each scaffold and merge the scores of the 3 most significant axes. (\emph{Default: } \code{FALSE})
-#' @param kmer_BH_tSNE (\emph{Logical}) Calculate Barnes-Hut t-Distributed Stochastic Neighbor Embedding (B-H t-SNE) representations of tetranucleotide frequencies using \code{\link[Rtsne]{Rtsne}} and merge the result. Additional arguments may be required for success, refer to the documentation of \code{\link[Rtsne]{Rtsne}}. This is done in parallel, thus setting the \code{num_threads} to the number of available cores may greatly increase the calculation time of large data. (\emph{Default: } \code{FALSE})
+#' @param kmer_pca (\emph{Logical}) Perform Principal Components Analysis of kmer nucleotide frequencies (kmer size defined by \code{kmer_size}) of each scaffold and merge the scores of the 3 most significant axes. (\emph{Default: } \code{FALSE})
+#' @param kmer_BH_tSNE (\emph{Logical}) Calculate Barnes-Hut t-Distributed Stochastic Neighbor Embedding (B-H t-SNE) representations of kmer nucleotide frequencies (kmer size defined by \code{kmer_size}) using \code{\link[Rtsne]{Rtsne}} and merge the result. Additional arguments may be required for success (passed on through \code{...}), refer to the documentation of \code{\link[Rtsne]{Rtsne}}. This is done in parallel, thus setting the \code{num_threads} to the number of available cores may greatly increase the calculation time of large data. (\emph{Default: } \code{FALSE})
+#' @param kmer_size The kmer frequency size (k) used when \code{kmer_pca = TRUE} or \code{kmer_BH_tSNE = TRUE}. The default is tetramers (\code{k = 4}). (\emph{Default: } \code{4})
 #' @param verbose (\emph{Logical}) Whether to print status messages during the loading process. (\emph{Default: } \code{TRUE})
 #' @param ... Additional arguments are passed on to \code{\link[Rtsne]{Rtsne}}.
 #'
@@ -56,6 +57,7 @@ mmload <- function(assembly,
                    additional = NULL,
                    kmer_pca = FALSE,
                    kmer_BH_tSNE = FALSE,
+                   kmer_size = 4L,
                    verbose = TRUE,
                    ...) {
   ##### Assembly #####
@@ -170,20 +172,39 @@ mmload <- function(assembly,
     }
   }
 
-  ##### calculate tetranucleotides frequencies #####
-  if (isTRUE(kmer_pca) | isTRUE(kmer_BH_tSNE)) {
-    if (isTRUE(verbose)) {
-      message("Calculating tetranucleotide frequencies in the assembly sequences...")
+  ##### calculate kmer nucleotide frequencies #####
+  if (isTRUE(kmer_pca) || isTRUE(kmer_BH_tSNE)) {
+    if (is.numeric(kmer_size)) {
+      if (isTRUE(verbose)) {
+        message(paste0(
+          "Calculating kmer (k=",
+          as.integer(kmer_size),
+          ") nucleotide frequencies in the assembly sequences..."
+        ))
+      }
+      kmer_fwd <- Biostrings::oligonucleotideFrequency(assembly,
+        width = as.integer(kmer_size),
+        as.prob = TRUE,
+        with.labels = TRUE
+      )
+      kmer_revC <- Biostrings::oligonucleotideFrequency(Biostrings::reverseComplement(assembly),
+        width = as.integer(kmer_size),
+        as.prob = TRUE
+      )
+      kmer <- (kmer_fwd + kmer_revC) / 2 * 100
+    } else {
+      stop("kmer_size must be a positive integer larger than 0", call. = FALSE)
     }
-    kmer_fwd <- Biostrings::oligonucleotideFrequency(assembly, width = 4, as.prob = TRUE, with.labels = TRUE)
-    kmer_revC <- Biostrings::oligonucleotideFrequency(Biostrings::reverseComplement(assembly), width = 4, as.prob = TRUE)
-    kmer <- (kmer_fwd + kmer_revC) / 2 * 100
   }
 
   ##### PCA of tetranucleotides #####
   if (isTRUE(kmer_pca)) {
     if (isTRUE(verbose)) {
-      message("Calculating principal components of tetranucleotide frequencies...")
+      message(paste0(
+        "Calculating principal components of kmer (k=",
+        as.integer(kmer_size),
+        ") nucleotide frequencies..."
+      ))
     }
     PCA_res <- kmer %>%
       vegan::rda() %>%
@@ -199,10 +220,18 @@ mmload <- function(assembly,
   ##### BH tSNE of tetranucleotides #####
   if (isTRUE(kmer_BH_tSNE)) {
     if (isTRUE(verbose)) {
-      message("Calculating Barnes-Hut t-Distributed Stochastic Neighbor Embedding representations of tetranucleotide frequencies...")
+      message(paste0(
+        "Calculating Barnes-Hut t-Distributed Stochastic Neighbor Embedding representations of kmer (k=",
+        as.integer(kmer_size),
+        ") nucleotide frequencies..."
+      ))
     }
     set.seed(42) # Sets seed for reproducibility
-    tSNE_res <- Rtsne::Rtsne(kmer, verbose = verbose, check_duplicates = F, ...)[["Y"]] %>%
+    tSNE_res <- Rtsne::Rtsne(kmer,
+      verbose = verbose,
+      check_duplicates = F,
+      ...
+    )[["Y"]] %>%
       tibble::as.tibble()
     mm <- tibble::add_column(mm,
       tSNE1 = tSNE_res[[1]],

@@ -6,7 +6,7 @@
 \usage{
 mmload(assembly, coverage, essential_genes = NULL, taxonomy = NULL,
   additional = NULL, kmer_pca = FALSE, kmer_BH_tSNE = FALSE,
-  verbose = TRUE, ...)
+  kmer_size = 4L, verbose = TRUE, ...)
 }
 \arguments{
 \item{assembly}{(\emph{required}) A character string with the path to the assembly FASTA file, or the assembly as already loaded with \code{\link{readDNAStringSet}}.}
@@ -25,9 +25,11 @@ mmload(assembly, coverage, essential_genes = NULL, taxonomy = NULL,
 
 \item{additional}{A dataframe containing any additional data. The first column must contain the scaffold names. (\emph{Default: } \code{NULL})}
 
-\item{kmer_pca}{(\emph{Logical}) Perform Principal Components Analysis of tetranucleotide frequencies of each scaffold and merge the scores of the 3 most significant axes. (\emph{Default: } \code{FALSE})}
+\item{kmer_pca}{(\emph{Logical}) Perform Principal Components Analysis of kmer nucleotide frequencies (kmer size defined by \code{kmer_size}) of each scaffold and merge the scores of the 3 most significant axes. (\emph{Default: } \code{FALSE})}
 
-\item{kmer_BH_tSNE}{(\emph{Logical}) Calculate Barnes-Hut t-Distributed Stochastic Neighbor Embedding (B-H t-SNE) representations of tetranucleotide frequencies using \code{\link[Rtsne]{Rtsne}} and merge the result. Additional arguments may be required for success, refer to the documentation of \code{\link[Rtsne]{Rtsne}}. This is done in parallel, thus setting the \code{num_threads} to the number of available cores may greatly increase the calculation time of large data. (\emph{Default: } \code{FALSE})}
+\item{kmer_BH_tSNE}{(\emph{Logical}) Calculate Barnes-Hut t-Distributed Stochastic Neighbor Embedding (B-H t-SNE) representations of kmer nucleotide frequencies (kmer size defined by \code{kmer_size}) using \code{\link[Rtsne]{Rtsne}} and merge the result. Additional arguments may be required for success (passed on through \code{...}), refer to the documentation of \code{\link[Rtsne]{Rtsne}}. This is done in parallel, thus setting the \code{num_threads} to the number of available cores may greatly increase the calculation time of large data. (\emph{Default: } \code{FALSE})}
+
+\item{kmer_size}{The kmer frequency size (k) used when \code{kmer_pca = TRUE} or \code{kmer_BH_tSNE = TRUE}. The default is tetramers (\code{k = 4}). (\emph{Default: } \code{4})}
 
 \item{verbose}{(\emph{Logical}) Whether to print status messages during the loading process. (\emph{Default: } \code{TRUE})}
 
