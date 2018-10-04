@@ -51,7 +51,7 @@
 #' 
 #' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
 mmload <- function(assembly,
-                   coverage,
+                   coverage = NULL,
                    essential_genes = NULL,
                    taxonomy = NULL,
                    additional = NULL,
@@ -99,40 +99,43 @@ mmload <- function(assembly,
   )
 
   ##### Coverage #####
-  if (isTRUE(verbose)) {
-    message("Loading coverage data...")
-  }
-  if (is.character(coverage)) {
-    filepaths <- list.files(
-      path = coverage,
-      full.names = TRUE,
-      all.files = FALSE,
-      recursive = FALSE,
-      ignore.case = TRUE
-    )
-    filepaths <- filepaths[grepl("*._cov$", tools::file_path_sans_ext(filepaths))]
-    path <- coverage
-    if (length(filepaths) > 0) {
-      filenames <- basename(filepaths)
-      coverage <- list()
-      for (i in 1:length(filenames)) {
-        coverage[[stringr::str_remove(tools::file_path_sans_ext(filenames)[i], "_cov$")]] <- data.table::fread(filepaths[i], data.table = FALSE)[, 1:2]
-      }
-      if (isTRUE(verbose)) {
-        message(paste0("  Found the following ", length(filenames), " coverage files in the folder \"", path, "\":\n    ", paste0(filenames, collapse = "\n    ")))
-      }
-    } else {
-      stop("No files with a filename ending with \"_cov\" were found in the folder \"", coverage, "\"", call. = FALSE)
+  if (!is.null(coverage)) {
+    if (isTRUE(verbose)) {
+      message("Loading coverage data...")
     }
+    if (is.character(coverage)) {
+      filepaths <- list.files(
+        path = coverage,
+        full.names = TRUE,
+        all.files = FALSE,
+        recursive = FALSE,
+        ignore.case = TRUE
+      )
+      filepaths <- filepaths[grepl("*._cov$", tools::file_path_sans_ext(filepaths))]
+      path <- coverage
+      if (length(filepaths) > 0) {
+        filenames <- basename(filepaths)
+        coverage <- list()
+        for (i in 1:length(filenames)) {
+          coverage[[stringr::str_remove(tools::file_path_sans_ext(filenames)[i], "_cov$")]] <- data.table::fread(filepaths[i], data.table = FALSE)[, 1:2]
+        }
+        if (isTRUE(verbose)) {
+          message(paste0("  Found the following ", length(filenames), " coverage files in the folder \"", path, "\":\n    ", paste0(filenames, collapse = "\n    ")))
+        }
+      } else {
+        stop("No files with a filename ending with \"_cov\" were found in the folder \"", coverage, "\"", call. = FALSE)
+      }
+    }
+    beforeMerge <- ncol(mm)
+    mm <- mmmerge(
+      x = mm,
+      y = coverage,
+      type = "coverage"
+    )
+    colnames(mm)[c((beforeMerge + 1):ncol(mm))] <- paste0("cov_", colnames(mm)[c((beforeMerge + 1):ncol(mm))])
+  } else {
+    warning("No coverage data loaded, this may cause trouble with other mmgenome2 functions", call. = FALSE)
   }
-  beforeMerge <- ncol(mm)
-  mm <- mmmerge(
-    x = mm,
-    y = coverage,
-    type = "coverage"
-  )
-  colnames(mm)[c((beforeMerge + 1):ncol(mm))] <- paste0("cov_", colnames(mm)[c((beforeMerge + 1):ncol(mm))])
-
 
   ##### Essential genes #####
   if (!is.null(essential_genes)) {
