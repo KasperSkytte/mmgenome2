@@ -14,10 +14,8 @@
 #' @param taxonomy A dataframe containing taxonomy assigned to the scaffolds. The first column must contain the scaffold names. (\emph{Default: } \code{NULL})
 #' @param additional A dataframe containing any additional data. The first column must contain the scaffold names. (\emph{Default: } \code{NULL})
 #' @param kmer_pca (\emph{Logical}) Perform Principal Components Analysis of kmer nucleotide frequencies (kmer size defined by \code{kmer_size}) of each scaffold and merge the scores of the 3 most significant axes. (\emph{Default: } \code{FALSE})
-#' @param kmer_BH_tSNE (\emph{Logical}) Calculate Barnes-Hut t-Distributed Stochastic Neighbor Embedding (B-H t-SNE) representations of kmer nucleotide frequencies (kmer size defined by \code{kmer_size}) using \code{\link[Rtsne]{Rtsne}} and merge the result. Additional arguments may be required for success (passed on through \code{...}), refer to the documentation of \code{\link[Rtsne]{Rtsne}}. This is done in parallel, thus setting the \code{num_threads} to the number of available cores may greatly increase the calculation time of large data. (\emph{Default: } \code{FALSE})
 #' @param kmer_size The kmer frequency size (k) used when \code{kmer_pca = TRUE} or \code{kmer_BH_tSNE = TRUE}. The default is tetramers (\code{k = 4}). (\emph{Default: } \code{4})
 #' @param verbose (\emph{Logical}) Whether to print status messages during the loading process. (\emph{Default: } \code{TRUE})
-#' @param ... Additional arguments are passed on to \code{\link[Rtsne]{Rtsne}}.
 #'
 #' @export
 #'
@@ -32,7 +30,6 @@
 #' @importFrom vegan rda scores
 #' @importFrom data.table fread
 #' @importFrom tools file_path_sans_ext
-#' @import Rtsne
 #'
 #' @examples
 #' \dontrun{
@@ -56,10 +53,8 @@ mmload <- function(assembly,
                    taxonomy = NULL,
                    additional = NULL,
                    kmer_pca = FALSE,
-                   kmer_BH_tSNE = FALSE,
                    kmer_size = 4L,
-                   verbose = TRUE,
-                   ...) {
+                   verbose = TRUE) {
   ##### Assembly #####
   # Load assembly sequences from the provided file path or object
   if (isTRUE(verbose)) {
@@ -176,7 +171,7 @@ mmload <- function(assembly,
   }
 
   ##### calculate kmer nucleotide frequencies #####
-  if (isTRUE(kmer_pca) || isTRUE(kmer_BH_tSNE)) {
+  if (isTRUE(kmer_pca)) {
     if (is.numeric(kmer_size)) {
       if (isTRUE(verbose)) {
         message(paste0(
@@ -217,28 +212,6 @@ mmload <- function(assembly,
       PC1 = PCA_res[[1]],
       PC2 = PCA_res[[2]],
       PC3 = PCA_res[[3]]
-    )
-  }
-
-  ##### BH tSNE of tetranucleotides #####
-  if (isTRUE(kmer_BH_tSNE)) {
-    if (isTRUE(verbose)) {
-      message(paste0(
-        "Calculating Barnes-Hut t-Distributed Stochastic Neighbor Embedding representations of kmer (k=",
-        as.integer(kmer_size),
-        ") nucleotide frequencies..."
-      ))
-    }
-    set.seed(42) # Sets seed for reproducibility
-    tSNE_res <- Rtsne::Rtsne(kmer,
-      verbose = verbose,
-      check_duplicates = F,
-      ...
-    )[["Y"]] %>%
-      tibble::as.tibble()
-    mm <- tibble::add_column(mm,
-      tSNE1 = tSNE_res[[1]],
-      tSNE2 = tSNE_res[[2]]
     )
   }
 
