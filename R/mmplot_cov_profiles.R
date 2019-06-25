@@ -135,7 +135,7 @@ mmplot_cov_profiles <- function(mm,
   # add points to plot and generate plotly hover labels if interactive, return plot
   if (isTRUE(interactive_plot)) {
     data_plotly <- gg %>%
-      purrr::imap(~paste(.y, .x, sep = ": ")) %>%
+      purrr::imap(~ paste(.y, .x, sep = ": ")) %>%
       as.data.frame() %>%
       tidyr::unite("test", sep = "<br>") %>%
       unlist(use.names = FALSE) %>%

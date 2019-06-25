@@ -30,7 +30,7 @@
 #'   file = "bins/exported_assembly.fa"
 #' )
 #' }
-#' 
+#'
 #' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
 #' @author Soren M. Karst \email{smk@@bio.aau.dk}
 #' @author Mads Albertsen \email{MadsAlbertsen85@@gmail.com}

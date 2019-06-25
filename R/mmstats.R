@@ -32,7 +32,7 @@
 #' library(mmgenome2)
 #' data(mmgenome2)
 #' mmstats(mmgenome2)
-#' 
+#'
 #' # Compare an extraction with the original data from which the extraction originates:
 #' selection <- data.frame(
 #'   cov_C13.11.25 = c(7.2, 16.2, 25.2, 23.3, 10.1),
@@ -41,7 +41,7 @@
 #' mmgenome2_extraction <- mmextract(mmgenome2,
 #'   selection = selection
 #' )
-#' 
+#'
 #' mmstats(mmgenome2_extraction, original_data = mmgenome2)
 #' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
 #' @author Soren M. Karst \email{smk@@bio.aau.dk}

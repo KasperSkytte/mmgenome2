@@ -48,7 +48,7 @@
 #' )
 #' mm
 #' }
-#' 
+#'
 #' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
 mmload <- function(assembly,
                    coverage = NULL,

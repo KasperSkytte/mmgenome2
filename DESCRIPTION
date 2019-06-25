@@ -47,5 +47,5 @@ biocViews:
 remotes:
     github::jkrijthe/Rtsne@openmp,
     github::Rdatatable/data.table
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Suggests: testthat

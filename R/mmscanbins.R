@@ -14,7 +14,7 @@
 #' # write their sequences to a FASTA file per bin. Then the mmscanbins() function
 #' # can be used to retrieve the names of all scaffolds already extracted, and
 #' # then for example highlight them in a plot:
-#' 
+#'
 #' binned_scaffolds <- mmscanbins("path/to/folder", namesOnly = TRUE)
 #' binned_scaffolds
 #' mmplot(mmgenome2,

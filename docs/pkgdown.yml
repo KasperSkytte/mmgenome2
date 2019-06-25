@@ -1,6 +1,6 @@
-pandoc: 1.19.2.4
-pkgdown: 1.1.0.9000
-pkgdown_sha: dd7df10589bd8e24cd7cdef75f1f932726a8b185
+pandoc: 2.3.1
+pkgdown: 1.3.0.9000
+pkgdown_sha: 83f2afb5d2ec85abe29bfd8d67408cdf2bb55f03
 articles:
   MACinstall: MACinstall.html
   mmgenome2: mmgenome2.html
