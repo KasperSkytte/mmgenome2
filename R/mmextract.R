@@ -49,7 +49,7 @@ mmextract <- function(mm,
     point.y = mms[[colnames(selection)[2]]],
     pol.x = selection[[1]],
     pol.y = selection[[2]],
-    mode.checked = TRUE
+    mode.checked = FALSE
   )
   ifelse(isTRUE(inverse),
     mms <- dplyr::filter(mmss, in_polygon == 0),
