@@ -17,7 +17,7 @@
 #' @export
 #' @import ggplot2
 #' @importFrom dplyr left_join
-#' @importFrom data.table melt
+#' @importFrom data.table melt data.table
 #' @importFrom magrittr %>% %<>%
 #' @importFrom purrr imap
 #' @importFrom tidyr unite
@@ -66,7 +66,8 @@ mmplot_cov_profiles <- function(mm,
   colnames(mm)[1] <- "scaffold"
 
   # make a data frame suited for ggplot2 and merge with the color_by variable if supplied
-  gg <- data.table::melt(mm,
+  gg <- data.table::melt(
+    data.table::data.table(mm),
     id.vars = 1,
     measure.vars = cov_variables,
     value.name = "Coverage"
