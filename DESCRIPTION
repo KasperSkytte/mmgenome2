@@ -36,7 +36,6 @@ Imports:
     tibble,
     tidyr,
     stringr,
-    remotes,
     shiny,
     plotly,
     purrr,
