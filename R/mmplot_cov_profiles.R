@@ -146,7 +146,7 @@ mmplot_cov_profiles <- function(mm,
         aes(text = data_plotly)
       )
     plotly <- plotly::ggplotly(p, tooltip = "text") %>%
-      layout(margin = list(
+      plotly::layout(margin = list(
         l = 50,
         r = 0,
         b = 150,
