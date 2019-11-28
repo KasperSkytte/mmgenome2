@@ -348,10 +348,12 @@ StrPad <- function(x, width = NULL, pad = " ", adj = "left") {
     x = x, width = width, pad = pad,
     adj = adj
   )
-  sapply(1:attr(lgp, "maxdim"), function(i) .pad(
+  sapply(1:attr(lgp, "maxdim"), function(i) {
+    .pad(
       lgp$x[i],
       lgp$width[i], lgp$pad[i], lgp$adj[i]
-    ))
+    )
+  })
 }
 
 # This function is sourced from the DescTools CRAN package
