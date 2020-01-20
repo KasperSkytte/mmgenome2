@@ -3,7 +3,7 @@ Type: Package
 Title: Tools for extracting individual genomes from metagenomes
 Description: mmgenome: a toolbox for extracting individual genomes from
     metagenomes.
-Version: 2.0.14
+Version: 2.1
 Date: 2018-01-01
 Encoding: UTF-8
 Authors@R: c(
@@ -65,5 +65,5 @@ biocViews:
     Biostrings
 remotes:
     github::jkrijthe/Rtsne@openmp
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Suggests: testthat

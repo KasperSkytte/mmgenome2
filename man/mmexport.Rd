@@ -4,8 +4,11 @@
 \alias{mmexport}
 \title{Export DNA sequences of selected scaffolds}
 \usage{
-mmexport(scaffolds, assembly = get("assembly", envir = .GlobalEnv),
-  file = "exported_assembly.fa")
+mmexport(
+  scaffolds,
+  assembly = get("assembly", envir = .GlobalEnv),
+  file = "exported_assembly.fa"
+)
 }
 \arguments{
 \item{scaffolds}{(\emph{required}) Either a vector of scaffold names or a dataframe loaded with \code{\link{mmload}} containing the scaffolds to extract from the \code{assembly}.}

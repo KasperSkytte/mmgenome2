@@ -13,7 +13,7 @@
 #' @param interactive_plot (\emph{Logical}) Return an interactive \code{plotly} plot or not. (\emph{Default: } \code{FALSE})
 #' @param mm_normalise A dataframe loaded with \code{\link{mmload}} to normalise by.
 #' @param mm_normalise_index A coverage column to serve as an index for normalisation.
-#' 
+#'
 #' @return A ggplot or plotly object. Note that mmgenome2 hides all warnings produced by ggplot objects.
 #'
 #' @export
@@ -51,16 +51,16 @@ mmplot_cov_profiles <- function(mm,
                                 y_scale_log10 = FALSE,
                                 plot_lines = TRUE,
                                 interactive_plot = FALSE,
-                                mm_normalise=NULL,
-                                mm_normalise_index=NULL) {
+                                mm_normalise = NULL,
+                                mm_normalise_index = NULL) {
   # can currently only color by 1 variable
   if (length(color_by) > 1) {
     stop("color_by must be of length 1", call. = FALSE)
   }
-  
+
   # find which columns are coverage profiles
   cov_variables <- which(substring(tolower(colnames(mm)), 1, 4) == "cov_")
-  
+
   # normalise to the highest value in each coverage profile
   if (isTRUE(normalise & is.null(mm_normalise))) {
     mm[, cov_variables] %<>% lapply(function(x) {
@@ -69,13 +69,13 @@ mmplot_cov_profiles <- function(mm,
   }
   # normalise based on the amount of data for each sample
   if (isTRUE(normalise) & (!is.null(mm_normalise)) & (!is.null(mm_normalise_index))) {
-    data_vol<-(mm_normalise$length*mm_normalise %>% select(starts_with("cov_")) ) %>% summarise_all(funs(sum=sum))
-    data_vol_normalised<-data_vol/as.numeric((data_vol %>% select(paste0(mm_normalise_index,"_sum"))))
-    cov_variables<-which(substring(tolower(colnames(mm_normalise)), 1, 4) == "cov_")
-    mm[, cov_variables]<- t(t(mm[,cov_variables])/(as.numeric(data_vol_normalised)))
-  }  
+    data_vol <- (mm_normalise$length * mm_normalise %>% select(starts_with("cov_"))) %>% summarise_all(funs(sum = sum))
+    data_vol_normalised <- data_vol / as.numeric((data_vol %>% select(paste0(mm_normalise_index, "_sum"))))
+    cov_variables <- which(substring(tolower(colnames(mm_normalise)), 1, 4) == "cov_")
+    mm[, cov_variables] <- t(t(mm[, cov_variables]) / (as.numeric(data_vol_normalised)))
+  }
   colnames(mm)[1] <- "scaffold"
-  
+
   # make a data frame suited for ggplot2 and merge with the color_by variable if supplied
   gg <- data.table::melt(
     data.table::data.table(mm),
@@ -84,7 +84,7 @@ mmplot_cov_profiles <- function(mm,
     value.name = "Coverage"
   ) %>%
     dplyr::left_join(mm[, c(1, 2, which(colnames(mm) %in% color_by)), drop = FALSE], by = "scaffold")
-  
+
   # color_by
   if (!is.null(color_by)) {
     p <- ggplot(
@@ -95,7 +95,7 @@ mmplot_cov_profiles <- function(mm,
         color = color_by
       )
     )
-    
+
     # if numeric set custom colorscale and breaks if colored by GC
     if (is.numeric(mm[[color_by]])) {
       p <- p +
@@ -114,7 +114,7 @@ mmplot_cov_profiles <- function(mm,
       )
     )
   }
-  
+
   # theme adjustments
   p <- p +
     theme(
@@ -128,26 +128,26 @@ mmplot_cov_profiles <- function(mm,
       legend.key = element_blank()
     ) +
     xlab("")
-  
+
   # log10 scale y axis
   if (isTRUE(y_scale_log10)) {
     p <- p + scale_y_log10()
   }
-  
+
   # plot lines
   if (isTRUE(plot_lines)) {
     p <- p + geom_line(aes_string(group = "scaffold"), alpha = alpha)
   }
-  
+
   # adjust y axis label when normalise = TRUE
-  if  (isTRUE(normalise) & (is.null(mm_normalise)) & (is.null(mm_normalise_index))) {
+  if (isTRUE(normalise) & (is.null(mm_normalise)) & (is.null(mm_normalise_index))) {
     p <- p + ylab("Coverage (normalised to 100)")
   }
   # adjust
-  if  (isTRUE(normalise) & (!is.null(mm_normalise)) & (!is.null(mm_normalise_index))) {
+  if (isTRUE(normalise) & (!is.null(mm_normalise)) & (!is.null(mm_normalise_index))) {
     p <- p + ylab("Coverage\n(normalised by data volume)")
   }
-  
+
   # add points to plot and generate plotly hover labels if interactive, return plot
   if (isTRUE(interactive_plot)) {
     data_plotly <- gg %>%

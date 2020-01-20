@@ -4,11 +4,21 @@
 \alias{mmnetwork}
 \title{Network plot of mate-pair or paired-end connected scaffold reads}
 \usage{
-mmnetwork(mm, network, min_connections = 1, color_by = NULL,
-  color_scale_log10 = FALSE, locator = FALSE, selection = NULL,
-  highlight_labels = NULL, highlight_color = "darkred",
-  links_scale = 1, scaffold_labels = FALSE, print_nolinks = FALSE,
-  seed = 0)
+mmnetwork(
+  mm,
+  network,
+  min_connections = 1,
+  color_by = NULL,
+  color_scale_log10 = FALSE,
+  locator = FALSE,
+  selection = NULL,
+  highlight_labels = NULL,
+  highlight_color = "darkred",
+  links_scale = 1,
+  scaffold_labels = FALSE,
+  print_nolinks = FALSE,
+  seed = 0
+)
 }
 \arguments{
 \item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}

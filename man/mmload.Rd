@@ -4,9 +4,18 @@
 \alias{mmload}
 \title{Load and combine data for use with other mmgenome2 functions}
 \usage{
-mmload(assembly, coverage = NULL, essential_genes = NULL,
-  taxonomy = NULL, additional = NULL, kmer_pca = FALSE,
-  kmer_BH_tSNE = FALSE, kmer_size = 4L, verbose = TRUE, ...)
+mmload(
+  assembly,
+  coverage = NULL,
+  essential_genes = NULL,
+  taxonomy = NULL,
+  additional = NULL,
+  kmer_pca = FALSE,
+  kmer_BH_tSNE = FALSE,
+  kmer_size = 4L,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{assembly}{(\emph{required}) A character string with the path to the assembly FASTA file, or the assembly as already loaded with \code{\link{readDNAStringSet}}.}

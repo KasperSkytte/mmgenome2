@@ -4,10 +4,19 @@
 \alias{mmplot_cov_profiles}
 \title{Compare coverage profiles}
 \usage{
-mmplot_cov_profiles(mm, normalise = FALSE, alpha = 0.6,
-  color_by = NULL, color_vector = c("blue", "green", "red"),
-  color_scale_log10 = FALSE, y_scale_log10 = FALSE,
-  plot_lines = TRUE, interactive_plot = FALSE)
+mmplot_cov_profiles(
+  mm,
+  normalise = FALSE,
+  alpha = 0.6,
+  color_by = NULL,
+  color_vector = c("blue", "green", "red"),
+  color_scale_log10 = FALSE,
+  y_scale_log10 = FALSE,
+  plot_lines = TRUE,
+  interactive_plot = FALSE,
+  mm_normalise = NULL,
+  mm_normalise_index = NULL
+)
 }
 \arguments{
 \item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}}.}
@@ -27,6 +36,10 @@ mmplot_cov_profiles(mm, normalise = FALSE, alpha = 0.6,
 \item{plot_lines}{(\emph{Logical}) Connect scaffolds with lines. (\emph{Default: } \code{TRUE})}
 
 \item{interactive_plot}{(\emph{Logical}) Return an interactive \code{plotly} plot or not. (\emph{Default: } \code{FALSE})}
+
+\item{mm_normalise}{A dataframe loaded with \code{\link{mmload}} to normalise by.}
+
+\item{mm_normalise_index}{A coverage column to serve as an index for normalisation.}
 }
 \value{
 A ggplot or plotly object. Note that mmgenome2 hides all warnings produced by ggplot objects.

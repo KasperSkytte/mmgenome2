@@ -4,8 +4,13 @@
 \alias{mmexpand_network}
 \title{Find connections of a subset of scaffolds in a larger set of scaffolds}
 \usage{
-mmexpand_network(mm, scaffolds, network, min_connections = 2,
-  include_connections = "direct")
+mmexpand_network(
+  mm,
+  scaffolds,
+  network,
+  min_connections = 2,
+  include_connections = "direct"
+)
 }
 \arguments{
 \item{mm}{(\emph{required}) A dataframe loaded with \code{\link{mmload}} in which to find connections from \code{scaffolds}.}
