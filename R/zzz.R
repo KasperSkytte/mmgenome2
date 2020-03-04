@@ -1,11 +1,20 @@
 .onAttach <- function(lib, pkg) {
   options(scipen = 6)
-  # Check for new github release version. (Not master branch version, release version!)
+  # Check for new github version (master branch).
   if (!interactive()) {
     return()
   } else {
     installed_version <- as.character(utils::packageVersion(pkg))
+    packageStartupMessage(
+      paste0(
+        "This is ",
+        pkg,
+        " version ",
+        installed_version,
+        ". Great documentation is available at the mmgenome2 website: https://kasperskytte.github.io/mmgenome2/"),
+      appendLF = TRUE)
     gitHubUser <- "kasperskytte"
+    errMsg <- "Couldn't reach GitHub to check for new version just now."
     tryCatch(
       {
         DESCRIPTION <- readLines(
@@ -18,28 +27,24 @@
           )
         )
         remote_version <- gsub("Version:\\s*", "", DESCRIPTION[grep("Version:", DESCRIPTION)])
-        startupMsg <- ""
+        if (installed_version < remote_version) {
+          packageStartupMessage(
+            paste0(
+              "\nNewer version of ", 
+              pkg, 
+              " (", 
+              remote_version, 
+              ") is available! Install the latest version with the following command (copy/paste): \nremotes::install_github(\"kasperskytte/mmgenome2\")"),
+            appendLF = TRUE
+          )
+        }
       },
       error = function(e) {
-        startupMsg <- "\nCan't reach GitHub to check for new version just now. Trying again next time."
-        remote_version <- "0"
+        packageStartupMessage(errMsg, appendLF = TRUE)
+      },
+      warning = function(e) {
+        packageStartupMessage(errMsg, appendLF = TRUE)
       }
     )
-
-    if (installed_version < remote_version) {
-      startupMsg <- paste0("\nNew version of ", pkg, " (", remote_version, ") is available! Install the latest version with the following command (copy/paste): \nremotes::install_github(\"kasperskytte/mmgenome2\")")
-    }
-    startupMsg <- paste0(
-      "This is ",
-      pkg,
-      " version ",
-      installed_version,
-      if (installed_version >= remote_version) {
-        " (up to date)"
-      },
-      ". Great documentation is available at the mmgenome2 website: https://kasperskytte.github.io/mmgenome2/",
-      startupMsg
-    )
-    packageStartupMessage(startupMsg, appendLF = TRUE)
   }
 }
