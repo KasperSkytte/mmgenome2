@@ -1,9 +1,8 @@
 Package: mmgenome2
 Type: Package
 Title: Tools for extracting individual genomes from metagenomes
-Description: mmgenome: a toolbox for extracting individual genomes from
-    metagenomes.
-Version: 2.1.1
+Description: mmgenome: a toolbox for extracting individual genomes from metagenomes.
+Version: 2.1.2
 Date: 2018-01-01
 Encoding: UTF-8
 Authors@R: c(
@@ -36,7 +35,7 @@ License: AGPL-3
 BugReports: https://github.com/kasperskytte/mmgenome2/issues
 LazyData: true
 Depends:
-    R (>= 3.4.3),
+    R (>= 3.5.0),
     ggplot2 (>= 2.2.1)
 Imports:
     tidyverse,
@@ -64,6 +63,6 @@ Imports:
 biocViews:
     Biostrings
 remotes:
-    github::jkrijthe/Rtsne@openmp
+    github::kasperskytte/Rtsne@openmp
 RoxygenNote: 7.0.2
 Suggests: testthat
