@@ -1,28 +1,38 @@
-#' @title Plot the most abundant bins as a heatmap plot
+#' @title Heatmap of the most abundant bins
 #'
-#' @description Plots a heatmap of the coverage profiles for the bins.
+#' @description Generates a heatmap of the coverage profiles for the bins.
 #'
 #' @param mm (\emph{required}) A dataframe loaded with \code{\link{mmload}}.
-#' @param BIN_COL Column to group scaffolds by
-#' @param CLASSIFICATION Optional: Column with gtdb classification in the format d__Bacteria;p__Firmicutes_A;c__Clostridia;o__Tissierellales;f__Sedimentibacteraceae;g__Sedimentibacter;s__
-#' @param TOPN Optional Number of "bins" to display
-#' @param tax_add Optional: Taxonomic levels to add from the gtdb column c("Kingdom","Phylum","Class","Order","Family","Genus","Species")
+#' @param BIN_COL (\emph{required}) Group the scaffolds by a variable in \code{mm}.
+#' @param CLASSIFICATION Name of the variable in \code{mm} with taxonomic classification. The format must resemble that of the following: \code{d__Bacteria;p__Firmicutes_A;c__Clostridia;o__Tissierellales;f__Sedimentibacteraceae;g__Sedimentibacter;s__}. (\emph{Default: } \code{NULL})
+#' @param TOPN Number of the most abundant bins to display. (\emph{Default: } \code{20})
+#' @param tax_add Taxonomic levels to show from the taxonomy variable, one of \code{c("Kingdom","Phylum","Class","Order","Family","Genus","Species")}. (\emph{Default: } \code{NULL})
 #'
 #' @export
-#' #' @import mmgenome2
+#' @import ggplot2
+#' @importFrom data.table melt setDT
+#' @importFrom dplyr filter distinct group_by group_by_ arrange summarise mutate mutate_at rename_ select select_ desc starts_with left_join top_n
+#' @importFrom tidyr pivot_wider pivot_longer separate_
+#' @importFrom forcats fct_explicit_na
 #'
-#' @return A ggplot object. #'
+#' @return A ggplot object. Note that mmgenome2 hides all warnings produced by ggplot objects.
 #'
 #' @examples
 #' library(mmgenome2)
 #' data(mmgenome2)
 #' mmgenome2
-#' mm_heatmap(mmgenome2,
-#'   BIN_COL="taxonomy",
-#'   TOPN=20
+#' mmheatmap(mmgenome2,
+#'   BIN_COL = "taxonomy",
+#'   TOPN = 20
 #' )
 #' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
 #' @author Rasmus Kirkegaard \email{rhk@@bio.aau.dk}
+mmheatmap <- function(mm,
+                      CLASSIFICATION = NULL,
+                      BIN_COL,
+                      TOPN = 20,
+                      tax_add = NULL) {
+  BIN_COL <- as.name(BIN_COL)
 
 
 mm_heatmap <-function(mm=NULL,CLASSIFICATION=NULL,BIN_COL=NULL,TOPN=20,tax_add=NULL) {
