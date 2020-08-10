@@ -4,6 +4,9 @@
     <loc>https://kasperskytte.github.io/mmgenome2//index.html</loc>
   </url>
   <url>
+    <loc>https://kasperskytte.github.io/mmgenome2//reference/dot-onAttach.html</loc>
+  </url>
+  <url>
     <loc>https://kasperskytte.github.io/mmgenome2//reference/mmexpand_network.html</loc>
   </url>
   <url>
@@ -11,6 +14,9 @@
   </url>
   <url>
     <loc>https://kasperskytte.github.io/mmgenome2//reference/mmextract.html</loc>
+  </url>
+  <url>
+    <loc>https://kasperskytte.github.io/mmgenome2//reference/mmheatmap.html</loc>
   </url>
   <url>
     <loc>https://kasperskytte.github.io/mmgenome2//reference/mmload.html</loc>
