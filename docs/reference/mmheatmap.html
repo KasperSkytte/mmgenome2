@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compare coverage profiles — mmplot_cov_profiles • mmgenome2</title>
+<title>Heatmap of the most abundant bins — mmheatmap • mmgenome2</title>
 
 
 <!-- jquery -->
@@ -41,8 +41,8 @@
 
 
 
-<meta property="og:title" content="Compare coverage profiles — mmplot_cov_profiles" />
-<meta property="og:description" content="Plots all coverage profiles in the data for comparison. This is useful for identifying scaffold patterns across multiple coverage profiles and spot potential contaminants." />
+<meta property="og:title" content="Heatmap of the most abundant bins — mmheatmap" />
+<meta property="og:description" content="Generates a heatmap of the coverage profiles for the bins." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -127,28 +127,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Compare coverage profiles</h1>
+    <h1>Heatmap of the most abundant bins</h1>
     
-    <div class="hidden name"><code>mmplot_cov_profiles.Rd</code></div>
+    <div class="hidden name"><code>mmheatmap.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Plots all coverage profiles in the data for comparison. This is useful for identifying scaffold patterns across multiple coverage profiles and spot potential contaminants.</p>
+    <p>Generates a heatmap of the coverage profiles for the bins.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mmplot_cov_profiles</span>(
-  <span class='no'>mm</span>,
-  <span class='kw'>normalise</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.6</span>,
-  <span class='kw'>color_by</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>color_vector</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"blue"</span>, <span class='st'>"green"</span>, <span class='st'>"red"</span>),
-  <span class='kw'>color_scale_log10</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>y_scale_log10</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>plot_lines</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>interactive_plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>mm_normalise</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>mm_normalise_index</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>mmheatmap</span>(<span class='no'>mm</span>, <span class='kw'>CLASSIFICATION</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>BIN_COL</span>, <span class='kw'>TOPN</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>tax_add</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -158,50 +146,26 @@
       <td><p>(<em>required</em>) A dataframe loaded with <code><a href='mmload.html'>mmload</a></code>.</p></td>
     </tr>
     <tr>
-      <th>normalise</th>
-      <td><p>(<em>Logical</em>) Normalises each coverage column in <code>mm</code> to its highest value and multiplies by 100. (<em>Default: </em> <code>TRUE</code>)</p></td>
+      <th>CLASSIFICATION</th>
+      <td><p>Name of the variable in <code>mm</code> with taxonomic classification. The format must resemble that of the following: <code>d__Bacteria;p__Firmicutes_A;c__Clostridia;o__Tissierellales;f__Sedimentibacteraceae;g__Sedimentibacter;s__</code>. (<em>Default: </em> <code>NULL</code>)</p></td>
     </tr>
     <tr>
-      <th>alpha</th>
-      <td><p>The transparancy of the scaffold points and lines, where 0 is invisible and 1 is opaque. (<em>Default: </em> <code>0.6</code>)</p></td>
+      <th>BIN_COL</th>
+      <td><p>(<em>required</em>) Group the scaffolds by a variable in <code>mm</code>.</p></td>
     </tr>
     <tr>
-      <th>color_by</th>
-      <td><p>Color the scaffolds by a variable in <code>mm</code>. (<em>Default: </em> <code>NULL</code>)</p></td>
+      <th>TOPN</th>
+      <td><p>Number of the most abundant bins to display. (<em>Default: </em> <code>20</code>)</p></td>
     </tr>
     <tr>
-      <th>color_vector</th>
-      <td><p>The colors from which to generate a color gradient when <code>color_by</code> is set and the variable is continuous. Any number of colors can be used. (<em>Default: </em> <code><a href='https://rdrr.io/r/base/c.html'>c("blue", "green", "red")</a></code>)</p></td>
-    </tr>
-    <tr>
-      <th>color_scale_log10</th>
-      <td><p>(<em>Logical</em>) Log10-scale the color gradient when <code>color_by</code> is set and the variable is continuous. (<em>Default: </em> <code>FALSE</code>)</p></td>
-    </tr>
-    <tr>
-      <th>y_scale_log10</th>
-      <td><p>(<em>Logical</em>) Log10-scale the y axis. (<em>Default: </em> <code>FALSE</code>)</p></td>
-    </tr>
-    <tr>
-      <th>plot_lines</th>
-      <td><p>(<em>Logical</em>) Connect scaffolds with lines. (<em>Default: </em> <code>TRUE</code>)</p></td>
-    </tr>
-    <tr>
-      <th>interactive_plot</th>
-      <td><p>(<em>Logical</em>) Return an interactive <code>plotly</code> plot or not. (<em>Default: </em> <code>FALSE</code>)</p></td>
-    </tr>
-    <tr>
-      <th>mm_normalise</th>
-      <td><p>A dataframe loaded with <code><a href='mmload.html'>mmload</a></code> to normalise by.</p></td>
-    </tr>
-    <tr>
-      <th>mm_normalise_index</th>
-      <td><p>A coverage column to serve as an index for normalisation.</p></td>
+      <th>tax_add</th>
+      <td><p>Taxonomic levels to show from the taxonomy variable, one of <code><a href='https://rdrr.io/r/base/c.html'>c("Kingdom","Phylum","Class","Order","Family","Genus","Species")</a></code>. (<em>Default: </em> <code>NULL</code>)</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A ggplot or plotly object. Note that mmgenome2 hides all warnings produced by ggplot objects.</p>
+    <p>A ggplot object. Note that mmgenome2 hides all warnings produced by ggplot objects.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>mmgenome2</span>)
@@ -220,18 +184,20 @@
 #&gt; </span><span style='color: #BCBCBC;'> 9</span><span> 9          </span><span style='text-decoration: underline;'>1</span><span>403  70.4      85.1             192.          0             0    
 #&gt; </span><span style='color: #BCBCBC;'>10</span><span> 10         </span><span style='text-decoration: underline;'>2</span><span>018  70.2      50.3             101.          0             0    
 #&gt; </span><span style='color: #949494;'># … with 97,275 more rows, and 6 more variables: PC1 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>, PC2 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>,</span><span>
-#&gt; </span><span style='color: #949494;'>#   PC3 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>, geneID </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span style='color: #949494;'>, taxonomy </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span style='color: #949494;'>, rRNA16S </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span></div><div class='input'><span class='no'>selection</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
-  <span class='kw'>cov_C13.11.25</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>7.2</span>, <span class='fl'>16.2</span>, <span class='fl'>25.2</span>, <span class='fl'>23.3</span>, <span class='fl'>10.1</span>),
-  <span class='kw'>cov_C14.01.09</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>47</span>, <span class='fl'>77</span>, <span class='fl'>52.8</span>, <span class='fl'>29.5</span>, <span class='fl'>22.1</span>)
-)
-<span class='no'>mmgenome2_extraction</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='mmextract.html'>mmextract</a></span>(<span class='no'>mmgenome2</span>,
-  <span class='kw'>min_length</span> <span class='kw'>=</span> <span class='fl'>3000</span>,
-  <span class='kw'>selection</span> <span class='kw'>=</span> <span class='no'>selection</span>,
-  <span class='kw'>inverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</div><div class='output co'>#&gt; <span class='message'>47 scaffolds (or 1.33% of the scaffolds in mm, weighted by length) remain after 97238 of 97285 scaffolds have been filtered.</span></div><div class='input'><span class='fu'>mmplot_cov_profiles</span>(<span class='no'>mmgenome2_extraction</span>,
-  <span class='kw'>color_by</span> <span class='kw'>=</span> <span class='st'>"taxonomy"</span>,
-  <span class='kw'>normalise</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</div><div class='img'><img src='mmplot_cov_profiles-1.png' alt='' width='700' height='433' /></div></span></pre>
+#&gt; </span><span style='color: #949494;'>#   PC3 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>, geneID </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span style='color: #949494;'>, taxonomy </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span style='color: #949494;'>, rRNA16S </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span></div><div class='input'><span class='fu'>mmheatmap</span>(<span class='no'>mmgenome2</span>,
+  <span class='kw'>BIN_COL</span> <span class='kw'>=</span> <span class='st'>"taxonomy"</span>,
+  <span class='kw'>TOPN</span> <span class='kw'>=</span> <span class='fl'>20</span>
+)</div><div class='output co'>#&gt; <span class='warning'>Warning: `group_by_()` is deprecated as of dplyr 0.7.0.</span>
+#&gt; <span class='warning'>Please use `group_by()` instead.</span>
+#&gt; <span class='warning'>See vignette('programming') for more help</span>
+#&gt; <span class='warning'></span><span style='color: #555555;'>This warning is displayed once every 8 hours.</span><span></span>
+#&gt; <span class='warning'></span><span style='color: #555555;'>Call `lifecycle::last_warnings()` to see where this warning was generated.</span><span></span></div><div class='output co'>#&gt; <span class='warning'>Warning: `select_()` is deprecated as of dplyr 0.7.0.</span>
+#&gt; <span class='warning'>Please use `select()` instead.</span>
+#&gt; <span class='warning'></span><span style='color: #555555;'>This warning is displayed once every 8 hours.</span><span></span>
+#&gt; <span class='warning'></span><span style='color: #555555;'>Call `lifecycle::last_warnings()` to see where this warning was generated.</span><span></span></div><div class='output co'>#&gt; <span class='warning'>Warning: `rename_()` is deprecated as of dplyr 0.7.0.</span>
+#&gt; <span class='warning'>Please use `rename()` instead.</span>
+#&gt; <span class='warning'></span><span style='color: #555555;'>This warning is displayed once every 8 hours.</span><span></span>
+#&gt; <span class='warning'></span><span style='color: #555555;'>Call `lifecycle::last_warnings()` to see where this warning was generated.</span><span></span></div><div class='output co'>#&gt; <span class='message'>Selecting by mean_cov</span></div><div class='img'><img src='mmheatmap-1.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -241,6 +207,9 @@
       <li><a href="#examples">Examples</a></li>
     </ul>
 
+    <h2>Author</h2>
+    <p>Kasper Skytte Andersen <a href='mailto:ksa@bio.aau.dk'>ksa@bio.aau.dk</a></p>
+<p>Rasmus Kirkegaard <a href='mailto:rhk@bio.aau.dk'>rhk@bio.aau.dk</a></p>
   </div>
 </div>
 

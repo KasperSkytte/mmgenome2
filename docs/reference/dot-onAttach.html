@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Custom ggplot object print to suppress warnings — print.ggplot • mmgenome2</title>
+<title>.onAttach — .onAttach • mmgenome2</title>
 
 
 <!-- jquery -->
@@ -41,8 +41,8 @@
 
 
 
-<meta property="og:title" content="Custom ggplot object print to suppress warnings — print.ggplot" />
-<meta property="og:description" content="Simply wraps ggplot2:::print.ggplot() in suppressWarnings(). The main reason for this is to hide warnings produced by log10-transformation in mmplot." />
+<meta property="og:title" content=".onAttach — .onAttach" />
+<meta property="og:description" content=".onAttach" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -127,24 +127,27 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Custom ggplot object print to suppress warnings</h1>
+    <h1>.onAttach</h1>
     
-    <div class="hidden name"><code>print.ggplot.Rd</code></div>
+    <div class="hidden name"><code>dot-onAttach.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Simply wraps <code>ggplot2:::print.ggplot()</code> in <code><a href='https://rdrr.io/r/base/warning.html'>suppressWarnings()</a></code>. The main reason for this is to hide warnings produced by log10-transformation in <code>mmplot</code>.</p>
+    <p>.onAttach</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for ggplot</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>.onAttach</span>(<span class='no'>lib</span>, <span class='no'>pkg</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>...</th>
-      <td><p>All arguments are directly passed to <code>ggplot2:::print.ggplot()</code></p></td>
+      <th>lib</th>
+      <td><p>lib</p></td>
+    </tr>
+    <tr>
+      <th>pkg</th>
+      <td><p>pkg</p></td>
     </tr>
     </table>
 
