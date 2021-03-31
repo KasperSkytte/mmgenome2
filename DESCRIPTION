@@ -48,6 +48,7 @@ Imports:
     dplyr,
     vegan,
     Biostrings,
+    rstudioapi,
     Rtsne,
     digest,
     clipr,

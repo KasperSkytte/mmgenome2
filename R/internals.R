@@ -119,6 +119,7 @@ mmmerge <- function(x, y, type) {
 #' @import ggplot2
 #' @importFrom shiny actionButton div fillPage icon observeEvent p plotOutput reactiveValues renderPlot runApp shinyApp stopApp
 #' @importFrom clipr write_clip
+#' @importFrom rstudioapi viewer
 #'
 #' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
 #' @author Rasmus Hansen Kirkegaard \email{rhk@@bio.aau.dk}
