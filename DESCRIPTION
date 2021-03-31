@@ -34,6 +34,7 @@ Reference: Albertsen, M., Hugenholtz, P., Skarshewski, A., Nielsen, K. L.,
 License: AGPL-3
 BugReports: https://github.com/kasperskytte/mmgenome2/issues
 LazyData: true
+LazyDataCompression: bzip2
 Depends:
     R (>= 3.5.0),
     ggplot2 (>= 2.2.1)
