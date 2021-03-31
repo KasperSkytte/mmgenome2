@@ -2,7 +2,7 @@ Package: mmgenome2
 Type: Package
 Title: Tools for extracting individual genomes from metagenomes
 Description: mmgenome: a toolbox for extracting individual genomes from metagenomes.
-Version: 2.1.2
+Version: 2.1.3
 Date: 2018-01-01
 Encoding: UTF-8
 Authors@R: c(
@@ -31,7 +31,7 @@ Reference: Albertsen, M., Hugenholtz, P., Skarshewski, A., Nielsen, K. L.,
     Tyson, G. W., & Nielsen, P. H. (2013). Genome sequences of rare, uncultured
     bacteria obtained by differential coverage binning of multiple metagenomes.
     Nature biotechnology, 31(6), 533-8. doi:10.1038/nbt.2579
-License: AGPL-3
+License: AGPL-3 + file LICENSE
 BugReports: https://github.com/kasperskytte/mmgenome2/issues
 LazyData: true
 LazyDataCompression: bzip2
@@ -67,5 +67,6 @@ biocViews:
     Biostrings
 remotes:
     github::kasperskytte/Rtsne@openmp
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Suggests: testthat
+URL: https://kasperskytte.github.io/mmgenome2
