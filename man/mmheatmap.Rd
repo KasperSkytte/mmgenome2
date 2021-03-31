@@ -24,13 +24,16 @@ A ggplot object. Note that mmgenome2 hides all warnings produced by ggplot objec
 Generates a heatmap of the coverage profiles for the bins.
 }
 \examples{
+\dontrun{
 library(mmgenome2)
-data(mmgenome2)
+data("mmgenome2")
 mmgenome2
-mmheatmap(mmgenome2,
+mmheatmap(
+  mmgenome2,
   BIN_COL = "taxonomy",
   TOPN = 20
 )
+}
 }
 \author{
 Kasper Skytte Andersen \email{ksa@bio.aau.dk}
