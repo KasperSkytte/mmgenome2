@@ -68,7 +68,5 @@ biocViews:
 remotes:
     github::kasperskytte/Rtsne@openmp
 RoxygenNote: 7.1.1
-Suggests: 
-  testthat,
-  knitr
+Suggests: testthat
 URL: https://kasperskytte.github.io/mmgenome2
