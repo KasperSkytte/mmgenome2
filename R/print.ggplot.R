@@ -5,5 +5,5 @@
 #' @import ggplot2
 #' @export
 print.ggplot <- function(...) {
-  suppressWarnings(print(...))
+  suppressWarnings(ggplot2:::print.ggplot(...))
 }

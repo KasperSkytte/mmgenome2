@@ -18,7 +18,6 @@
 #' @return A ggplot object. Note that mmgenome2 hides all warnings produced by ggplot objects.
 #'
 #' @examples
-#' \dontrun{
 #' library(mmgenome2)
 #' data("mmgenome2")
 #' mmgenome2
@@ -27,7 +26,6 @@
 #'   BIN_COL = "taxonomy",
 #'   TOPN = 20
 #' )
-#' }
 #' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
 #' @author Rasmus Kirkegaard \email{rhk@@bio.aau.dk}
 mmheatmap <- function(mm,
