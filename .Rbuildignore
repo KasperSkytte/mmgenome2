@@ -6,3 +6,4 @@
 .Rhistory
 ^\.httr-oauth$
 ^vignettes/data$
+^\.github$
