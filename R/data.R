@@ -1,5 +1,5 @@
 #' @title Example data
-#' 
+#'
 #' @description Very little info here
 #'
 #' @name mate_pairs
@@ -17,7 +17,7 @@
 NULL
 
 #' @title Example data
-#' 
+#'
 #' @description Very little info here
 #'
 #' @name paired_ends
@@ -35,7 +35,7 @@ NULL
 NULL
 
 #' @title Example data
-#' 
+#'
 #' @description Very little info here
 #'
 #' @name mmgenome2

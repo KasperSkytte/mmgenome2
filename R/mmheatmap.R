@@ -13,7 +13,6 @@
 #' @importFrom data.table melt setDT
 #' @importFrom dplyr filter distinct group_by group_by_ arrange summarise mutate mutate_at rename_ select select_ desc starts_with left_join top_n
 #' @importFrom tidyr pivot_wider pivot_longer separate_
-#' @importFrom forcats fct_explicit_na
 #'
 #' @return A ggplot object. Note that mmgenome2 hides all warnings produced by ggplot objects.
 #'
@@ -33,6 +32,7 @@ mmheatmap <- function(mm,
                       BIN_COL,
                       TOPN = 20,
                       tax_add = NULL) {
+  checkReqPkgs("forcats")
   BIN_COL <- as.name(BIN_COL)
 
   ### Bins: Calculate abundance for each bin
@@ -62,8 +62,7 @@ mmheatmap <- function(mm,
       left_join(bins_tax)
   }
 
-  bins_abundance %<>%
-    dplyr::rename_(Display = BIN_COL)
+  bins_abundance %<>% dplyr::rename_(Display = BIN_COL)
   bins_abundance %<>% mutate_at(vars(Display), forcats::fct_explicit_na, na_level = "Unbinned")
 
 
@@ -87,7 +86,8 @@ mmheatmap <- function(mm,
     mutate(Display = factor(Display, levels = rev(top_bins$Display))) %>%
     data.table::setDT() %>%
     data.table::melt(id.vars = "Display") %>%
-    ggplot(aes(x = variable, y = Display)) + geom_tile(aes(fill = value)) +
+    ggplot(aes(x = variable, y = Display)) +
+    geom_tile(aes(fill = value)) +
     theme(
       axis.text.y = element_text(size = 12, color = "black", vjust = 0.4),
       axis.text.x = element_text(size = 10, color = "black", vjust = 0.5, angle = 90, hjust = 1),

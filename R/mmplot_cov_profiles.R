@@ -21,9 +21,7 @@
 #' @importFrom dplyr left_join
 #' @importFrom data.table melt data.table
 #' @importFrom magrittr %>% %<>%
-#' @importFrom purrr imap
 #' @importFrom tidyr unite
-#' @importFrom plotly ggplotly
 #'
 #' @examples
 #' library(mmgenome2)
@@ -150,6 +148,7 @@ mmplot_cov_profiles <- function(mm,
 
   # add points to plot and generate plotly hover labels if interactive, return plot
   if (isTRUE(interactive_plot)) {
+    checkReqPkgs(c("plotly", "purrr"))
     data_plotly <- gg %>%
       purrr::imap(~ paste(.y, .x, sep = ": ")) %>%
       as.data.frame() %>%

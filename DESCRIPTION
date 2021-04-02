@@ -40,17 +40,13 @@ Depends:
     ggplot2 (>= 3.0.0)
 Imports:
     tidyverse,
-    tools,
     sp,
     data.table,
     cowplot,
     magrittr,
     dplyr,
-    vegan,
     Biostrings,
     rstudioapi,
-    Rtsne,
-    digest,
     clipr,
     igraph,
     ggrepel,
@@ -58,18 +54,21 @@ Imports:
     tidyr,
     stringr,
     shiny,
-    plotly,
-    purrr,
-    rlang, 
-    plyr,
-    forcats
+    rlang
 biocViews:
     Biostrings
-remotes:
-    github::kasperskytte/Rtsne@openmp
 RoxygenNote: 7.1.1
 VignetteBuilder: knitr
 Suggests:
     testthat,
-    knitr
+    knitr,
+    tools,
+    utils,
+    vegan,
+    Rtsne,
+    digest,
+    plotly,
+    purrr,
+    plyr,
+    forcats
 URL: https://kasperskytte.github.io/mmgenome2

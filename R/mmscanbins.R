@@ -6,7 +6,6 @@
 #'
 #' @return A character vector (if \code{namesOnly = TRUE}) or a list (if \code{namesOnly = FALSE}).
 #' @export
-#' @importFrom tools file_path_sans_ext file_ext
 #' @importFrom Biostrings readDNAStringSet
 #' @examples
 #' \dontrun{
