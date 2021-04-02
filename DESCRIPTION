@@ -37,10 +37,14 @@ LazyData: true
 LazyDataCompression: bzip2
 Depends:
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 =======
     R,
 >>>>>>> master
+=======
+    R (>= 3.3),
+>>>>>>> Stashed changes
 =======
     R (>= 3.3),
 >>>>>>> Stashed changes
