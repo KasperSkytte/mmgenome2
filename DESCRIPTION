@@ -36,7 +36,6 @@ BugReports: https://github.com/kasperskytte/mmgenome2/issues
 LazyData: true
 LazyDataCompression: bzip2
 Depends:
-    R (>= 4.0.0),
     ggplot2 (>= 3.0.0)
 Imports:
     tidyverse,
