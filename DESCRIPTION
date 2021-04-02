@@ -2,7 +2,7 @@ Package: mmgenome2
 Type: Package
 Title: Tools for extracting individual genomes from metagenomes
 Description: mmgenome: a toolbox for extracting individual genomes from metagenomes.
-Version: 2.1.4
+Version: 2.2.0
 Date: 2018-01-01
 Encoding: UTF-8
 Authors@R: c(
