@@ -5,5 +5,7 @@
 ^test$
 .Rhistory
 ^\.httr-oauth$
+^vignettes$
+^pkgdown$
 ^vignettes/data$
 ^\.github$

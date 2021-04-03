@@ -25,9 +25,10 @@ Generates a heatmap of the coverage profiles for the bins.
 }
 \examples{
 library(mmgenome2)
-data(mmgenome2)
+data("mmgenome2")
 mmgenome2
-mmheatmap(mmgenome2,
+mmheatmap(
+  mmgenome2,
   BIN_COL = "taxonomy",
   TOPN = 20
 )

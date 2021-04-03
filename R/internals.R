@@ -119,6 +119,7 @@ mmmerge <- function(x, y, type) {
 #' @import ggplot2
 #' @importFrom shiny actionButton div fillPage icon observeEvent p plotOutput reactiveValues renderPlot runApp shinyApp stopApp
 #' @importFrom clipr write_clip
+#' @importFrom rstudioapi viewer
 #'
 #' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
 #' @author Rasmus Hansen Kirkegaard \email{rhk@@bio.aau.dk}
@@ -275,6 +276,44 @@ mmlocator <- function(plot, x_scale = NULL, y_scale = NULL) {
   return(df)
 }
 
+#' @title Check for installed package(s)
+#' @description Returns an error if required package(s) are not installed. Mostly used for checking whether packages listed under the Suggests field in the DESCRIPTION file are installed.
+#'
+#' @param pkgs Character vector with package(s) to check for.
+#' @param msg Optionally additional text appended (with \code{paste0}) to the default error message.
+#'
+#' @return Returns error and message if not installed, otherwise \code{invisible(TRUE)}
+#' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
+checkReqPkgs <- function(pkgs, msg = "") {
+  stopifnot(is.character(pkgs), length(pkgs) > 0L, nchar(pkgs) > 0, is.character(msg))
+  missingPkgs <- character()
+  # loop over pkgs appending missing ones to vector, otherwise load
+  for (pkg in pkgs) {
+    if (!requireNamespace(pkg, quietly = TRUE)) {
+      missingPkgs <- c(missingPkgs, pkg)
+    } else {
+      require(pkg, quietly = TRUE, character.only = TRUE)
+    }
+  }
+  if (length(missingPkgs) > 0L) {
+    stop(
+      paste0(
+        "The following package",
+        if (length(missingPkgs) > 1L) {
+          "s are "
+        } else {
+          " is "
+        },
+        "required but not installed: ",
+        paste0(pkgs, collapse = ", "),
+        msg
+      ),
+      call. = FALSE
+    )
+  }
+  invisible(TRUE)
+}
+
 # This function is sourced from the DescTools CRAN package
 # version 0.99.24 for pretty printing numbers
 StrAlign <- function(x, sep = "\\r") {
@@ -372,22 +411,26 @@ StrTrim <- function(x, pattern = " \t\n", method = "both") {
   switch(match.arg(arg = method, choices = c(
     "both", "left",
     "right"
-  )), both = {
+  )),
+  both = {
     gsub(
       pattern = gettextf("^[%s]+|[%s]+$", pattern, pattern),
       replacement = "", x = x
     )
-  }, left = {
+  },
+  left = {
     gsub(
       pattern = gettextf("^[%s]+", pattern), replacement = "",
       x = x
     )
-  }, right = {
+  },
+  right = {
     gsub(
       pattern = gettextf("[%s]+$", pattern), replacement = "",
       x = x
     )
-  })
+  }
+  )
 }
 
 # This function is sourced from the DescTools CRAN package

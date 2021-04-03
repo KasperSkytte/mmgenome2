@@ -35,7 +35,6 @@
 #' @importFrom tidyr separate_rows
 #' @importFrom dplyr filter summarise_at
 #' @importFrom rlang quos sym
-#' @importFrom plyr ldply
 #' @importFrom tibble as_tibble
 #' @importFrom ggrepel geom_text_repel
 #'
@@ -347,6 +346,7 @@ mmplot <- function(mm,
 
   # label the centroid of bins by a variable in mm
   if (!is.null(label_bins)) {
+    checkReqPkgs("plyr")
     labels_data <- mm[, c(x, y, label_bins)] %>%
       split(.[, label_bins]) %>%
       plyr::ldply(function(bin) {
