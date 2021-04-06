@@ -1,0 +1,11 @@
+pandoc: 2.7.3
+pkgdown: 1.6.1
+pkgdown_sha: ~
+articles:
+  MACinstall: MACinstall.html
+  mmgenome2: mmgenome2.html
+last_built: 2021-04-06T13:07Z
+urls:
+  reference: https://kasperskytte.github.io/mmgenome2//reference
+  article: https://kasperskytte.github.io/mmgenome2//articles
+
