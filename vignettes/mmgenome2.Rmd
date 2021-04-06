@@ -17,6 +17,14 @@ This is a brief guide explaining the basics of how to use `mmgenome2` for genome
 ## Loading data
 `mmgenome2` requires at minimum two types of data; the assembly and at minimum one coverage profile. Any number of coverage profiles can be loaded at once. Other than the assembly and coverage profiles, optional data includes essential genes, taxonomy, small subunit taxonomic classification, and anything else that could be relevant. The only requirement is that the data is in a row-by-column format, so that the first column contains scaffold names matching those in the assembly, and then any number of columns containing relevant information for the binning process. Metagenome data often consists of numerous files that first have to be loaded into R. The various files are loaded with the `mmload` function, which checks, adjusts, and combines the data into a single data frame, here called `mm`, which will be used in all other `mmgenome2` functions:
 
+```{r include = FALSE}
+#download and unzip example data
+tempfile <- tempfile("mmgenome2", fileext = ".zip")
+download.file("https://ndownloader.figshare.com/files/11094290", tempfile, quiet = TRUE)
+unzip(tempfile, exdir = "data/")
+```
+
+
 ```{r, warning = FALSE, message = FALSE, error = FALSE}
 library(mmgenome2)
 mm <- mmload(
