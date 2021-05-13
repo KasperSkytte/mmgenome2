@@ -54,7 +54,7 @@ mmstats <- function(mm,
 
   # N50
   lengths <- sort(as.integer(mm$length), decreasing = TRUE)
-  N50 <- lengths[which(cumsum(lengths) >= lengthTotal / 2)[1]]
+  N50 <- lengths[which(cumsum(as.numeric(lengths)) >= lengthTotal / 2)[1]]
 
   # essential genes
   if (any(colnames(mm) == "geneID")) {
