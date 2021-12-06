@@ -1,3 +1,23 @@
+#' @title Check for installed package
+#' @description Returns error if a required package is not installed. Mostly used for checking whether packages listed under the Suggests field in the DESCRIPTION file is installed.
+#'
+#' @param pkg The package to check for, a character of length 1.
+#' @param msg Optionally additional text appended (with \code{paste0}) to the default error message.
+#'
+#' @return Returns error and message if not installed, otherwise \code{invisible(TRUE)}
+#' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
+checkReqPkg <- function(pkg, msg = "") {
+  stopifnot(is.character(pkg), length(pkg) == 1L, nchar(pkg) > 0)
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    stopifnot(is.character(msg))
+    stop(
+      paste0("Package '", pkg, "' is required but not installed. ", msg),
+      call. = FALSE
+    )
+  }
+  require(pkg, quietly = TRUE, character.only = TRUE)
+}
+
 #' @title Merge mm object with more data
 #'
 #' @description Internal function used in mmload. \code{y} can be a named vector, dataframe, or a list containing any of these types of data to be merged with \code{x}.
@@ -117,15 +137,16 @@ mmmerge <- function(x, y, type) {
 #' @return A data frame with the x/y coordinates of the mousepositions clicked in the ggplot2 plot.
 #'
 #' @import ggplot2
-#' @importFrom shiny actionButton div fillPage icon observeEvent p plotOutput reactiveValues renderPlot runApp shinyApp stopApp
-#' @importFrom clipr write_clip
-#' @importFrom rstudioapi viewer
 #'
 #' @author Kasper Skytte Andersen \email{ksa@@bio.aau.dk}
 #' @author Rasmus Hansen Kirkegaard \email{rhk@@bio.aau.dk}
 #' @author Soren M. Karst \email{smk@@bio.aau.dk}
 #' @author Mads Albertsen \email{MadsAlbertsen85@@gmail.com}
 mmlocator <- function(plot, x_scale = NULL, y_scale = NULL) {
+  checkReqPkg("shiny")
+  checkReqPkg("rstudioapi")
+  checkReqPkg("clipr")
+  
   app <- shinyApp(
     ui = fillPage(
       padding = c(5, 5, 50),

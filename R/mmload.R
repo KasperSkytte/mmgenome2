@@ -29,6 +29,7 @@
 #' @importFrom dplyr mutate_all funs group_by left_join summarise_all
 #' @importFrom stringr str_replace_all str_remove
 #' @importFrom data.table fread
+#' @importFrom tools file_path_sans_ext
 #'
 #' @examples
 #' \dontrun{
@@ -201,7 +202,8 @@ mmload <- function(assembly,
 
   ##### PCA of tetranucleotides #####
   if (isTRUE(kmer_pca)) {
-    checkReqPkgs("vegan")
+    checkReqPkg("vegan")
+    
     if (isTRUE(verbose)) {
       message(paste0(
         "Calculating principal components of kmer (k=",
@@ -222,7 +224,7 @@ mmload <- function(assembly,
 
   ##### BH tSNE of tetranucleotides #####
   if (isTRUE(kmer_BH_tSNE)) {
-    checkReqPkgs("Rtsne")
+    checkReqPkg("Rtsne", "To install with support for multithreading run:\n  remotes::install_github('kasperskytte/Rtsne@openmp')\notherwise just install from CRAN.")
     if (isTRUE(verbose)) {
       message(paste0(
         "Calculating Barnes-Hut t-Distributed Stochastic Neighbor Embedding representations of kmer (k=",

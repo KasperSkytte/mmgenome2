@@ -2,7 +2,7 @@ Package: mmgenome2
 Type: Package
 Title: Tools for extracting individual genomes from metagenomes
 Description: mmgenome: a toolbox for extracting individual genomes from metagenomes.
-Version: 2.2.0
+Version: 2.2.1
 Date: 2018-01-01
 Encoding: UTF-8
 Authors@R: c(
@@ -46,29 +46,28 @@ Imports:
     magrittr,
     dplyr,
     Biostrings,
-    rstudioapi,
-    clipr,
+    digest,
     igraph,
     ggrepel,
     tibble,
     tidyr,
     stringr,
-    shiny,
-    rlang
-biocViews:
-    Biostrings
-RoxygenNote: 7.1.1
+    purrr,
+    rlang, 
+    plyr,
+    forcats
+remotes:
+    github::kasperskytte/Rtsne@openmp,
+    bioc::Biostrings
+RoxygenNote: 7.1.2
 VignetteBuilder: knitr
 Suggests:
     testthat,
     knitr,
-    tools,
-    utils,
     vegan,
+    shiny,
     Rtsne,
-    digest,
-    plotly,
-    purrr,
-    plyr,
-    forcats
+    rstudioapi,
+    clipr,
+    plotly
 URL: https://kasperskytte.github.io/mmgenome2
