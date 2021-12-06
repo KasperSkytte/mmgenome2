@@ -22,6 +22,7 @@
 #' @importFrom data.table melt data.table
 #' @importFrom magrittr %>% %<>%
 #' @importFrom tidyr unite
+#' @importFrom purrr imap
 #'
 #' @examples
 #' library(mmgenome2)

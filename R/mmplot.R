@@ -34,6 +34,7 @@
 #' @importFrom magrittr %>%
 #' @importFrom tidyr separate_rows
 #' @importFrom dplyr filter summarise_at
+#' @importFrom plyr ldply
 #' @importFrom rlang quos sym
 #' @importFrom tibble as_tibble
 #' @importFrom ggrepel geom_text_repel
