@@ -251,7 +251,7 @@ mmload <- function(assembly,
 
   ##### UWOT/UMAP of tetranucleotides
   if (isTRUE(kmer_uwot)) {
-    checkReqPkg("uwot", "To install uwot/umap run:\n install.packages("uwot")\notherwise just install from CRAN.")
+    checkReqPkg("uwot", "To install uwot/umap run:\n install.packages('uwot')\notherwise just install from CRAN.")
     if (isTRUE(verbose)) {
       message(paste0(
         "Calculating  UMAP representations of kmer (k=",
