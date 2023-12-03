@@ -259,7 +259,7 @@ mmload <- function(assembly,
         ") nucleotide frequencies..."
       ))
     }
-    set.seed(42) # Sets seed for reproducibility
+
     umap_res <- uwot::umap(kmer,
       n_neighbors = 15, 
       learning_rate = 0.5, 
