@@ -179,7 +179,7 @@ mmload <- function(assembly,
   }
 
   ##### calculate kmer nucleotide frequencies #####
-  if (isTRUE(kmer_pca) || isTRUE(kmer_BH_tSNE) isTRUE(kmer_uwot)) {
+  if (isTRUE(kmer_pca) || isTRUE(kmer_BH_tSNE) || isTRUE(kmer_uwot)) {
     if (is.numeric(kmer_size)) {
       if (isTRUE(verbose)) {
         message(paste0(
