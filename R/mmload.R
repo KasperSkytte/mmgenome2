@@ -248,19 +248,6 @@ mmload <- function(assembly,
       tSNE1 = tSNE_res[[1]],
       tSNE2 = tSNE_res[[2]]
     )
-    umap_res <- uwot::umap(kmer,
-      n_neighbors = 15, 
-      learning_rate = 0.5, 
-      init = "random", 
-      n_epochs = 20, 
-      n_threads = 10,
-      ...
-    ) %>%
-      tibble::as.tibble()
-    mm <- tibble::add_column(mm,
-      tSNE1 = umap_res[[1]],
-      tSNE2 = umap_res[[2]]
-    )
   }
 
 
@@ -274,18 +261,17 @@ mmload <- function(assembly,
         ") nucleotide frequencies..."
       ))
     }
-    umap_res <- uwot::umap(kmer,
-      n_neighbors = 15, 
-      learning_rate = 0.5, 
-      init = "random", 
-      n_epochs = 20, 
-      n_threads = 10,
+    umap_res <- uwot::umap(kmer, 
+    n_neighbors = 25, 
+    min_dist = 0.001, 
+    verbose = TRUE, 
+    n_threads = 10,
       ...
     ) %>%
       tibble::as.tibble()
     mm <- tibble::add_column(mm,
-      umap1 = umap_res[[1]],
-      umap2 = umap_res[[2]]
+      tSNE1 = umap_res[[1]],
+      tSNE2 = umap_res[[2]]
     )
   }
   ##### Taxonomy #####
