@@ -237,12 +237,13 @@ mmload <- function(assembly,
         ") nucleotide frequencies..."
       ))
     }
-    set.seed(42) # Sets seed for reproducibility
-    tSNE_res <- Rtsne::Rtsne(kmer,
-      verbose = verbose,
-      check_duplicates = F,
+    tSNE_res <- uwot::umap(kmer, 
+    n_neighbors = 25, 
+    min_dist = 0.001, 
+    verbose = TRUE, 
+    n_threads = 10,
       ...
-    )[["Y"]] %>%
+    ) %>%
       tibble::as.tibble()
     mm <- tibble::add_column(mm,
       tSNE1 = tSNE_res[[1]],
