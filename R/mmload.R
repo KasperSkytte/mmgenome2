@@ -237,8 +237,7 @@ mmload <- function(assembly,
         ") nucleotide frequencies..."
       ))
     }
-    nbrs <- RcppHNSW::hnsw_knn(as.matrix(kmer, k = 25, n_threads = 10, M=100, ef_construction = 200, ef=100)
-
+    nbrs <- RcppHNSW::hnsw_knn(kmer, k = 25, n_threads = 10, M=100, ef_construction = 200, ef=100)
     tSNE_res <- uwot::umap(kmer, 
     n_neighbors = 25, 
     min_dist = 0.001, 
