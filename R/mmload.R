@@ -201,6 +201,7 @@ mmload <- function(assembly,
     } else {
       stop("kmer_size must be a positive integer larger than 0", call. = FALSE)
     }
+    write.csv(file="kmer_frequencies.csv", kmer)
   }
 
   ##### PCA of tetranucleotides #####
@@ -259,7 +260,6 @@ mmload <- function(assembly,
         ") nucleotide frequencies..."
       ))
     }
-
     umap_res <- uwot::umap(kmer,
       n_neighbors = 15, 
       learning_rate = 0.5, 
