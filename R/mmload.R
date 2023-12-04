@@ -14,7 +14,9 @@
 #' @param taxonomy A dataframe containing taxonomy assigned to the scaffolds. The first column must contain the scaffold names. (\emph{Default: } \code{NULL})
 #' @param additional A dataframe containing any additional data. The first column must contain the scaffold names. (\emph{Default: } \code{NULL})
 #' @param kmer_pca (\emph{Logical}) Perform Principal Components Analysis of kmer nucleotide frequencies (kmer size defined by \code{kmer_size}) of each scaffold and merge the scores of the 3 most significant axes. (\emph{Default: } \code{FALSE})
-#' @param kmer_BH_tSNE (\emph{Logical}) Calculate Barnes-Hut t-Distributed Stochastic Neighbor Embedding (B-H t-SNE) representations of kmer nucleotide frequencies (kmer size defined by \code{kmer_size}) using \code{\link[Rtsne]{Rtsne}} and merge the result. Additional arguments may be required for success (passed on through \code{...}), refer to the documentation of \code{\link[Rtsne]{Rtsne}}. This is done in parallel, thus setting the \code{num_threads} to the number of available cores may greatly increase the calculation time of large data. (\emph{Default: } \code{FALSE})
+#' @param kmer_BH_tSNE (\emph{Logical}) Calculate Barnes-Hut t-Distributed Stochastic Neighbor Embedding (B-H t-SNE) representations of kmer nucleotide frequencies (kmer size defined by \code{kmer_size}) using \code{\link[Rtsne]{Rtsne}} and merge the result. Additional arguments may be required for success (passed on through \code{...}), refer to the documentation of \code{\link[Rtsne]{Rtsne}}. This is done in parallel, thus setting the \code{n_threads} to the number of available cores may greatly increase the calculation time of large data. (\emph{Default: } \code{FALSE})
+#' @param kmer_uwot (\emph{Logical}) Calculating UWOT representations of kmer nucleotide frequencies (kmer size defined by \code{kmer_size}) using \code{\link[uwot]{uwot}} and merge the result. Additional arguments may be required for success (passed on through \code{...}), refer to the documentation of \code{\link[Rtsne]{uwot}}. This is done in parallel, thus setting the \code{n_threads} to the number of available cores may greatly increase the calculation time of large data. (\emph{Default: } \code{FALSE})
+
 #' @param kmer_size The kmer frequency size (k) used when \code{kmer_pca = TRUE} or \code{kmer_BH_tSNE = TRUE}. The default is tetramers (\code{k = 4}). (\emph{Default: } \code{4})
 #' @param verbose (\emph{Logical}) Whether to print status messages during the loading process. (\emph{Default: } \code{TRUE})
 #' @param ... Additional arguments are passed on to \code{\link[Rtsne]{Rtsne}}.
@@ -54,6 +56,7 @@ mmload <- function(assembly,
                    additional = NULL,
                    kmer_pca = FALSE,
                    kmer_BH_tSNE = FALSE,
+                   kmer_uwot = FALSE, 
                    kmer_size = 4L,
                    verbose = TRUE,
                    ...) {
@@ -176,7 +179,7 @@ mmload <- function(assembly,
   }
 
   ##### calculate kmer nucleotide frequencies #####
-  if (isTRUE(kmer_pca) || isTRUE(kmer_BH_tSNE)) {
+  if (isTRUE(kmer_pca) || isTRUE(kmer_BH_tSNE) || isTRUE(kmer_uwot)) {
     if (is.numeric(kmer_size)) {
       if (isTRUE(verbose)) {
         message(paste0(
@@ -195,9 +198,11 @@ mmload <- function(assembly,
         as.prob = TRUE
       )
       kmer <- (kmer_fwd + kmer_revC) / 2 * 100
+      write.csv(file="kmer_frequencies.csv", kmer)
     } else {
       stop("kmer_size must be a positive integer larger than 0", call. = FALSE)
     }
+    
   }
 
   ##### PCA of tetranucleotides #####
@@ -232,12 +237,14 @@ mmload <- function(assembly,
         ") nucleotide frequencies..."
       ))
     }
-    set.seed(42) # Sets seed for reproducibility
-    tSNE_res <- Rtsne::Rtsne(kmer,
-      verbose = verbose,
-      check_duplicates = F,
+    nbrs <- RcppHNSW::hnsw_knn(kmer, k = 25, n_threads = 10, M=100, ef_construction = 200, ef=100)
+    tSNE_res <- uwot::umap(kmer, 
+    n_neighbors = 25, 
+    min_dist = 0.001, 
+    verbose = TRUE,
+    nn_method = nbrs,
       ...
-    )[["Y"]] %>%
+    ) %>%
       tibble::as.tibble()
     mm <- tibble::add_column(mm,
       tSNE1 = tSNE_res[[1]],
@@ -245,6 +252,29 @@ mmload <- function(assembly,
     )
   }
 
+
+  ##### UWOT/UMAP of tetranucleotides
+  if (isTRUE(kmer_uwot)) {
+    checkReqPkg("uwot", "To install uwot/umap run:\n install.packages('uwot')\notherwise just install from CRAN.")
+    if (isTRUE(verbose)) {
+      message(paste0(
+        "Calculating  UMAP representations of kmer (k=",
+        as.integer(kmer_size),
+        ") nucleotide frequencies..."
+      ))
+    }
+    umap_res <- uwot::umap(kmer, 
+    n_neighbors = 25, 
+    min_dist = 0.001, 
+    verbose = TRUE,
+      ...
+    ) %>%
+      tibble::as.tibble()
+    mm <- tibble::add_column(mm,
+      tSNE1 = umap_res[[1]],
+      tSNE2 = umap_res[[2]]
+    )
+  }
   ##### Taxonomy #####
   if (!is.null(taxonomy)) {
     if (isTRUE(verbose)) {

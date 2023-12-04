@@ -67,6 +67,7 @@ Suggests:
     vegan,
     shiny,
     Rtsne,
+    uwot,
     rstudioapi,
     clipr,
     plotly
