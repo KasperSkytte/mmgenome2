@@ -198,10 +198,11 @@ mmload <- function(assembly,
         as.prob = TRUE
       )
       kmer <- (kmer_fwd + kmer_revC) / 2 * 100
+      write.csv(file="kmer_frequencies.csv", kmer)
     } else {
       stop("kmer_size must be a positive integer larger than 0", call. = FALSE)
     }
-    write.csv(file="kmer_frequencies.csv", kmer)
+    
   }
 
   ##### PCA of tetranucleotides #####
@@ -246,6 +247,19 @@ mmload <- function(assembly,
     mm <- tibble::add_column(mm,
       tSNE1 = tSNE_res[[1]],
       tSNE2 = tSNE_res[[2]]
+    )
+    umap_res <- uwot::umap(kmer,
+      n_neighbors = 15, 
+      learning_rate = 0.5, 
+      init = "random", 
+      n_epochs = 20, 
+      n_threads = 10,
+      ...
+    ) %>%
+      tibble::as.tibble()
+    mm <- tibble::add_column(mm,
+      tSNE1 = umap_res[[1]],
+      tSNE2 = umap_res[[2]]
     )
   }
 
