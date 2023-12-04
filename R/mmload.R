@@ -240,8 +240,7 @@ mmload <- function(assembly,
     tSNE_res <- uwot::umap(kmer, 
     n_neighbors = 25, 
     min_dist = 0.001, 
-    verbose = TRUE, 
-    n_threads = 10,
+    verbose = TRUE,
       ...
     ) %>%
       tibble::as.tibble()
